@@ -1,0 +1,65 @@
+###############################################################################
+config HI_LOG_SUPPORT
+    bool "Log Support"
+    depends on HI_ADVCA_FUNCTION!=FINAL && HI_ADVCA_FUNCTION!=RELEASE && HI_LOADER_LOG_DISABLE=n
+    default y
+    ---help---
+        If you want to close SDK print, say n.
+
+##############################################################################
+config HI_LOG_LEVEL
+    int "Compile Log Level (0,4)"
+    range 0 4
+    default 1
+    depends on HI_LOG_SUPPORT
+    ---help---
+        This option control each CBB compile log level, range from 0 to 4.
+        0-the fatal level
+        1-the error level
+        2-the warning level
+        3-the info level
+        4-the debug level
+        Default 1.
+        NOTICE: This value only control the compiling log level of every module, the default output level is always 1(error).
+
+##############################################################################
+config HI_LOG_NETWORK_SUPPORT
+    bool "Network Log Support"
+    default n
+    depends on HI_LOG_SUPPORT
+    ---help---
+        This option control the network log output.
+        If enable, supported network output. Default disable.
+
+###############################################################################
+config HI_LOG_UDISK_SUPPORT
+    bool "UDisk Log Support"
+    default n
+    depends on HI_LOG_SUPPORT
+    ---help---
+        This option control the u-disk log. Default disable.
+        If enble, the log will be written into u-disk.
+
+###############################################################################
+config HI_PROC_SUPPORT
+    bool "Proc Support"
+    depends on HI_ADVCA_FUNCTION!=FINAL && HI_ADVCA_FUNCTION!=RELEASE
+    default y
+    ---help---
+        If you want to get an advance CA release build, say no. Default enable.
+
+config HI_PROC_WRITE_SUPPORT
+    bool "Proc Write Support"
+    depends on HI_PROC_SUPPORT
+    default y
+
+###############################################################################
+menu "DEBUG CONFIG"
+config  HI_LOADER_LOG_DISABLE
+    bool "Loader Log Disable"
+    default n
+    help
+        Disable the log under LOADER circumstance.
+
+endmenu
+###############################################################################

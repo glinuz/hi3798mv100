@@ -1,0 +1,11 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menuconfig GSTREAMER_SUPPORT
+	bool "Gstreamer Support"
+#	depends on HAL_SUPPORT && HI_AUDIO_OMX_SUPPORT
+	depends on HI_AUDIO_OMX_SUPPORT
+	default y
+config  GSTREAMER_FULL_SUPPORT
+	bool "Gstreamer Full Support"
+	depends on GSTREAMER_SUPPORT
+	default y
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

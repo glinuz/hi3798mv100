@@ -1,0 +1,94 @@
+# Hi3716mV300 ca debug config
+
+#
+#  version
+#
+VERSION    = 1
+PATCHLEVEL = 0
+SUBLEVEL   = 0
+
+#
+#  global define
+#
+CONFIG_ARCH_GODBOX = y
+TEXT_BASE  = 0x80710000
+ARCH       = "armv7-a"
+PLATFORM   = godbox
+CONFIG_CACHE_ARMV7       = y
+
+#
+#  buffer size
+#
+CONFIG_BOOTHEAD_GAP      = ((TEXT_BASE & 0x000FFFFF) + 0x1000) 
+CONFIG_RESERVE_MEMORY_GAP = 0x8000000
+
+#  storage
+#
+CONFIG_GENERIC_NAND      = y
+CONFIG_MMC_BOOT_ADDR     = 0x200
+
+#CONFIG_GENERIC_MMC = y
+
+#
+#  printf
+#
+CONFIG_DEBUG             = y
+CONFIG_PRINT             = y
+
+#
+#  serial driver
+#
+CONFIG_UART           = y
+CONFIG_UART_P101X     = y
+
+#
+#  SFC controller driver
+#
+CONFIG_GENERIC_SFC = y
+CONFIG_SPIFLASH_HISFC350 = y
+CONFIG_HISFC350_CHIP_NUM            = 2
+
+#
+#  NAND controller driver
+#
+CONFIG_GENERIC_NAND       = y
+CONFIG_NAND_HINFC504                  = y
+CONFIG_NAND_MAX_CHIP                  = 2
+CONFIG_NAND_RANDOMIZER_BOOT           = y
+CONFIG_HINFC504_HARDWARE_PAGESIZE_ECC = y
+#CONFIG_NAND_NOTICE_RR                = y
+
+#
+# show xls table information on start
+#
+CONFIG_SHOW_REG_INFO = y
+CONFIG_START_TIMEOUT = 2
+
+#
+# compress miniboot
+#
+#CONFIG_COMPRESS = y
+CONFIG_UNCOMP_ADDR = 0x80600000
+CONFIG_UNCMOP_MAX_SIZE = 0x100000
+
+CONFIG_ENV_FROM        = 0x100000
+#CONFIG_ENV_BACKUP_FROM
+CONFIG_ENV_RANGE       = 0x20000
+CONFIG_ENV_SIZE        = 0x2000
+CONFIG_DEFAULT_BOOTCMD = "nand read 0x82000000 0x100000 0x100000;boot 0x82000000"
+CONFIG_ENV_FLASH_SPI    = y
+#CONFIG_ENV_FLASH_NAND        = y
+
+#
+#  support ethernet
+#
+CONFIG_NET = y
+CONFIG_NET_HISFV300 = y
+
+#  support command system
+#
+CONFIG_CMDLINE = y
+
+#
+# end of config.hi3716mv300 ca debug
+#

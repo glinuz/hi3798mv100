@@ -1,0 +1,56 @@
+###########################################################
+## Clear out values of all variables used by rule templates.
+###########################################################
+
+LOCAL_MODULE:=
+LOCAL_MODULE_PATH:=
+LOCAL_SRC_FILES:=
+LOCAL_INTERMEDIATE_TARGETS:=
+LOCAL_MODULE_MAKEFILE:=
+LOCAL_MODULE_STEM:=
+LOCAL_DONT_CHECK_MODULE:=
+LOCAL_CHECKED_MODULE:=
+LOCAL_BUILT_MODULE:=
+LOCAL_BUILT_MODULE_STEM:=
+LOCAL_INSTALLED_MODULE:=
+LOCAL_INSTALLED_MODULE_STEM:=
+LOCAL_UNINSTALLABLE_MODULE:=
+LOCAL_UNSTRIPPED_PATH:=
+LOCAL_MODULE_CLASS:=
+LOCAL_MODULE_SUFFIX:=
+LOCAL_REQUIRED_MODULES:=
+LOCAL_MODULE_TAGS:=
+LOCAL_PREBUILT_OBJ_FILES:=
+LOCAL_STATIC_LIBRARIES:=
+# Group static libraries with "-Wl,--start-group" and "-Wl,--end-group" when linking.
+LOCAL_GROUP_STATIC_LIBRARIES:=
+LOCAL_WHOLE_STATIC_LIBRARIES:=
+LOCAL_SHARED_LIBRARIES:=
+LOCAL_CC:=
+LOCAL_CXX:=
+LOCAL_AR:=
+LOCAL_CPP_EXTENSION:=
+LOCAL_CFLAGS:=
+LOCAL_CPPFLAGS:=
+LOCAL_ARFLAGS:=
+LOCAL_C_INCLUDES:=
+LOCAL_EXPORT_C_INCLUDE_DIRS:=
+LOCAL_LDFLAGS:=
+LOCAL_LDLIBS:=
+LOCAL_PREBUILT_LIBS:=
+LOCAL_PREBUILT_EXECUTABLES:=
+LOCAL_COPY_HEADERS:=
+LOCAL_ADDITIONAL_DEPENDENCIES:=
+LOCAL_STRIP_MODULE:=
+LOCAL_SOURCE_VERSION :=
+LOCAL_SOURCE_TARBALL :=
+LOCAL_SOURCE_PATCH :=
+LOCAL_OPENSOURCE_PREFIX:=
+#生成obj时使用，如果指定了，那么将插在intermediate目录下，目前只在生成EXE时使用
+LOCAL_OBJ_EXTRADIR_NAME:=
+
+# Trim MAKEFILE_LIST so that $(call my-dir) doesn't need to
+# iterate over thousands of entries every time.
+# Leave the current makefile to make sure we don't break anything
+# that expects to be able to find the name of the current makefile.
+MAKEFILE_LIST := $(lastword $(MAKEFILE_LIST))

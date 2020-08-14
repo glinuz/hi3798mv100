@@ -1,0 +1,79 @@
+mainmenu "Hisi SDK Configuration"
+
+menu "Base"
+source "scripts/kconfig/Kconfig.base"
+endmenu
+
+menu "Board"
+source "scripts/kconfig/Kconfig.board"
+endmenu
+
+menu "Boot"
+source "scripts/kconfig/Kconfig.boot"
+endmenu
+
+menu "Kernel"
+source "scripts/kconfig/Kconfig.kernel"
+endmenu
+
+menu "Rootfs"
+source "scripts/kconfig/Kconfig.fstools"
+source "scripts/kconfig/Kconfig.rootfs"
+endmenu
+
+menu "Common"
+source "scripts/kconfig/Kconfig.common"
+endmenu
+
+menu "Component"
+source "scripts/kconfig/Kconfig.advca"
+source "scripts/kconfig/Kconfig.zlib"
+source "scripts/kconfig/Kconfig.wifi"
+source "scripts/kconfig/Kconfig.hifat"
+source "scripts/kconfig/Kconfig.ntfs"
+source "scripts/kconfig/Kconfig.exfat"
+source "scripts/kconfig/Kconfig.3g"
+source "scripts/kconfig/Kconfig.alsa"
+source "scripts/kconfig/Kconfig.bluetooth"
+source "scripts/kconfig/Kconfig.karaoke"
+source "scripts/kconfig/Kconfig.resampler"
+source "scripts/kconfig/Kconfig.hacodec"
+source "scripts/kconfig/Kconfig.vp"
+source "scripts/kconfig/Kconfig.caption"
+source "scripts/kconfig/Kconfig.hiplayer"
+source "scripts/kconfig/Kconfig.gstreamer"
+source "scripts/kconfig/Kconfig.openssl"
+source "scripts/kconfig/Kconfig.apploader"
+source "scripts/kconfig/Kconfig.curl"
+source "scripts/kconfig/Kconfig.drm"
+source "scripts/kconfig/Kconfig.opera"
+endmenu
+
+menu "Msp"
+source "scripts/kconfig/Kconfig.frontend"
+source "scripts/kconfig/Kconfig.demux"
+source "scripts/kconfig/Kconfig.audio"
+source "scripts/kconfig/Kconfig.avplay"
+source "scripts/kconfig/Kconfig.vdec"
+source "scripts/kconfig/Kconfig.vo"
+source "scripts/kconfig/Kconfig.vpss"
+source "scripts/kconfig/Kconfig.hdmi"
+source "scripts/kconfig/Kconfig.graph"
+source "scripts/kconfig/Kconfig.gpu"
+source "scripts/kconfig/Kconfig.ir"
+source "scripts/kconfig/Kconfig.keyled"
+source "scripts/kconfig/Kconfig.pm"
+source "scripts/kconfig/Kconfig.mce"
+source "scripts/kconfig/Kconfig.sci"
+source "scripts/kconfig/Kconfig.gpioi2c"
+source "scripts/kconfig/Kconfig.vi"
+source "scripts/kconfig/Kconfig.venc"
+source "scripts/kconfig/Kconfig.pvr"
+source "scripts/kconfig/Kconfig.spi"
+endmenu
+
+menu "TEE"
+source "scripts/kconfig/Kconfig.tee"
+endmenu
+
+#--------------------------------

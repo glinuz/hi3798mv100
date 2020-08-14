@@ -1,0 +1,7 @@
+
+config MTD_HIFMC100
+	tristate "Hisilicon Flash Memory Controller Ver 100 support"
+	default n
+	select MTD_BLOCK
+	help
+	  Support Hisilicon Flash Memory Controller Version 100.

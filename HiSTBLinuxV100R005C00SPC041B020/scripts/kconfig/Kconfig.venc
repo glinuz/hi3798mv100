@@ -1,0 +1,6 @@
+
+config  HI_VENC_SUPPORT
+	bool "VENC Support" 
+	default n
+	help
+	    this option should be chosen on transcode scene

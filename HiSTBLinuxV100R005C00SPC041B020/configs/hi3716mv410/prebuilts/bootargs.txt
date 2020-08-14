@@ -1,0 +1,15 @@
+bootdelay=1
+baudrate=115200
+ethaddr=00:00:00:00:00:00
+ipaddr=192.168.1.10
+serverip=192.168.1.1
+netmask=255.255.255.0
+bootfile="uImage"
+bootargs_512M=mem=512M mmz=ddr,0,0,256M
+bootargs_1G=mem=1G mmz=ddr,0,0,380M
+bootargs_2G=mem=2G mmz=ddr,0,0,600M
+bootargs=mem=512M mmz=ddr,0,0,256M console=ttyAMA0,115200 root=/dev/mtdblock13 rootfstype=yaffs2 mtdparts=hinand:1M(boot),1M(bootargs),1M(baseparam),1M(pqparam),1M(logo),1M(deviceinfo),1M(softwareinfo),1M(loaderdb),1M(loaderdbbak),8M(loader),8M(loaderbak),8M(trustedcore),8M(kernel),64M(rootfs),-(others)
+bootcmd=nand read 1000000 2100000 800000;bootm 1000000
+stdin=serial
+stdout=serial
+stderr=serial

@@ -1,0 +1,12 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+source "scripts/kconfig/Kconfig.board.eth"
+source "scripts/kconfig/Kconfig.flash"
+source "scripts/kconfig/Kconfig.board.tuner"
+source "scripts/kconfig/Kconfig.board.demux"
+source "scripts/kconfig/Kconfig.board.keyled"
+source "scripts/kconfig/Kconfig.board.pm"
+source "scripts/kconfig/Kconfig.board.sci"
+source "scripts/kconfig/Kconfig.board.mutectrl"
+source "scripts/kconfig/Kconfig.board.videodac"
+source "scripts/kconfig/Kconfig.board.bootreg"
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

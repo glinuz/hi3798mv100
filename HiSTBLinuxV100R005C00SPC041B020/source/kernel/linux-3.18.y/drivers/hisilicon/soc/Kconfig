@@ -1,0 +1,8 @@
+
+if ARCH_HI3798CV2X
+source "drivers/hisilicon/soc/hi3798cv200/Kconfig"
+endif
+
+if ARCH_HI3798MV2X
+source "drivers/hisilicon/soc/hi3798mv200/Kconfig"
+endif

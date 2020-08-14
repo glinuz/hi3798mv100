@@ -1,0 +1,93 @@
+#
+# drivers/mtd/nand/hinfc610/Kconfig
+# add by caizhiyong 2010.11.04
+#
+
+menuconfig MTD_NAND_HINFC610
+	tristate "Hisilicon NAND Controller v610 device Support"
+	depends on MTD_NAND
+	default y if (ARCH_S40) || (ARCH_GODBOX) || (ARCH_HI3798MX) || (ARCH_HIFONE)
+	select MISC_FILESYSTEMS
+	select MTD_BLOCK
+	help
+	  Hisilicon NAND Controller v610 device Support
+
+if MTD_NAND_HINFC610
+
+config HINFC610_MAX_CHIP
+	int "number of nand flash chip (1,4)"
+	default 1
+	help
+	  nand controller v610 device only support 1 or 2 nand flash chip,
+	  your should not config other value.
+
+config HINFC610_CACHE_ENABLE
+	bool "enable nand cache feature"
+	default n
+	help
+	  enable cache feature may improve nand startup speed on some file system
+
+config HINFC610_DBG_NAND_DEBUG
+	bool "Debug: create debug file to control debug type"
+	default y
+	help
+	  Create "debug" file to control debug type.
+
+config HINFC610_DBG_NAND_DUMP
+	bool "Debug: display read/write/erase process nand data"
+	depends on HINFC610_DBG_NAND_DEBUG
+	default y
+	help
+	  Create "dump" file dump to display all nand operation and data.
+
+config HINFC610_DBG_NAND_ERASE_COUNT
+	bool "Debug: display last erase count"
+	depends on HINFC610_DBG_NAND_DEBUG
+	default y
+	help
+	  Create "erase_count" file to display last erase count.
+
+config HINFC610_DBG_NAND_READ_COUNT
+	bool "Debug: display last read count"
+	depends on HINFC610_DBG_NAND_DEBUG
+	default y
+	help
+	  Create "read_count" file to display last read count.
+
+config HINFC610_DBG_NAND_ECC_COUNT
+	bool "Debug: display last ecc count."
+	depends on HINFC610_DBG_NAND_DEBUG
+	default y
+	help
+	  Create "ecc_count" to display last ecc count.
+
+config HINFC610_DBG_NAND_READ_RETRY
+	bool "Debug: display read_retry process"
+	depends on HINFC610_DBG_NAND_DEBUG
+	default y
+	help
+	  Create read_retry file to display read_retry process.
+ 
+config CONFIG_HINFC610_DBG_NAND_CACHE
+	bool "Debug: display cache information"
+	depends on HINFC610_DBG_NAND_DEBUG && HINFC610_CACHE_ENABLE
+	default y
+	help
+	  Create data file to display cache information.
+
+choice
+	prompt "Pagesize and Ecc Type Select"
+
+config HINFC610_AUTO_PAGESIZE_ECC
+	bool "Auto"
+	help
+	  pagesize and ecc type use hardware config
+
+config HINFC610_PAGESIZE_AUTO_ECC_NONE
+	bool "Pagesize Auto, Ecc None"
+	help
+	  select pagesize 2K, ecc none.
+
+endchoice
+
+endif # MTD_NAND_HINFC610

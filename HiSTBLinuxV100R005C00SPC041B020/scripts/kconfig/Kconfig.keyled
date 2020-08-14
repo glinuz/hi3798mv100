@@ -1,0 +1,137 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "Keyled Config"
+#--------------------------------
+
+#choice
+#	prompt "Keyled Type"
+#	default KEYLED_PT6964
+config  HI_KEYLED_SUPPORT
+        bool "Keyled Support"
+	default y
+config  HI_KEYLED_74HC164_SUPPORT
+	bool "74HC164 Keyled"
+	depends on HI_KEYLED_SUPPORT
+	default n
+	
+#menu "GpioKey Keyled"
+#     depends on HI_KEYLED_SUPPORT 
+menuconfig  HI_KEYLED_GPIOKEY_SUPPORT
+	bool "GpioKey Keyled Support"
+	depends on HI_KEYLED_SUPPORT
+	default n
+	config  HI_KEYLED_GPIOKEY_POWER_GPIO
+                depends on  HI_KEYLED_GPIOKEY_SUPPORT
+                hex "Power Gpio Number"
+                default 0x2d
+        config  HI_KEYLED_GPIOKEY_OK_GPIO
+                depends on  HI_KEYLED_GPIOKEY_SUPPORT
+                hex "OK Gpio Number"
+                default 0xd
+        config  HI_KEYLED_GPIOKEY_MENU_GPIO
+                depends on  HI_KEYLED_GPIOKEY_SUPPORT
+                hex "Menu Gpio Number"
+                default 0xe
+        config  HI_KEYLED_GPIOKEY_LEFT_GPIO
+                depends on  HI_KEYLED_GPIOKEY_SUPPORT
+                hex "Left Gpio Number"
+                default 0xf
+        config  HI_KEYLED_GPIOKEY_RIGHT_GPIO
+                depends on  HI_KEYLED_GPIOKEY_SUPPORT
+                hex "Right Gpio Number"
+                default 0x10
+        config  HI_KEYLED_GPIOKEY_UP_GPIO
+                depends on  HI_KEYLED_GPIOKEY_SUPPORT
+                hex "Up Gpio Number"
+                default 0x12
+        config  HI_KEYLED_GPIOKEY_DOWN_GPIO
+                depends on  HI_KEYLED_GPIOKEY_SUPPORT
+                hex "Down Gpio Number"
+                default 0x11
+#endmenu	
+
+menuconfig HI_KEYLED_CT1642_SUPPORT
+	bool "Ct1642 Keyled Support"
+	depends on HI_KEYLED_SUPPORT
+	default y
+	config  HI_KEYLED_CT1642_GPIO_MODE
+		bool "Use Ct1642 in GPIO Mode"
+		depends on  HI_KEYLED_CT1642_SUPPORT
+		help
+			Default, Ct1642 will be controlled by chipset, if you want to control it by GPIO, say y, default n.
+		default n
+	config  HI_KEYLED_CT1642_KERNEL_SUPPORT
+		bool "Ct1642 Kernel Support"
+		depends on HI_KEYLED_CT1642_GPIO_MODE && HI_MSP_BUILDIN
+		default n
+	config  HI_KEYLED_CT1642_CLOCK_GPIO
+		depends on HI_KEYLED_CT1642_GPIO_MODE
+		hex "Clock Gpio Number"
+		default 0x29
+	config  HI_KEYLED_CT1642_DAT_GPIO
+		depends on HI_KEYLED_CT1642_GPIO_MODE
+		hex "DAT Gpio Number"
+		default 0x28
+	config  HI_KEYLED_CT1642_KEY_GPIO
+		depends on HI_KEYLED_CT1642_GPIO_MODE
+		hex "Key Gpio Number"
+		default 0x2f
+#endmenu
+
+#menu "Pt6961 Keyled"
+#     depends on HI_KEYLED_SUPPORT    
+menuconfig  HI_KEYLED_PT6961_SUPPORT
+	bool "Pt6961 Keyled Support"
+	depends on HI_KEYLED_SUPPORT 
+	default n
+        config  HI_KEYLED_PT6961_CLOCK_GPIO
+                depends on  HI_KEYLED_PT6961_SUPPORT
+                hex "Clock Gpio Number"
+                default 0x2a
+        config  HI_KEYLED_PT6961_STB_GPIO
+                depends on  HI_KEYLED_PT6961_SUPPORT
+                hex "STB Gpio Number"
+                default 0x2b
+        config  HI_KEYLED_PT6961_DIN_GPIO
+                depends on  HI_KEYLED_PT6961_SUPPORT
+                hex "DIN Gpio Number"
+                default 0x2c
+        config  HI_KEYLED_PT6961_DOUT_GPIO
+                depends on  HI_KEYLED_PT6961_SUPPORT
+                hex "DOUT Gpio Number"
+                default 0x2d
+#endmenu
+
+#menu "Pt6964 Keyled"
+#     depends on HI_KEYLED_SUPPORT
+menuconfig  HI_KEYLED_PT6964_SUPPORT
+	bool "Pt6964 Keyled Support"
+	depends on HI_KEYLED_SUPPORT
+	default n
+        config  HI_KEYLED_PT6964_CLOCK_GPIO
+                depends on  HI_KEYLED_PT6964_SUPPORT
+                hex "Clock Gpio Number"
+                default 0x2a
+        config  HI_KEYLED_PT6964_STB_GPIO
+                depends on  HI_KEYLED_PT6964_SUPPORT
+                hex "STB Gpio Number"
+                default 0x2b
+        config  HI_KEYLED_PT6964_DINOUT_GPIO
+                depends on  HI_KEYLED_PT6964_SUPPORT
+                hex "DINOUT Gpio Number"
+                default 0x2c   
+#endmenu
+
+menuconfig  HI_KEYLED_FD650_SUPPORT
+	bool "Fd650 Keyled Support"
+	depends on HI_KEYLED_SUPPORT
+	default n
+	config  HI_KEYLED_FD650_CLOCK_GPIO
+                depends on  HI_KEYLED_FD650_SUPPORT
+                hex "Clock Gpio Number"
+                default 0x2b
+	 config  HI_KEYLED_FD650_DINOUT_GPIO
+                depends on  HI_KEYLED_FD650_SUPPORT
+                hex "DINOUT Gpio Number"
+                default 0x2d
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -1,0 +1,16 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "TSI Config"	  	  
+config HI_TSI_NUMBER
+	int "TSI Port Number"
+	default 4
+	range 0 6
+	help
+	  Configure the number of TSI port,range (0 ~ 6).
+source "scripts/kconfig/Kconfig.board.demux.tsi0"
+source "scripts/kconfig/Kconfig.board.demux.tsi1"
+source "scripts/kconfig/Kconfig.board.demux.tsi2"
+source "scripts/kconfig/Kconfig.board.demux.tsi3"
+source "scripts/kconfig/Kconfig.board.demux.tsi4"
+source "scripts/kconfig/Kconfig.board.demux.tsi5"     
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

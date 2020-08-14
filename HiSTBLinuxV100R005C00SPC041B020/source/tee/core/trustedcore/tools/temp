@@ -1,0 +1,44 @@
+
+
+Gen sre_syscalls.S:
+
+    .global __bsp_efuse_write
+    .global __bsp_efuse_read
+
+__bsp_efuse_write:
+    push {lr}
+    swi SW_SYSCALL_BSP_EFUSE_WRITE
+    pop {lr}
+    bx lr
+
+__bsp_efuse_read:
+    push {lr}
+    swi SW_SYSCALL_BSP_EFUSE_READ
+    pop {lr}
+    bx lr
+
+
+Gen sre_syscalls_id.h:
+
+#define SW_SYSCALL_BSP_EFUSE_WRITE		0x1000
+#define SW_SYSCALL_BSP_EFUSE_READ		0x1004
+
+
+Gen sre_syscallDispatch.c:
+
+
+        case SW_SYSCALL_BSP_EFUSE_WRITE:
+            uwRet = bsp_efuse_write((const unsigned int*)regs->regs[0], (const unsigned int)regs->regs[1], (const unsigned int)regs->regs[2]);
+            regs->regs[0] = uwRet;
+            break;
+
+        case SW_SYSCALL_BSP_EFUSE_READ:
+            uwRet = bsp_efuse_read((unsigned int*)regs->regs[0], (const unsigned int)regs->regs[1], (const unsigned int)regs->regs[2]);
+            regs->regs[0] = uwRet;
+            break;
+
+
+Gen sre_syscall.h:
+
+extern int __bsp_efuse_write(const unsigned int* buf,const unsigned int group,			  const unsigned int size);
+extern int __bsp_efuse_read(unsigned int* buf,const unsigned int group,			  const unsigned int size);

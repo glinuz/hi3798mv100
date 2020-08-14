@@ -1,0 +1,81 @@
+#++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "Audio Config"
+#--------------------------------
+config  HI_SND_ALSA_AO_SUPPORT
+    bool "AO ALSA Support"
+    default n
+
+config HI_AI_SUPPORT
+    bool "AI Support"
+    default n
+
+config  HI_SND_ALSA_AI_SUPPORT
+    depends on HI_AI_SUPPORT
+    bool "AI ALSA Support"
+    default n
+
+config  HI_SND_ALSA_I2S_ONLY_SUPPORT
+    depends on HI_SND_ALSA_AI_SUPPORT
+    bool "ALSA I2S only Card Support"
+    default n
+
+config  HI_SND_ALSA_HDMI_ONLY_SUPPORT
+    depends on HI_SND_ALSA_AI_SUPPORT
+    bool "ALSA HDMI only Card Support"
+    default n
+
+config HI_ADEC_MAX_INSTANCE
+    int "ADEC Max Instance Number(1~8)"
+    range 1 8
+    default 8
+
+config HI_ADEC_AUDSPECTRUM_SUPPORT
+    bool "ADEC Audio Spectrum Support"
+    default n
+
+config HI_SND_SMARTVOLUME_SUPPORT
+    bool "SND Smart Volume Support"
+    default n
+
+config HI_SND_HBRA_PASSTHROUGH_SUPPORT
+    bool "SND HBRA passthrough support"
+    default n if HI3716MV410 || HI3716MV420
+    default y
+    help
+        Say Y here if you want to support HBRA(TRUEHD DTSHD 7.1LPCM) passthrough.
+        There will not be enough memmory in SND for HBRA if chosen N.
+
+config HI_AENC_SUPPORT
+    bool "AENC Support"
+    default y
+
+menuconfig  HI_ADAC_SUPPORT
+    bool "ADAC Support"
+    default n
+
+choice
+    prompt "Codec Support"
+    depends on HI_ADAC_SUPPORT
+
+config  HI_ADAC_SLIC_SUPPORT
+    bool "slic"
+
+config  HI_ADAC_TVL320AIC31_SUPPORT
+    bool "tlv320"
+
+endchoice
+
+config HI_ALSA_TVL320_KERNEL_SUPPORT
+    bool "KERNEL Tlv320 Support"
+    default n
+
+config HI_AUDIO_OMX_SUPPORT
+    bool "OMX Audio Support"
+    default n
+
+config HI_SND_SPDIF_DELAY_SUPPORT
+    bool "SND SPDIF Compensation"
+    default n
+#--------------------------------
+endmenu
+#++++++++++++++++++++++++++++++++++++++++++++++++++++

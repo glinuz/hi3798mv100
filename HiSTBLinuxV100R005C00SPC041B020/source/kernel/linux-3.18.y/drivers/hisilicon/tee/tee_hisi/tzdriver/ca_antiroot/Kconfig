@@ -1,0 +1,24 @@
+#
+# tee root scan client configuration
+#
+
+config TEE_ANTIROOT_CLIENT
+        bool "A client to scan root status"
+#        depends on HW_ROOT_SCAN
+        default n
+        help
+           this is a TEE root scan client,
+	   that use huawei root scan engine
+	   to gather kernel info, and send to
+	   TEE to verify kernel.
+
+
+config HUAWEI_ROOT_SCAN_DUMMY_API
+	bool "dummy api for test of TEE_ANTIROOT_CLIENT"
+	depends on TEE_ANTIROOT_CLIENT
+	default n
+	help
+	   this is dummy api for test of TEE_ANTIROOT_CLIENT.
+	   It mimics the API of HW_ROOT_SCAN, so we
+	   can test antiroot CA/TA.
+	   SHOULD turn off this when HW_ROOT_SCAN is on.

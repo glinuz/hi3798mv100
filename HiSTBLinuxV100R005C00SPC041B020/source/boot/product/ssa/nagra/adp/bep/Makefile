@@ -1,0 +1,10 @@
+BOOTROM_BEP_ENTRY=0x00800000
+UBOOT_CODE_OFFSET=0x2400
+BOOT_START_OFFSET_NAGRA=$(BOOTROM_BEP_ENTRY)+$(UBOOT_CODE_OFFSET)
+
+all:
+	$(CC)  -DBOOT_START_OFFSET_NAGRA=$(BOOT_START_OFFSET_NAGRA) -c bep.S -o bep.o
+	$(OBJCOPY) --gap-fill=0xff -O binary bep.o bep.bin
+
+clean:
+	-rm -rf bep.bin bep.o

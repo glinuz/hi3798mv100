@@ -1,0 +1,13 @@
+config HISI_VDEC
+	tristate "hisilicon video decoder support"
+	depends on VFMW_V3 || VFMW_V2
+	---help---
+	  This driver provides kernel-side support video decoder driver.
+	  If unsure, say Y.
+
+config HISI_VDEC_DEBUG
+	bool "debug verbose for hisi vdec"
+	depends on HISI_VDEC
+	---help---
+	This is for vdec driver debug.
+	If unsure, say Y.

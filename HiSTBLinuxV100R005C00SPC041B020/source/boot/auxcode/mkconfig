@@ -1,0 +1,20 @@
+#!/bin/sh -e
+
+#
+# Create include file for Make
+#
+echo "MACH   = $1" >config.mk
+
+echo "#ifndef __CONFIG_H__" > config.h		# Create new config file
+echo "#define __CONFIG_H__" >> config.h		# Create new config file
+
+echo "/* Automatically generated - do not edit */" >>config.h
+
+cat << EOF >> config.h
+#include <configs/$1.h>
+EOF
+
+echo "#endif" >> config.h
+
+
+exit 0

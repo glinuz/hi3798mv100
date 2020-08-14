@@ -1,0 +1,19 @@
+#ifndef _SRE_SHAREDMEM_H
+#define _SRE_SHAREDMEM_H
+
+typedef enum {
+	TEEOS_SHARED_MEM_MODEM = 0,
+	TEEOS_SHARED_MEM_FINGERPRINT = 1,
+	TEEOS_SHARED_MEM_ROOT_STATUS = 2,
+	TEEOS_SHARED_MEM_ESE = 3,
+	TEEOS_SHARED_MEM_COLORLOCK = 4,
+	TEEOS_SHARED_MEM_DSS = 5,
+	TEEOS_SHARED_MEM_MAILBOX = 6,
+	TEEOS_SHARED_MEM_SKYTONE = 7,
+	TEEOS_SHARED_MEM_NOMAP = 8,
+	TEEOS_SHARED_MEM_MAX,
+} module_types;
+
+int SRE_Get_SharedMem_Info(module_types type, unsigned int *buffer, unsigned int  size);
+
+#endif//_SRE_SHAREDMEM_H

@@ -1,0 +1,120 @@
+################################################################################
+#    Copyright (C) 2014 Hisilicon STB Development Dept
+#    All rights reserved.
+#####
+#    Create by Cai Zhiyong
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#    http://www.apache.org/licenses/LICENSE-2.0
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+################################################################################
+
+SRCS-y  :=
+FORCE-y :=
+TEMPS   :=
+
+sinclude $(TOPDIR)/configs/config
+include $(TOPDIR)/scripts/Makefile.define
+include $(SRCDIR)Makefile
+
+SRCS-y  := $(addprefix $(SRCDIR),$(SRCS-y))
+DOBJS   := $(addsuffix $(BUILDOBJ).o,$(filter-out %.c %.S,$(SRCS-y)))
+AOBJS   := $(subst .S,.o,$(filter %.S,$(SRCS-y)))
+COBJS   := $(subst .c,.o,$(filter %.c,$(SRCS-y)))
+FORCE-y := $(addprefix $(SRCDIR),$(FORCE-y))
+AFORCE  := $(subst .S,.o,$(filter %.S,$(FORCE-y)))
+CFORCE  := $(subst .c,.o,$(filter %.c,$(FORCE-y)))
+OBJS    := $(strip $(DOBJS) $(AOBJS) $(COBJS) $(AFORCE) $(CFORCE))
+DEPS    := $(OBJS:.o=.d)
+TEMPS   += $(OBJS) $(DEPS) $(SRCDIR)$(BUILDOBJ).o $(SRCDIR)$(BUILDOBJ).d
+SRCS-n  := $(addprefix $(SRCDIR),$(SRCS-) $(SRCS-n) $(FORCE-) $(FORCE-n))
+TMPOBJS := $(subst .c,.o,$(filter %.c,$(SRCS-n))) \
+	$(subst .S,.o,$(filter %.S,$(SRCS-n))) \
+	$(addsuffix $(BUILDOBJ).o,$(filter-out %.c %.S,$(SRCS-n)))
+
+SYMFILE := $(SRCDIR).symbol
+
+################################################################################
+ifeq ($(OBJS),)
+$(SRCDIR)$(BUILDOBJ).o: $(SRCDIR)$(BUILDOBJ).a
+	cp $< $@
+
+$(SRCDIR)$(BUILDOBJ).a:
+	@echo "$@ $(@:.a=.d): $(DEFCONFIG) $(SRCDIR)Makefile" > $(@:.a=.d)
+	@touch $(basename $@).c
+	@$(CC) -c $(basename $@).c -o $(@:.a=.o)
+	@$(RM) $(basename $@).c
+else
+$(SRCDIR)$(BUILDOBJ).o: $(OBJS)
+	@echo "$@ $(@:.o=.d): $(DEFCONFIG) $(SRCDIR)Makefile $(OBJS)" > $(@:.o=.d)
+	@for ix in $(DEPS); do ( echo "sinclude $${ix}" >> $(@:.o=.d); ) done
+	$(call show_cmd,LD,$(SRCDIR))
+	$(Q)${LD} -EL -r -o $@ $(OBJS)
+endif
+
+TEMPS += $(BOOT).elf $(BOOT).map $(ZBOOT).elf $(ZBOOT).map $(SYMFILE).*
+$(ZBOOT).elf \
+$(BOOT).elf: $(OBJS) $(SRCDIR)Makefile $(LINKLDS) $(PLATFORMLDS) force
+	$(call show_cmd,LD,$@)
+	$(call show_cmd,SYSMAP,$(basename $@).map)
+	$(Q)(echo ".section .symbol"; \
+		echo ".global __symbol_start; __symbol_start:"; \
+		echo ".global __symbol_end; __symbol_end:" ) > $(SYMFILE).S
+	$(Q)$(CC) -c $(SYMFILE).S -D__ASSEMBLY__ $(ASFLAGS) -o $(SYMFILE).o
+	$(Q)$(LD) -L $(dir $(PLATFORMLDS)) -X -Bstatic -T$(LINKLDS) $(OBJS) \
+		$(SYMFILE).o -Ttext $(TEXT_BASE) \
+		--start-group $(LIBS) --end-group -Map $(basename $@).map -o $@
+	$(Q)$(NM) -nS $@ | $(MKSYM) > $(SYMFILE).S
+	$(Q)$(CC) -c $(SYMFILE).S -D__ASSEMBLY__ $(ASFLAGS) -o $(SYMFILE).o
+	$(Q)$(LD) -L $(dir $(PLATFORMLDS)) -X -Bstatic -T$(LINKLDS) $(OBJS) \
+		$(SYMFILE).o -Ttext $(TEXT_BASE) \
+		--start-group $(LIBS) --end-group -Map $(basename $@).map -o $@
+
+$(DOBJS):
+	$(call show_cmd,ENTRY,$(@D))
+	$(Q)test ! -f "$(@D)/Makefile" || $(MAKE) $(MKFLAGS) SRCDIR="$(@D)/"
+	$(Q)test -f "$(@D)/Makefile" || $(RM) -f $(dir $(@D))$(BUILDOBJ).*
+
+$(COBJS):
+	$(call show_cmd,CC,$(@:.o=.c))
+	$(call make_dep,$(@D),$(basename $(@F)),c)
+	$(Q)$(CC) -c $(@:.o=.c) $(CFLAGS) -o $@
+
+$(AOBJS):
+	$(call show_cmd,CC,$(@:.o=.S))
+	$(call make_dep,$(@D),$(basename $(@F)),S)
+	$(Q)$(CC) -c $(@:.o=.S) -D__ASSEMBLY__ $(ASFLAGS) -o $@
+
+$(CFORCE): force
+	$(call show_cmd,CC,$(@:.o=.c))
+	$(call make_dep,$(@D),$(basename $(@F)),c)
+	$(Q)$(CC) -c $(@:.o=.c) $(CFLAGS) -o $@
+
+$(AFORCE): force
+	$(call show_cmd,CC,$(@:.o=.S))
+	$(call make_dep,$(@D),$(basename $(@F)),S)
+	$(Q)$(CC) -c $(@:.o=.S) -D__ASSEMBLY__ $(ASFLAGS) -o $@
+
+%.o: %.c
+	$(Q)test ! -f "$(@D)/Makefile" || $(MAKE) $(MKFLAGS) SRCDIR="$(@D)/"
+	$(Q)test -f "$(@D)/Makefile" || $(RM) -f $(dir $(@D))$(BUILDOBJ).*
+
+%.o: %.S
+	$(Q)test ! -f "$(@D)/Makefile" || $(MAKE) $(MKFLAGS) SRCDIR="$(@D)/"
+	$(Q)test -f "$(@D)/Makefile" || $(RM) -f $(dir $(@D))$(BUILDOBJ).*
+
+.SUFFIXES:
+%.c %.h:
+	rm -f $(SRCDIR)$(BUILDOBJ).*
+
+sinclude $(SRCDIR)$(BUILDOBJ).d
+sinclude $(DEPS)
+
+force:;

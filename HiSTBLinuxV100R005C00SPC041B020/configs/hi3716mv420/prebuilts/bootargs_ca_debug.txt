@@ -1,0 +1,12 @@
+bootdelay=1
+baudrate=115200
+ethaddr=00:00:00:00:00:00
+ipaddr=192.168.1.10
+netmask=255.255.255.0
+gatewayip=192.168.1.1
+serverip=192.168.1.1
+bootcmd=nand read 0x4000000 0xa00000 0x400000;nand read 0x04500000 0xF00000 0x1E00000;bootm 0x4000000
+bootargs=mem=512M mmz=ddr,0,0,256M console=ttyAMA0,115200 initrd=0x04500000,0x2b00000 root=/dev/ram rootfstype=squashfs mtdparts=hinand:1M(boot),1M(bootargs),8M(loader),35M(system),1M(pqparam),1M(cadata),1M(loaderdb),1M(deviceinfo),2M(db),2M(predb),1M(syscfg),1M(history),1M(baseparam),1M(logo),1M(privatedata)
+stdin=serial
+stdout=serial
+stderr=serial

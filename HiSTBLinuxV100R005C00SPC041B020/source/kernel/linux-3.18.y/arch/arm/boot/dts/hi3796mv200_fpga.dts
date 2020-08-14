@@ -1,0 +1,653 @@
+/dts-v1/;
+
+#include <dt-bindings/clock/hi3796mv200-clock.h>
+
+/ {
+	model = "Hisilicon";
+	compatible = "hi3796mv200-series";
+	#address-cells = <1>;
+	#size-cells = <1>;
+	interrupt-parent = <&gic>;
+
+	aliases {
+		net_phy1 = &higmac0;
+		net_phy_addr1 = &eth_phy0;
+		emmc = &emmc;
+		sd   = &sd;
+		sdio = &sdio;
+		ohci0= &ohci;
+		ehci0= &ehci;
+		xhci0= &xhci0;
+		sata = &sata;
+		sataphy = &sataphy;
+		pcie = &pcie;
+		uart0= &uart0;
+		uart2= &uart2;
+		uart3= &uart3;
+		fmc  = &fmc;
+		udc  = &udc;
+		otg  = &otg;
+		i2c0=&hii2c0;
+		i2c1=&hii2c1;
+		i2c2=&hii2c2;
+		spi0=&spi;
+	};
+
+	cpus {
+		cluster0: cluster0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			/* cooling options */
+			#cooling-cells = <2>; /* min followed by max */
+
+			cpu@0 {
+				compatible = "arm,cortex-a53";
+				device_type = "cpu";
+				reg = <0>;
+			};
+			cpu@1 {
+				compatible = "arm,cortex-a53";
+				device_type = "cpu";
+				reg = <1>;
+			};
+			cpu@2 {
+				compatible = "arm,cortex-a53";
+				device_type = "cpu";
+				reg = <2>;
+			};
+			cpu@3 {
+				compatible = "arm,cortex-a53";
+				device_type = "cpu";
+				reg = <3>;
+			};
+
+		}; /* cluster0 */
+	}; /* cpus */
+
+	gic: interrupt-controller {
+		compatible = "arm,cortex-a9-gic";
+		#interrupt-cells = <3>;
+		#address-cells = <0>;
+		interrupt-controller;
+		reg = <0xf1001000 0x1000>,
+		      <0xf1002000 0x100>;
+	};
+
+	clocks {
+		xtal_clk: xtal_clk {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <24000000>;
+			clock-output-names = "clk24M";
+		};
+
+		clk_54m: clk_54m{
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <54000000>;
+			clock-output-names = "clk54M";
+		};
+
+		clk_75m: clk_75m{
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <75000000>;
+			clock-output-names = "clk75M";
+		};
+	};
+
+	soc {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "simple-bus";
+		device_type = "soc";
+		ranges = <0x0 0x0 0xffffffff>;
+
+		hisi_sensor0: hisi-sensor@0 {
+			compatible = "arm,hisi-thermal";
+			#thermal-sensor-cells = <1>;
+		};
+
+		thermal-zones {
+			soc_thermal {
+				polling-delay = <1000>;
+				polling-delay-passive = <100>;
+				sustainable-power = <2500>;
+
+				thermal-sensors = <&hisi_sensor0 0>;
+
+				trips {
+					threshold: trip-point@0 {
+						temperature = <95000>;
+						hysteresis = <5000>;
+						type = "passive";
+					};
+					target: trip-point@1 {
+						temperature = <105000>;
+						hysteresis = <5000>;
+						type = "passive";
+					};
+					critical: trip-point@2 {
+						temperature = <120000>;
+						hysteresis = <5000>;
+						type = "critical";
+					};
+				};
+
+				cooling-maps {
+					map0 {
+					     trip = <&target>;
+					     cooling-device = <&cluster0 0 4>;
+					     contribution = <1024>;
+					};
+					map1 {
+					    trip = <&target>;
+					    cooling-device = <&gpu 0 5>;
+					    contribution = <1024>;
+					};
+				};
+			};
+		};
+
+		amba {
+			compatible = "arm,amba-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			interrupt-parent = <&gic>;
+			ranges;
+#if 0
+			gpio0: gpio0 {
+				compatible = "arm,pl061", "arm,primecell";
+				arm,primecell-periphid = <0x00041061>;
+				reg = <0xF8B20000 0x1000>;
+				interrupts = <0 108 0x4>;
+				gpio-controller;
+				#gpio-cells = <2>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				clocks = <&xtal_clk>;
+				clock-names = "apb_pclk";
+			};
+
+			gpio1: gpio1 {
+				compatible = "arm,pl061", "arm,primecell";
+				arm,primecell-periphid = <0x00041061>;
+				reg = <0xF8B21000 0x1000>;
+				interrupts = <0 109 4>;
+				gpio-controller;
+				#gpio-cells = <2>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				clocks = <&xtal_clk>;
+				clock-names = "apb_pclk";
+			};
+
+			gpio2: gpio2 {
+				compatible = "arm,pl061", "arm,primecell";
+				arm,primecell-periphid = <0x00041061>;
+				reg = <0xF8B22000 0x1000>;
+				interrupts = <0 110 4>;
+				gpio-controller;
+				#gpio-cells = <2>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				clocks = <&xtal_clk>;
+				clock-names = "apb_pclk";
+			};
+
+			gpio3: gpio3 {
+				compatible = "arm,pl061", "arm,primecell";
+				arm,primecell-periphid = <0x00041061>;
+				reg = <0xF8B23000 0x1000>;
+				interrupts = <0 111 4>;
+				gpio-controller;
+				#gpio-cells = <2>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				clocks = <&xtal_clk>;
+				clock-names = "apb_pclk";
+			};
+
+			gpio4: gpio4 {
+				compatible = "arm,pl061", "arm,primecell";
+				arm,primecell-periphid = <0x00041061>;
+				reg = <0xF8B24000 0x1000>;
+				interrupts = <0 112 4>;
+				gpio-controller;
+				#gpio-cells = <2>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				clocks = <&xtal_clk>;
+				clock-names = "apb_pclk";
+			};
+
+			gpio5: gpio5 {
+				compatible = "arm,pl061", "arm,primecell";
+				arm,primecell-periphid = <0x00041061>;
+				reg = <0xF8004000 0x1000>;
+				interrupts = <0 113 0>;
+				gpio-controller;
+				#gpio-cells = <2>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				clocks = <&xtal_clk>;
+				clock-names = "apb_pclk";
+			};
+
+			gpio6: gpio6 {
+				compatible = "arm,pl061", "arm,primecell";
+				arm,primecell-periphid = <0x00041061>;
+				reg = <0xF8B26000 0x1000>;
+				interrupts = <0 114 4>;
+				gpio-controller;
+				#gpio-cells = <2>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				clocks = <&xtal_clk>;
+				clock-names = "apb_pclk";
+			};
+
+			gpio7: gpio7 {
+				compatible = "arm,pl061", "arm,primecell";
+				arm,primecell-periphid = <0x00041061>;
+				reg = <0xF8B27000 0x1000>;
+				interrupts = <0 115 4>;
+				gpio-controller;
+				#gpio-cells = <2>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				clocks = <&xtal_clk>;
+				clock-names = "apb_pclk";
+			};
+
+			gpio8: gpio8 {
+				compatible = "arm,pl061", "arm,primecell";
+				arm,primecell-periphid = <0x00041061>;
+				reg = <0xF8B28000 0x1000>;
+				interrupts = <0 116 4>;
+				gpio-controller;
+				#gpio-cells = <2>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				clocks = <&xtal_clk>;
+				clock-names = "apb_pclk";
+			};
+
+			gpio9: gpio9 {
+				compatible = "arm,pl061", "arm,primecell";
+				arm,primecell-periphid = <0x00041061>;
+				reg = <0xF8B29000 0x1000>;
+				interrupts = <0 117 4>;
+				gpio-controller;
+				#gpio-cells = <2>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				clocks = <&xtal_clk>;
+				clock-names = "apb_pclk";
+			};
+#endif
+			watchdog0: watchdog@0xf8a2c000 {
+				compatible = "arm,sp805-wdt", "arm,primecell";
+				arm,primecell-periphid = <0x00141805>;
+				reg = <0xf8a2c000 0x1000>;
+				clocks = <&xtal_clk>;
+				clock-names = "apb_pclk";
+			};
+
+			hii2c0:i2c@0xf8b10000 {
+				compatible = "hisilicon,hi-i2c";
+				reg = <0xf8b10000 0x1000>;
+				interrupts = <0 38 4>;
+				clock-frequency = <400000>;
+				clocks = <&hisilicon_clock HII2C_I2C0_CLK>;
+				clock-names = "apb_pclk";
+				#address-cells = <1>;
+				#size-cells = <0>;
+			};
+
+			hii2c1:i2c@0xf8b11000 {
+				compatible = "hisilicon,hi-i2c";
+				reg = <0xf8b11000 0x1000>;
+				interrupts = <0 39 4>;
+				clock-frequency = <400000>;
+				clocks = <&hisilicon_clock HII2C_I2C1_CLK>;
+				clock-names = "apb_pclk";
+				#address-cells = <1>;
+				#size-cells = <0>;
+			};
+
+			hii2c2:i2c@0xf8b12000 {
+				compatible = "hisilicon,hi-i2c";
+				reg = <0xf8b12000 0x1000>;
+				interrupts = <0 40 4>;
+				clock-frequency = <400000>;
+				clocks = <&hisilicon_clock HII2C_I2C2_CLK>;
+				clock-names = "apb_pclk";
+				#address-cells = <1>;
+				#size-cells = <0>;
+			};
+
+			spi:spi@0xF8B1A000 {
+				compatible = "arm,pl022", "arm,primecell";
+				arm,primecell-periphid = <0x00041022>;
+				interrupts = <0 45 4>;
+				reg = <0xF8B1A000 0x1000>;
+				num-cs = <2>;
+				#address-cells = <1>;
+				#size-cells = <0>;
+				clocks = <&hisilicon_clock PERI_CRG28_SSP>;
+				clock-names = "apb_pclk";
+				pl022,rt;
+
+				/* userspace spi interface
+				 * parse by of_register_spi_devices function
+				 */
+				/*spidev@0 {
+				*	compatible = "rohm,dh2228fv";
+				*	reg = <1>;
+				* 	spi-max-frequency = <16000000>;
+				* };
+				*/
+			};
+
+			/*
+			 *spi_gpio: spi-gpio {
+			 *	compatible = "spi-gpio";
+			 *	#address-cells = <1>;
+			 *	#size-cells = <0>;
+			 *	gpio-sck = <&gpio1 1 0>;
+			 *	gpio-miso = <&gpio1 3 0>;
+			 *	gpio-mosi = <&gpio1 2 0>;
+			 *	num-chipselects = <1>;
+			 *	cs-gpios = <&gpio1 4 1>;
+			 *};
+			 */
+
+			ir: ir@f8001000 {
+				compatible = "hisilicon,hix5hd2-ir";
+				reg = <0xf8001000 0x1000>;
+				interrupts = <0 47 4>;
+				clocks = <&hisilicon_clock HIIR_CLK>;
+				linux,rc-map-name = "rc-hisi";
+			};
+
+			arm-timer {
+				compatible = "arm,armv7-timer";
+				interrupts = <1 13 0xf04>,
+				             <1 14 0xf04>;
+				clock-frequency = <24000000>;
+			};
+
+			timer@0xf8a29000 {
+				compatible = "hisilicon,timer";
+				reg = <0xf8a29000 0x20>, /* clocksource */
+				      <0xf8a2a000 0x20>, /* local timer for each cpu */
+				      <0xf8a2a020 0x20>,
+				      <0xf8a2b000 0x20>,
+				      <0xf8a2b020 0x20>;
+				interrupts = <0 26 4>, /* irq of local timer */
+					     <0 59 4>,
+					     <0 27 4>,
+					     <0 60 4>;
+				clocks = <&xtal_clk>;
+				clock-names = "apb_pclk";
+			};
+
+			uart0: uart@0xf8b00000 {
+				compatible = "arm,pl011", "arm,primecell";
+				arm,primecell-periphid = <0x00241011>;
+				reg = <0xf8b00000 0x1000>;
+				interrupts = <0 49 4>;
+				clocks = <&clk_54m>;
+				clock-names = "apb_pclk";
+				status = "okay";
+			};
+
+			uart2: uart@0xf8b02000 {
+				compatible = "arm,pl011", "arm,primecell";
+				arm,primecell-periphid = <0x00241011>;
+				reg = <0xf8b02000 0x1000>;
+				interrupts = <0 51 4>;
+				clocks = <&clk_54m>;
+				clock-names = "apb_pclk";
+				status = "okay";
+			};
+
+			uart3: uart@0xf8b03000 {
+				compatible = "arm,pl011", "arm,primecell";
+				arm,primecell-periphid = <0x00241011>;
+				reg = <0xf8b03000 0x1000>;
+				interrupts = <0 52 4>;
+				clocks = <&clk_54m>;
+				clock-names = "apb_pclk";
+				status = "okay";
+			};
+
+		};
+
+		emmc: himciv200.MMC@0xf9830000 {
+			compatible = "hi3796mv200,himciv200";
+			reg = <0xf9830000 0x1000>,<0xF8A21000 0x40>;
+			interrupts = <0 35 4>;
+
+			clocks = <&hisilicon_clock PERI_CRG40_SDIO1>;
+			clock-names = "clk";
+
+			caps = <0xc0000047>;
+			caps2 = <0x0>;
+			max-frequency = <50000000>;
+			status = "okay";
+		};
+
+		sd:himciv200.SD@0xf9820000 {
+			compatible = "hi3796mv200,himciv200";
+			reg = <0xf9820000 0x1000>,<0xF8A21158 0x40>;
+			interrupts = <0 34 4>;
+
+			clocks = <&hisilicon_clock PERI_CRG39_SDIO0>;
+			clock-names = "clk";
+
+			ldo-addr  = <0xf8a2011c>;
+			ldo-shift = <0>;
+
+			caps = <0x80000007>;
+			max-frequency = <50000000>;
+			status = "okay";
+		};
+
+		sdio:himciv200.SD@0xf9c40000 {
+			compatible = "hi3796mv200,himciv200";
+			reg = <0xf9c40000 0x1000>,<0xF8A210B0 0x40>;
+			interrupts = <0 86 4>;
+
+			clocks = <&hisilicon_clock PERI_CRG163_SDIO2>;
+			clock-names = "clk";
+
+			caps = <0x80000007>;
+			max-frequency = <50000000>;
+			status = "okay";
+		};
+
+		fmc:hifmc100.NAND@0xf9950000 {
+			compatible = "hisilicon.hifmc100";
+			reg = <0xf9950000 0x100>, <0xfe200000 0x2176>;
+			interrupts = <0 54 4>;
+
+			clocks = <&hisilicon_clock PERI_CRG224_FMC>;
+			clock-names = "clk";
+			status = "okay";
+		};
+
+		hisilicon_clock: hisilicon_clock {
+			compatible = "hi3796mv200.clock","hisilicon,clock-reset";
+			reg = <0xF8A22000 0x400>, <0xF8A20000 0x0848>;
+			#clock-cells = <1>;
+			#reset-cells = <2>;
+		};
+		higmac0: ethernet@f9840000 {
+			compatible = "hisilicon,higmac";
+			reg = <0xf9840000 0x1000>,<0xf984300c 0x4>;
+			interrupts = <0 71 4>;
+
+			clocks = <&hisilicon_clock HIGMAC_MAC0_CLK>,
+					<&hisilicon_clock HIGMAC_MAC_IF0_CLK>;
+			clock-names = "higmac_clk",
+					"macif_clk";
+			status = "okay";
+
+			resets = <&hisilicon_clock PERI_CRG51_GSF HIGMAC_PORT0_RST_BIT>,
+					<&hisilicon_clock PERI_CRG51_GSF HIGMAC_MACIF0_RST_BIT>,
+					<&hisilicon_clock PERI_CRG51_GSF HIGMAC_PHY0_RST_BIT>;
+			reset-names = "port_reset",
+					"macif_reset",
+					"phy_reset";
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			mac-address = [00 00 00 00 00 00];
+
+			phy-handle = <&eth_phy0>;
+			phy-mode = "rgmii";
+			phy-gpio-base = <0>;
+			phy-gpio-bit = <0>;
+
+			eth_phy0: ethernet_phy@0 {
+				reg = <2>;
+			};
+		};
+
+		ehci:ehci@0xf9890000 {
+			compatible = "generic-ehci";
+			reg = <0xf9890000 0x10000>;
+			interrupts = <0 66 4>;
+
+			clocks = <&hisilicon_clock PERI_CRG46_USB2CTRL>;
+			clock-names = "clk";
+			status = "disabled";
+		};
+
+		ohci:ohci@0xf9880000 {
+			compatible = "generic-ohci";
+			reg = <0xf9880000 0x10000>;
+			interrupts = <0 67 4>;
+
+			clocks = <&hisilicon_clock PERI_CRG46_USB2CTRL>;
+			clock-names = "clk";
+			status = "disabled";
+		};
+
+		udc:hiudc@0xf98c0000 {
+			compatible = "hiudc";
+			reg = <0xf98c0000 0x40000>;
+			interrupts = <0 68 4>;
+
+			clocks = <&hisilicon_clock PERI_CRG46_USB2CTRL>;
+			clock-names = "clk";
+			status = "disabled";
+		};
+
+		otg:hi3796mv200.hiusbotg {
+			compatible = "hiusbotg";
+			reg = <0xf9880000 0x10000>,<0xf9890000 0x10000>,<0xf8a2012c 0x4>;
+			host_time = <1500 4>;
+			device_time = <1000 4>;
+			status = "disabled";
+		};
+
+		xhci0:xhci@0xf98a0000 {
+			compatible = "generic-xhci";
+			reg = <0xf98a0000 0x10000>;
+			interrupts = <0 69 4>;
+
+			clocks = <&hisilicon_clock PERI_CRG44_USB3CTRL>;
+			clock-names = "clk";
+			status = "disabled";
+		};
+
+		vddgpu: regulator@0xf8a23020 {
+			compatible = "hisilicon,hi3796mv200-volt";
+			reg = <0xf8a23020 0x4>;
+			reg-names = "base-address";
+			regulator-name = "vdd-gpu";
+			regulator-min-microvolt = <650000>;
+			regulator-max-microvolt = <1150000>;
+			regulator-always-on;
+			status = "disabled"; /* only for FPGA */
+		};
+
+		gpu:gpu@0xf9200000 {
+			compatible = "arm,malit720", "arm,mali", "arm,mali-midgard";
+			reg = <0xf9200000 0x4000>;
+			interrupts = <0 142 4>, <0 141 4>, <0 143 4>;
+			interrupt-names = "JOB", "MMU", "GPU";
+
+			#cooling-cells = <2>; /* min followed by max */
+
+			clocks = <&hisilicon_clock PERI_CRG73_GPU_LP>;
+			clock-names = "clk_mali";
+			mali-supply = <&vddgpu>;
+			operating-points = <
+			200000 880000
+			300000 880000
+			400000 880000
+			500000 880000
+			600000 920000
+			675000 980000>;
+
+			cooling-min-state = <0>;
+			cooling-max-state = <5>;
+			status = "disabled"; /* only for FPGA */
+
+		};
+		hiddr_watchpoint: hiddr_watchpoint@0xF8A36000 {
+			compatible = "hisilicon.ddr_watchpoint";
+			reg = <0xF8A36000 0x1000>;
+			interrupts = <0 31 4>;
+		};
+		hiddr_watchzone: hiddr_watchzone@0xF8A35000 {
+			compatible = "hisilicon.ddr_watchzone";
+			reg = <0xF8A35000 0x1000>;
+			interrupts = <0 31 4>;
+		};
+		pcie:pcie@0xF0001000 {
+			compatible = "hisilicon,hisilicon-pcie","snps,dw-pcie";
+			reg = <0xF0001000 0x200>,<0xf0000000 0x1000>;
+			interrupts = <0 131 4>;
+
+			clocks = <&hisilicon_clock PERI_CRG99_PCIECTRL>;
+			clock-names = "clk";
+
+			#address-cells = <3>;
+			#size-cells = <2>;
+			device_type = "pci";
+			ranges=<0x00000800 0 0xf2100000 0xf2100000 0 0x00020000
+				0x81000000 0 0 0xf4000000 0 0x00010000
+				0x82000000 0 0xf3000000 0xf3000000 0 0x01000000>;
+			num-lanes = <1>;
+			status = "disabled";
+		};
+
+		sata:hiahci@0xF9900000 {
+			compatible = "generic-ahci";
+			reg = <0xF9900000 0x1000>;
+			interrupts = <0 70 4>;
+
+			phys = <&hiahci_phy>;
+			phy-names = "sata-phy";
+
+			clocks = <&hisilicon_clock PERI_CRG42_SATA3CTRL>;
+			clock-names = "clk";
+			status = "disabled";
+		};
+
+		sataphy:hiahci_phy: hiahci-phy@0xF9900000 {
+			compatible = "hiahci-phy";
+			reg = <0xF9900000 0x1000>,<0xF8A20000 0x3000>;
+			#phy-cells = <0>;
+			status = "disabled";
+		};
+
+	};
+};

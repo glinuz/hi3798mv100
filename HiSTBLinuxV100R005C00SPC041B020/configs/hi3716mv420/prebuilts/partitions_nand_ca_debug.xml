@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<Partition_Info>
+<Part Sel="1" PartitionName="fastboot" FlashType="nand" FileSystem="none" Start="0" Length="1M" SelectFile="fastboot-burn.bin"/>
+<Part Sel="1" PartitionName="bootargs" FlashType="nand" FileSystem="none" Start="1M" Length="1M" SelectFile="bootargs.bin"/>
+<Part Sel="0" PartitionName="loader" FlashType="nand" FileSystem="none" Start="2M" Length="8M" SelectFile=""/>
+<Part Sel="1" PartitionName="kernel" FlashType="nand" FileSystem="none" Start="10M" Length="5M" SelectFile="hi_kernel.bin"/>
+<Part Sel="1" PartitionName="rootfs" FlashType="nand" FileSystem="squashfs" Start="15M" Length="30M" SelectFile="rootfs.squashfs"/>
+<Part Sel="1" PartitionName="pqparam" FlashType="nand" FileSystem="none" Start="45M" Length="1M" SelectFile="pq_param.bin"/>
+<Part Sel="0" PartitionName="cadata" FlashType="nand" FileSystem="none" Start="46M" Length="1M" SelectFile=""/>
+<Part Sel="0" PartitionName="loaderdb" FlashType="nand" FileSystem="none" Start="47M" Length="1M" SelectFile=""/>
+<Part Sel="0" PartitionName="deviceinfo" FlashType="nand" FileSystem="none" Start="48M" Length="1M" SelectFile=""/>
+<Part Sel="0" PartitionName="db" FlashType="nand" FileSystem="none" Start="49M" Length="2M" SelectFile=""/>
+<Part Sel="0" PartitionName="predb" FlashType="nand" FileSystem="none" Start="51M" Length="2M" SelectFile=""/>
+<Part Sel="0" PartitionName="syscfg" FlashType="nand" FileSystem="none" Start="53M" Length="1M" SelectFile=""/>
+<Part Sel="0" PartitionName="history" FlashType="nand" FileSystem="none" Start="54M" Length="1M" SelectFile=""/>
+<Part Sel="0" PartitionName="baseparam" FlashType="nand" FileSystem="none" Start="55M" Length="1M" SelectFile=""/>
+<Part Sel="0" PartitionName="logo" FlashType="nand" FileSystem="none" Start="56M" Length="1M" SelectFile=""/>
+<Part Sel="0" PartitionName="privatedata" FlashType="nand" FileSystem="none" Start="57M" Length="1M" SelectFile=""/>
+</Partition_Info>

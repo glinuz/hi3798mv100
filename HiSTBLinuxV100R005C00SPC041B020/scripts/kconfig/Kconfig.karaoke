@@ -1,0 +1,8 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+
+config HI_KARAOKE_SUPPORT
+	bool "KARAOKE Support"
+	depends on ANDROID_PRODUCT && (HI3798MV100 || HI3796MV100 || HI3716DV100 || HI3798CV200 || HI3798MV200 || HI3798MV200_A)
+	default y
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

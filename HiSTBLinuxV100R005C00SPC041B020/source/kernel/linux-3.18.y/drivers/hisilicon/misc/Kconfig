@@ -1,0 +1,33 @@
+config MTD_BLOCK_ROMBLOCK
+	tristate "Readonly(romblock) block device access to MTD devices"
+	depends on BLOCK
+	select MTD_BLKDEVS
+	default y
+	help
+	  Same as readonly block driver, but this allow you to mount read-only
+	  file systems from an MTD device, containing bad blocks.
+
+config PART_CHANGE
+	bool "Support change partition by file '/proc/partchange'"
+	default y
+	select BLK_CMDLINE_PARSER
+	select CMDLINE_PARTITION
+	---help---
+	  Support change partition by file '/proc/partchange'
+
+config HI_I2C
+	tristate "Hisilicon high-speed I2C devices"
+	default n
+	depends on I2C
+	help
+	Say Y here to include support for Hisilicon high-speed I2C controller.
+
+	This driver can also be built as a module.  If so, the module
+	will be called hi-i2c.
+
+config PAGEALLOC_LOCK
+	bool "lock page when free page, and unlock page when alloc page"
+	default n
+	select DEBUG_PAGEALLOC
+	help
+	  for page alloc debug.

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+mount -t cgroup none /sys/fs/cgroup
+
+# start bridge
+brctl addbr br0
+ifconfig eth0 up
+brctl addif br0 eth0
+ifconfig eth1 up
+brctl addif br0 eth1
+ifconfig br0 up
+
+lxc-start -n stb -d

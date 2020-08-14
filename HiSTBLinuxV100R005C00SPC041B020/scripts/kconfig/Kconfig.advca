@@ -1,0 +1,128 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menuconfig HI_ADVCA_SUPPORT
+	bool "Advance CA Support"
+	default n
+#--------------------------------
+choice
+	prompt "Advance CA Type"
+	depends on HI_ADVCA_SUPPORT
+	default ADVCA_OTHER
+config  ADVCA_CONAX
+	bool "Conax"
+config  ADVCA_NOVEL
+	bool "Novel"
+config  ADVCA_NAGRA
+	bool "Nagra"
+config  ADVCA_SUMA
+	bool "Suma"
+config  ADVCA_CTI
+	bool "Cti"
+config  ADVCA_VERIMATRIX
+	bool "Verimatrix"
+config  ADVCA_IRDETO
+	bool "Irdeto"
+config  ADVCA_PANACCESS
+	bool "Panaccess"
+config  ADVCA_DCAS
+	bool "Dcas"
+config  ADVCA_OTHER
+	bool "Other"
+endchoice
+
+config  HI_ADVCA_TYPE
+	string
+	depends on HI_ADVCA_SUPPORT
+	default CONAX           if ADVCA_CONAX
+	default NOVEL           if ADVCA_NOVEL
+	default NAGRA           if ADVCA_NAGRA
+	default SUMA            if ADVCA_SUMA
+	default CTI             if ADVCA_CTI
+	default VERIMATRIX      if ADVCA_VERIMATRIX
+	default IRDETO		if ADVCA_IRDETO
+	default PANACCESS	if ADVCA_PANACCESS
+	default DCAS		if ADVCA_DCAS
+	default OTHER           if ADVCA_OTHER
+#--------------------------------
+
+
+menuconfig ADVCA_FUNCTION
+	bool "Advance CA Function"
+	depends on HI_ADVCA_SUPPORT
+	default n
+
+choice
+	prompt "Advca Function"
+	depends on ADVCA_FUNCTION
+
+config  FUNCTION_DEBUG
+	bool "DEBUG"
+	select HI_ADVCA_SANDBOX_SUPPORT if !HI_LOADER_APPLOADER
+config  FUNCTION_RELEASE
+	bool "RELEASE"
+	select HI_ADVCA_SANDBOX_SUPPORT if !HI_LOADER_APPLOADER
+config  FUNCTION_FINAL
+	bool "FINAL"
+	select HI_ADVCA_SANDBOX_SUPPORT if !HI_LOADER_APPLOADER
+
+endchoice
+
+config  HI_ADVCA_FUNCTION
+	string	
+	depends on ADVCA_FUNCTION
+	default DEBUG       if FUNCTION_DEBUG
+	default RELEASE     if FUNCTION_RELEASE
+	default FINAL       if FUNCTION_FINAL
+
+config HI_STATIC_LIB_ONLY
+	bool
+	default y
+	depends on ADVCA_FUNCTION
+
+config HI_ADVCA_VERIFY_ENABLE
+    bool "Advca verify enable"
+    depends on HI_ADVCA_SUPPORT
+    help
+      If you want to enable boot to verify other images (kernel,loader,rootfs and so on), say y.
+
+config HI_ADVCA_VMX_3RD_SIGN
+    bool "Verimatrix Third-Party Sign Solution"
+    depends on (HI_ADVCA_SUPPORT && ADVCA_VERIMATRIX)
+	default y
+    help
+      If you want to enable verimatrix third-party signing solution, say y.
+
+config HI_ADVCA_USE_EXT1_RSA_KEY
+    bool "Verify with ext1_rsa_key"
+    depends on HI_ADVCA_SUPPORT
+    default n
+    help
+      If the boot verify other images (kernel,loader,rootfs and so on) with the ext1_rsa_key which is stored in the key area of signed boot image, say y.
+      If this option is not selected, the boot will verify other images with the ext2_rsa_key in bootcode.
+      Please refer to source/boot/product/driver/advca/common/auth/ca_config.c for ext2_rsa_key.
+
+#--------------------------------
+menuconfig HI_ADVCA_SANDBOX_SUPPORT
+	bool "Support Advance CA Sandbox"
+	depends on HI_ADVCA_SUPPORT
+	default y
+	
+choice
+	prompt "CA Sandbox Type"
+	depends on HI_ADVCA_SANDBOX_SUPPORT
+	default SANDBOX_CHROOT
+config  SANDBOX_CHROOT
+	bool "Chroot"
+	select HI_TOOL_SANDBOX_SUPPORT
+config  SANDBOX_LXC
+	bool "LXC"
+	select HI_LXC_CONTAINER_SUPPORT
+
+endchoice
+
+config  HI_ADVCA_SANDBOX_TYPE
+	string
+	depends on HI_ADVCA_SANDBOX_SUPPORT
+	default CHROOT        if SANDBOX_CHROOT
+	default LXC           if SANDBOX_LXC
+
+#--------------------------------

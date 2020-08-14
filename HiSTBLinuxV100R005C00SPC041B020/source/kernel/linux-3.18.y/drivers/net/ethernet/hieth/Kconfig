@@ -1,0 +1,22 @@
+#
+# hieth family network device configuration
+#
+
+menuconfig HIETH_SWITCH_FABRIC
+	tristate "hieth(switch fabric) family network device support"
+	depends on (ARCH_GODBOX|| ARCH_S40 || ARCH_HI3798MX || ARCH_HI3798MV2X || ARCH_HI3796MV2X)
+	select PHYLIB
+	help
+	  This selects the hieth family network device.
+
+if HIETH_SWITCH_FABRIC
+
+config HIETH_MAX_RX_POOLS
+	int "hieth max rx pool size"
+	default "1024"
+	help
+	  hieth max static rx pool size.
+
+endif # HIETH_SWITCH_FABRIC
+
+#vim: set ts=8 sw=8 tw=78:

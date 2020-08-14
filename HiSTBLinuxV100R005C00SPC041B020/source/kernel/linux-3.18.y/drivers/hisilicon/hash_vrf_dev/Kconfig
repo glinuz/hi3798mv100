@@ -1,0 +1,6 @@
+menuconfig HASH_VRF_DEV
+	bool "Support Hash Verification Block Device"
+	default n
+	help
+	  If say y, Hash Verification Block Device is supported
+

@@ -1,0 +1,23 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+#--------------------------------
+menuconfig HI_BLUETOOTH_SUPPORT
+	bool "Bluetooth Support"
+	depends on LINUX_PRODUCT
+	default n
+	help
+	  ALSA will support too when support Bluetooth.
+
+menu    "BlueTooth Device Type"
+	depends on HI_BLUETOOTH_SUPPORT
+
+config  HI_BLUETOOTH_DEVICE_RTL8723BU
+	bool "Realtek rtl8723bu bluetooth driver"
+config  HI_BLUETOOTH_DEVICE_RTL8761AU
+	bool "Realtek rtl8761au bluetooth driver"
+config  HI_BLUETOOTH_DEVICE_RTL8821AU
+	bool "Realtek rtl8821au bluetooth driver"
+config  HI_BLUETOOTH_DEVICE_RTL8822BU
+	bool "Realtek rtl8822bu bluetooth driver"
+config  HI_BLUETOOTH_DEVICE_MT76X2
+	bool "Mtk mt76x2 bluetooth driver"
+endmenu

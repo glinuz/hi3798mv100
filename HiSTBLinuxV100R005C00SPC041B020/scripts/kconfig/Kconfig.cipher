@@ -1,0 +1,21 @@
+#+++++++++++++++++++++++++++++++++++++
+menu "Cipher Config"
+#+++++++++++++++++++++++++++++++++++++
+
+#config HI_CIPHER_SUPPORT
+#	bool "Cipher Support"
+#	default y
+	
+config HI_CIPHER_MULTICIPHER_SUPPORT
+	bool "Multicipher Support"
+#	depends on HI_CIPHER_SUPPORT
+	default n
+	
+config HI_CIPHER_HASH_SUPPORT
+	bool "Hash Support"
+#	depends on HI_CIPHER_SUPPORT
+	default n
+
+#+++++++++++++++++++++++++++++++++++++
+endmenu
+#+++++++++++++++++++++++++++++++++++++

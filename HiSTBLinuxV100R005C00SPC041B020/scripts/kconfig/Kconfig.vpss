@@ -1,0 +1,8 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "VPSS Config"
+config  HI_VPSS_MAX_BUFFER_NUMB
+	int "Vpss Port OutBuffer Max  Number(6~20)"
+	range 6 20
+	default 10
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

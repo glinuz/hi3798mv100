@@ -1,0 +1,12 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "DEMUX Config"
+
+config HI_DEMUX_POOLBUF_SIZE
+	hex "DEMUX Poolbuf Size"
+	default 0x200000
+	help
+	    Configure section, pes and post channel memory.
+
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+

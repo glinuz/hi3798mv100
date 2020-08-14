@@ -1,0 +1,27 @@
+PROJECT=libsecurec.so
+CFLAG= -I ../include -Wall -m64 -s -DNDEBUG -O2 
+CXXFLAG= $(CFLAG)
+CC=gcc
+GCC=gcc
+ARCH:=$(shell getconf LONG_BIT)
+
+ifeq ($(ARCH), 64)
+    CFLAG += -fPIC
+    CXXFLAG += -fPIC
+endif
+
+SOURCES=$(wildcard *.c)
+OBJECTS=$(patsubst %.c,%.o,$(SOURCES))
+
+$(PROJECT):$(OBJECTS)
+	@mkdir -p ../obj
+	mkdir -p ../lib
+	$(GCC)  -shared -o ../lib/$@ $(patsubst %.o,../obj/%.o,$^) $(CFLAG) 
+	cp ../lib/libsecurec.so /usr/local/lib/libsecurec.so
+	echo "finish $(PROJECT)"
+.c.o:
+	@mkdir -p ../obj
+	$(GCC) -c $< $(CFLAG) -o ../obj/$(patsubst %.c,%.o,$<)
+
+clean:
+	rm -rf *.o ../obj ../lib $(PROJECT)

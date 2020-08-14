@@ -1,0 +1,30 @@
+menuconfig HI_FRONTEND_SUPPORT
+    bool "Frontend Support"
+    depends on !HI3798MV100
+    default y
+    help
+
+config  HI_DVBC_SUPPORT
+    bool "DVB-C Support"
+    depends on HI_FRONTEND_SUPPORT
+    default y
+    help
+
+source "scripts/kconfig/Kconfig.frontend.dvb_c"
+
+config  HI_DVBS_SUPPORT
+    bool "DVB-S/S2 Support"
+    depends on HI_FRONTEND_SUPPORT
+    default n
+    help
+
+source "scripts/kconfig/Kconfig.frontend.dvb_s"
+
+config  HI_DVBT_SUPPORT
+    bool "DVB-T/T2/ISDBT/DTMB Support"
+    depends on HI_FRONTEND_SUPPORT
+    default n
+    help
+
+source "scripts/kconfig/Kconfig.frontend.dvb_t"
+

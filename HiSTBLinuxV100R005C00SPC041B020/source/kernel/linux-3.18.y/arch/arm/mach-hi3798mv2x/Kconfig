@@ -1,0 +1,70 @@
+if ARCH_HI3798MV2X
+menu "HI3798MV2X board feature"
+
+config MACH_HI3798MV2X
+	bool "Support hi3798mv2x platform"
+	select CPU_V7
+	select ARM_GIC
+	select ARM_TIMER_SP804
+	select COMMON_CLK
+	select ARCH_REQUIRE_GPIOLIB
+	select DYNAMIC_DEBUG
+	help
+	  Include support for the hisilion HI3798MV2X platform.
+	  HI3798MV2X support ARM CORTEX-A7 processer,
+	  within a Generic Interrupt Controller.
+	  Support DDR2 and DDR3.
+
+choice
+	prompt "CPU timer source"
+	default HAVE_SP804_LOCAL_TIMER_HI3798MV2X
+
+config HAVE_SP804_LOCAL_TIMER_HI3798MV2X
+	bool "arm local timer from sp804"
+	help
+	  arm local timer from sp804.
+
+config HAVE_ARM_LOCAL_TIMER_HI3798MV2X
+	bool "arm local timer from arm self"
+	help
+	  arm local timer from arm self.
+endchoice
+
+config DEFAULT_UART_BASE_ADDR
+	hex "Default uart controller base address"
+	default "0xF8B00000"
+	help
+	  Default UART controller base address
+
+config DEFAULT_VMALLOC_SIZE
+	int "Default vmalloc size"
+	default 500
+	help
+	  Default vmalloc size in MBytes. Use "vmalloc=size" to change it.
+
+menuconfig SUPPORT_DSP_RUN_MEM
+	bool "Support DSP run memory"
+	default y
+	help
+	  Support DSP run memory
+
+config DSP_RUN_MEM_ADDR
+	hex "DSP run memory address"
+	depends on SUPPORT_DSP_RUN_MEM
+	default "0x2000000"
+	help
+	  The start address of DSP run memory.
+
+config DSP_RUN_MEM_SIZE
+	hex "DSP run memory size"
+	depends on SUPPORT_DSP_RUN_MEM
+	default "0x800000"
+	help
+	  The size of DSP run memory.
+
+config HI3798MV2X_FPGA
+	bool "Enable HI3798MV2X Fpga config"
+	default n if ARCH_HI3798MV2X
+
+endmenu
+endif

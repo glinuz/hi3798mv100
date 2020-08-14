@@ -1,0 +1,54 @@
+################################################################################
+#    Copyright (C) 2014 Hisilicon STB Development Dept
+#    All rights reserved.
+#####
+#    Create by Cai Zhiyong
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#    http://www.apache.org/licenses/LICENSE-2.0
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+################################################################################
+
+SRCS-y  :=
+FORCE-y :=
+TEMPS   :=
+
+sinclude $(TOPDIR)/configs/config
+include $(TOPDIR)/scripts/Makefile.define
+include $(SRCDIR)Makefile
+
+SRCS-y  := $(addprefix $(SRCDIR),$(SRCS-y))
+DOBJS   := $(addsuffix $(BUILDOBJ).o,$(filter-out %.c %.S,$(SRCS-y)))
+AOBJS   := $(subst .S,.o,$(filter %.S,$(SRCS-y)))
+COBJS   := $(subst .c,.o,$(filter %.c,$(SRCS-y)))
+FORCE-y := $(addprefix $(SRCDIR),$(FORCE-y))
+AFORCE  := $(subst .S,.o,$(filter %.S,$(FORCE-y)))
+CFORCE  := $(subst .c,.o,$(filter %.c,$(FORCE-y)))
+OBJS    := $(strip $(DOBJS) $(AOBJS) $(COBJS) $(AFORCE) $(CFORCE))
+DEPS    := $(OBJS:.o=.d)
+TEMPS   += $(OBJS) $(DEPS) $(SRCDIR)$(BUILDOBJ).o $(SRCDIR)$(BUILDOBJ).d
+SRCS-n  := $(addprefix $(SRCDIR),$(SRCS-) $(SRCS-n) $(FORCE-) $(FORCE-n))
+TMPOBJS := $(subst .c,.o,$(filter %.c,$(SRCS-n))) \
+	$(subst .S,.o,$(filter %.S,$(SRCS-n))) \
+	$(addsuffix $(BUILDOBJ).o,$(filter-out %.c %.S,$(SRCS-n)))
+
+SYMFILE := $(SRCDIR).symbol
+
+TEMPS += $(BOOT).elf $(BOOT).map $(ZBOOT).elf $(ZBOOT).map $(SYMFILE).*
+
+.PHONY: clean
+clean: $(addsuffix .clean,$(filter %/$(BUILDOBJ).o,$(OBJS) $(TMPOBJS)))
+	$(Q)$(RM) -f $(TEMPS) $(SRCDIR)*.[od]
+
+%/$(BUILDOBJ).o.clean:
+	$(call show_cmd,CLEAN,$(@D))
+	$(Q)$(MAKE) $(CLFLAGS) SRCDIR="$(@D)/" clean
+
+force:;

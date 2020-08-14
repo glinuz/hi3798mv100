@@ -1,0 +1,49 @@
+menu "S40 board feature"
+
+config MACH_S40
+	bool "Support s40 platform"
+	select CPU_V7
+	select ARM_GIC
+	select ARM_TIMER_SP804
+	select COMMON_CLK
+	select ARCH_REQUIRE_GPIOLIB
+	select DYNAMIC_DEBUG
+	help
+	  Include support for the hisilion S40 platform.
+	  S40 support ARM CORTEX-A9 processer,
+	  within a Generic Interrupt Controller.
+	  Support DDR2 and DDR3.
+
+config DEFAULT_UART_BASE_ADDR
+	hex "Default uart controller base address"
+	default "0xF8B00000"
+	help
+	  Default UART controller base address
+
+config DEFAULT_VMALLOC_SIZE
+	int "Default vmalloc size"
+	default 240
+	help
+	  Default vmalloc size in MBytes. Use "vmalloc=size" to change it.
+
+menuconfig SUPPORT_DSP_RUN_MEM
+	bool "Support DSP run memory"
+	default y
+	help 
+	  Support DSP run memory
+
+config DSP_RUN_MEM_ADDR
+	hex "DSP run memory address"
+	depends on SUPPORT_DSP_RUN_MEM
+	default "0x2000000" 
+	help
+	  The start address of DSP run memory.
+
+config DSP_RUN_MEM_SIZE
+	hex "DSP run memory size"
+	depends on SUPPORT_DSP_RUN_MEM
+	default "0x800000"
+	help
+	  The size of DSP run memory.
+
+endmenu

@@ -1,0 +1,7 @@
+
+config CPU_IDLE_HI3798MV2X
+	bool "CPU Idle Driver for Hisilicon Hi3798mv2x processors"
+	depends on ARCH_HI3798MV2X
+	help
+	  Select this to enable cpuidle on Hi3798mv2x processors.
+

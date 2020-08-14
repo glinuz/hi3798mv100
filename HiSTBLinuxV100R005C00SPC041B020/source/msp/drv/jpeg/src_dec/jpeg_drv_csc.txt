@@ -1,0 +1,610 @@
+/******************************************************************************
+*
+* Copyright (C) 2016 Hisilicon Technologies Co., Ltd.  All rights reserved.
+*
+* This program is confidential and proprietary to Hisilicon  Technologies Co., Ltd. (Hisilicon),
+* and may not be copied, reproduced, modified, disclosed to others, published or used, in
+* whole or in part, without the express prior written permission of Hisilicon.
+*
+******************************************************************************
+File Name        : jpeg_drv_csc.c
+Version          : Initial Draft
+Author           : y00181162
+Created          : 2016/05/09
+Description      :
+Function List    :
+
+
+History          :
+Date                Author                Modification
+2016/05/09          y00181162            Created file
+******************************************************************************/
+#if 0//ndef HI_BUILD_IN_BOOT
+
+
+/***************************** add include here*********************************/
+#include "hi_jpeg_config.h"
+#include "hi_drv_jpeg.h"
+
+/***************************** Macro Definition ********************************/
+
+/***************************** Structure Definition ****************************/
+
+/***************************** Global Variable declaration *********************/
+
+/***************************** API forward declarations ************************/
+static HI_VOID JPEG_DRV_OutYUV420SP(HI_DRV_JPEG_OUTMSG_S *pstOutMsg, HI_U32 Row, HI_U32 Col);
+
+/***************************** API realization *********************************/
+
+
+#if 0
+
+HI_VOID JPEG_DRV_OutYuv400()
+{
+     JPEG_HDEC_HANDLE_S_PTR    pJpegHandle = (JPEG_HDEC_HANDLE_S_PTR)(cinfo->client_data);
+
+     HI_CHAR* retYBuf    = (HI_CHAR*)output_buf;/** deal with warning **/
+     HI_S32 s32RowYNum;
+
+     retYBuf      = pJpegHandle->stOutDesc.stOutSurface.pOutVir[0];
+     s32RowYNum   = (pJpegHandle->stOutDesc.stOutSurface.u32OutStride[0]) * cinfo->output_scanline;
+
+     register JSAMPROW inptr;
+     register HI_S32 col;
+     JDIMENSION num_cols = cinfo->output_width;
+
+     while (--num_rows >= 0)
+     {
+
+           inptr = input_buf[0][input_row];
+           input_row++;
+           for (col = 0; col < (HI_S32)num_cols; col++)
+           {
+             retYBuf[s32RowYNum+col] = GETJSAMPLE(inptr[col]);
+             #ifdef CONFIG_JPEG_OUTPUT_LUPIXSUM
+             if(HI_TRUE == pJpegHandle->bLuPixSum)
+             {
+                pJpegHandle->u64LuPixValue += retYBuf[s32RowYNum+col];
+             }
+             #endif
+           }
+
+     }
+
+
+}
+
+#ifdef CONFIG_JPEG_OUTPUT_YUV420SP
+
+METHODDEF(void)
+yuv444_to_yuv420_sp_convert (j_decompress_ptr cinfo,
+           JSAMPIMAGE input_buf, JDIMENSION input_row,
+           JSAMPARRAY output_buf, int num_rows)
+
+{
+
+
+
+          JPEG_HDEC_HANDLE_S_PTR    pJpegHandle = (JPEG_HDEC_HANDLE_S_PTR)(cinfo->client_data);
+
+          HI_CHAR* retYBuf    = (HI_CHAR*)output_buf;/** deal with warning **/
+          HI_CHAR* retCbCrBuf = pJpegHandle->stOutDesc.stOutSurface.pOutVir[1];
+
+          HI_S32 s32RowYNum,s32RowCbCrNum;
+          HI_S32 s32Cnt = 0;
+
+          retYBuf       = pJpegHandle->stOutDesc.stOutSurface.pOutVir[0];
+          s32RowYNum    = pJpegHandle->stOutDesc.stOutSurface.u32OutStride[0] * cinfo->output_scanline;
+          s32RowCbCrNum = pJpegHandle->stOutDesc.stOutSurface.u32OutStride[1] * (cinfo->output_scanline/2);
+
+          register JSAMPROW inptr0, inptr1, inptr2;
+          register HI_S32 col;
+          JDIMENSION num_cols = cinfo->output_width;
+
+          while (--num_rows >= 0)
+          {
+
+                inptr0 = input_buf[0][input_row];
+                inptr1 = input_buf[1][input_row];
+                inptr2 = input_buf[2][input_row];
+                input_row++;
+
+                for (col = 0; col < (HI_S32)num_cols; col++)
+                {
+                    retYBuf[s32RowYNum+col] = GETJSAMPLE(inptr0[col]);
+                    #ifdef CONFIG_JPEG_OUTPUT_LUPIXSUM
+                    if(HI_TRUE == pJpegHandle->bLuPixSum)
+                    {
+                       pJpegHandle->u64LuPixValue += retYBuf[s32RowYNum+col];
+                    }
+                    #endif
+                }
+
+                if(0 != cinfo->output_scanline % 2)
+                {
+                     continue;
+                }
+                for (col = 0; col < (HI_S32)num_cols; col++)
+                {
+                    if(0 == col % 2)
+                    {
+                        retCbCrBuf[s32RowCbCrNum+2*s32Cnt]   = GETJSAMPLE(inptr2[col]);
+                        retCbCrBuf[s32RowCbCrNum+2*s32Cnt+1] = GETJSAMPLE(inptr1[col]);
+                        s32Cnt++;
+                    }
+                }
+
+        }
+
+}
+#endif
+
+
+METHODDEF(void)
+yuv444_sp_convert (j_decompress_ptr cinfo,
+           JSAMPIMAGE input_buf, JDIMENSION input_row,
+           JSAMPARRAY output_buf, int num_rows)
+{
+
+     JPEG_HDEC_HANDLE_S_PTR    pJpegHandle = (JPEG_HDEC_HANDLE_S_PTR)(cinfo->client_data);
+
+     HI_CHAR* retYBuf    = pJpegHandle->stOutDesc.stOutSurface.pOutVir[0];
+     HI_CHAR* retCbCrBuf = pJpegHandle->stOutDesc.stOutSurface.pOutVir[1];
+     HI_S32 s32RowYNum,s32RowCbCrNum;
+     register JSAMPROW inptr0, inptr1, inptr2;
+     register HI_S32 col;
+     JDIMENSION num_cols = cinfo->output_width;
+
+     UNUSED(output_buf);
+     s32RowYNum    = (pJpegHandle->stOutDesc.stOutSurface.u32OutStride[0]) * (cinfo->output_scanline);
+     s32RowCbCrNum = (pJpegHandle->stOutDesc.stOutSurface.u32OutStride[1]) * (cinfo->output_scanline);
+
+     while (--num_rows >= 0){
+        inptr0 = input_buf[0][input_row];
+        inptr1 = input_buf[1][input_row];
+        inptr2 = input_buf[2][input_row];
+        input_row++;
+
+        for (col = 0; col < (HI_S32)num_cols; col++){
+            retYBuf[s32RowYNum+col] = GETJSAMPLE(inptr0[col]);
+            retCbCrBuf[s32RowCbCrNum + 2*col]     = GETJSAMPLE(inptr2[col]);
+            retCbCrBuf[s32RowCbCrNum + 2*col + 1] = GETJSAMPLE(inptr1[col]);
+        #ifdef CONFIG_JPEG_OUTPUT_LUPIXSUM
+            if (HI_TRUE == pJpegHandle->bLuPixSum){
+               pJpegHandle->u64LuPixValue += retYBuf[s32RowYNum+col];
+            }
+        #endif
+        }
+     }
+     return;
+}
+
+
+METHODDEF(void)
+yuv420_sp_convert (j_decompress_ptr cinfo,
+           JSAMPIMAGE input_buf, JDIMENSION input_row,
+           JSAMPARRAY output_buf, int num_rows)
+{
+
+
+          HI_S32 s32RowYNum,s32RowCbCrNum;
+          HI_S32 s32Tmp = 0;
+
+          JPEG_HDEC_HANDLE_S_PTR    pJpegHandle = (JPEG_HDEC_HANDLE_S_PTR)(cinfo->client_data);
+
+          HI_CHAR* retYBuf    = (HI_CHAR*)output_buf;/** deal with warning **/
+          HI_CHAR* retCbCrBuf = pJpegHandle->stOutDesc.stOutSurface.pOutVir[1];
+
+          retYBuf     = pJpegHandle->stOutDesc.stOutSurface.pOutVir[0];
+          s32RowYNum  = (pJpegHandle->stOutDesc.stOutSurface.u32OutStride[0]) * cinfo->output_scanline;
+
+          register JSAMPROW inptr0, inptr1, inptr2;
+          register HI_S32 col;
+          JDIMENSION num_cols = cinfo->output_width;
+
+          while (--num_rows >= 0)
+          {
+
+                inptr0 = input_buf[0][input_row];
+                inptr1 = input_buf[1][input_row];
+                inptr2 = input_buf[2][input_row];
+                input_row++;
+
+                for (col = 0; col < (HI_S32)num_cols; col++)
+                {
+                    retYBuf[s32RowYNum+col] = GETJSAMPLE(inptr0[col]);
+                    #ifdef CONFIG_JPEG_OUTPUT_LUPIXSUM
+                    if(HI_TRUE == pJpegHandle->bLuPixSum)
+                    {
+                       pJpegHandle->u64LuPixValue += retYBuf[s32RowYNum+col];
+                    }
+                    #endif
+                }
+
+                if(0 !=cinfo->output_scanline%2)
+                {
+                   continue;
+                }
+                /**
+                ** 集中了YUV422 21 和 YUV422 12的特点
+                **/
+                s32RowCbCrNum = (pJpegHandle->stOutDesc.stOutSurface.u32OutStride[1]) * cinfo->output_scanline/2;
+                for (col = 0; col < (HI_S32)num_cols; col++)
+                {
+                    if(0 == s32Tmp)
+                    {
+                         retCbCrBuf[s32RowCbCrNum+col] = GETJSAMPLE(inptr2[col]);
+                         s32Tmp = 1;
+                    }
+                    else
+                    {
+                         retCbCrBuf[s32RowCbCrNum+col] = GETJSAMPLE(inptr1[col]);
+                         s32Tmp = 0;
+                    }
+                }
+
+        }
+
+}
+
+
+#ifdef CONFIG_JPEG_OUTPUT_YUV420SP
+METHODDEF(void)
+yuv422_12_to_yuv420_sp_convert (j_decompress_ptr cinfo,
+           JSAMPIMAGE input_buf, JDIMENSION input_row,
+           JSAMPARRAY output_buf, int num_rows)
+{
+
+
+          HI_S32 s32RowYNum,s32RowCbCrNum;
+          HI_S32 s32Cnt = 0;
+
+          JPEG_HDEC_HANDLE_S_PTR    pJpegHandle = (JPEG_HDEC_HANDLE_S_PTR)(cinfo->client_data);
+
+          HI_CHAR* retYBuf    = (HI_CHAR*)output_buf;/** deal with warning **/
+          HI_CHAR* retCbCrBuf = pJpegHandle->stOutDesc.stOutSurface.pOutVir[1];
+
+          retYBuf     = pJpegHandle->stOutDesc.stOutSurface.pOutVir[0];
+          s32RowYNum  = pJpegHandle->stOutDesc.stOutSurface.u32OutStride[0] * cinfo->output_scanline;
+
+          register JSAMPROW inptr0, inptr1, inptr2;
+          register HI_S32 col;
+          JDIMENSION num_cols = cinfo->output_width;
+
+          while (--num_rows >= 0)
+          {
+
+                inptr0 = input_buf[0][input_row];
+                inptr1 = input_buf[1][input_row];
+                inptr2 = input_buf[2][input_row];
+                input_row++;
+
+                for (col = 0; col < (HI_S32)num_cols; col++)
+                {
+                    retYBuf[s32RowYNum+col] = GETJSAMPLE(inptr0[col]);
+                    #ifdef CONFIG_JPEG_OUTPUT_LUPIXSUM
+                    if(HI_TRUE == pJpegHandle->bLuPixSum)
+                    {
+                       pJpegHandle->u64LuPixValue += retYBuf[s32RowYNum+col];
+                    }
+                    #endif
+                }
+
+                if(0 != cinfo->output_scanline%2)
+                {
+                   continue;
+                }
+
+                s32RowCbCrNum = pJpegHandle->stOutDesc.stOutSurface.u32OutStride[1] * cinfo->output_scanline/2;
+                for (col = 0; col < (HI_S32)num_cols; col++)
+                {
+                    if(0 == col % 2)
+                    {
+                        retCbCrBuf[s32RowCbCrNum+2*s32Cnt]   = GETJSAMPLE(inptr2[col]);
+                        retCbCrBuf[s32RowCbCrNum+2*s32Cnt+1] = GETJSAMPLE(inptr1[col]);
+                        s32Cnt++;
+                    }
+                }
+
+        }
+
+}
+
+
+#endif
+
+METHODDEF(void)
+yuv422_12_sp_convert (j_decompress_ptr cinfo,
+           JSAMPIMAGE input_buf, JDIMENSION input_row,
+           JSAMPARRAY output_buf, int num_rows)
+{
+
+
+          HI_S32 s32RowYNum,s32RowCbCrNum;
+
+          JPEG_HDEC_HANDLE_S_PTR    pJpegHandle = (JPEG_HDEC_HANDLE_S_PTR)(cinfo->client_data);
+
+          HI_CHAR* retYBuf    = (HI_CHAR*)output_buf;/** deal with warning **/
+          HI_CHAR* retCbCrBuf = pJpegHandle->stOutDesc.stOutSurface.pOutVir[1];
+
+          retYBuf     = pJpegHandle->stOutDesc.stOutSurface.pOutVir[0];
+          s32RowYNum  = (pJpegHandle->stOutDesc.stOutSurface.u32OutStride[0]) * cinfo->output_scanline;
+
+          register JSAMPROW inptr0, inptr1, inptr2;
+          register HI_S32 col;
+          JDIMENSION num_cols = cinfo->output_width;
+
+
+          while (--num_rows >= 0)
+          {
+
+                inptr0 = input_buf[0][input_row];
+                inptr1 = input_buf[1][input_row];
+                inptr2 = input_buf[2][input_row];
+                input_row++;
+
+                for (col = 0; col < (HI_S32)num_cols; col++)
+                {
+                    retYBuf[s32RowYNum+col] = GETJSAMPLE(inptr0[col]);
+                    #ifdef CONFIG_JPEG_OUTPUT_LUPIXSUM
+                    if(HI_TRUE == pJpegHandle->bLuPixSum)
+                    {
+                       pJpegHandle->u64LuPixValue += retYBuf[s32RowYNum+col];
+                    }
+                    #endif
+                }
+
+                if(0 != cinfo->output_scanline%2)
+                {
+                    continue;
+                }
+
+                /**
+                 ** 高度是Y的一半
+                 ** 取一行丢一行
+                 **/
+                s32RowCbCrNum = (pJpegHandle->stOutDesc.stOutSurface.u32OutStride[1]) * cinfo->output_scanline/2;
+                for (col = 0; col < (HI_S32)num_cols; col++)
+                {
+                    retCbCrBuf[s32RowCbCrNum+2*col]   = GETJSAMPLE(inptr2[col]);
+                    retCbCrBuf[s32RowCbCrNum+2*col+1] = GETJSAMPLE(inptr1[col]);
+                }
+
+        }
+
+}
+
+#ifdef CONFIG_JPEG_OUTPUT_YUV420SP
+METHODDEF(void)
+yuv422_21_to_yuv420_sp_convert (j_decompress_ptr cinfo,
+           JSAMPIMAGE input_buf, JDIMENSION input_row,
+           JSAMPARRAY output_buf, int num_rows)
+
+{
+
+
+          HI_S32 s32RowYNum,s32RowCbCrNum;
+          HI_S32 s32Tmp = 0;
+
+          JPEG_HDEC_HANDLE_S_PTR    pJpegHandle = (JPEG_HDEC_HANDLE_S_PTR)(cinfo->client_data);
+
+          HI_CHAR* retYBuf    = (HI_CHAR*)output_buf;/** deal with warning **/
+          HI_CHAR* retCbCrBuf = pJpegHandle->stOutDesc.stOutSurface.pOutVir[1];
+
+          retYBuf       = pJpegHandle->stOutDesc.stOutSurface.pOutVir[0];
+          s32RowYNum    = pJpegHandle->stOutDesc.stOutSurface.u32OutStride[0] * cinfo->output_scanline;
+          s32RowCbCrNum = pJpegHandle->stOutDesc.stOutSurface.u32OutStride[1] * (cinfo->output_scanline/2);
+
+          register JSAMPROW inptr0, inptr1, inptr2;
+          register HI_S32 col;
+          JDIMENSION num_cols = cinfo->output_width;
+
+          while (--num_rows >= 0)
+          {
+
+                inptr0 = input_buf[0][input_row];
+                inptr1 = input_buf[1][input_row];
+                inptr2 = input_buf[2][input_row];
+                input_row++;
+
+                for (col = 0; col < (HI_S32)num_cols; col++)
+                {
+                    retYBuf[s32RowYNum+col] = GETJSAMPLE(inptr0[col]);
+                    #ifdef CONFIG_JPEG_OUTPUT_LUPIXSUM
+                    if(HI_TRUE == pJpegHandle->bLuPixSum)
+                    {
+                       pJpegHandle->u64LuPixValue += retYBuf[s32RowYNum+col];
+                    }
+                    #endif
+                }
+                if(0 != cinfo->output_scanline%2)
+                {
+                   continue;
+                }
+
+                for (col = 0; col < (HI_S32)num_cols; col++)
+                {
+                    if(0==s32Tmp)
+                    {/**
+                      ** 宽度是Y的一半
+                      ** UV交替着取
+                      **/
+                       retCbCrBuf[s32RowCbCrNum+col] = GETJSAMPLE(inptr2[col]);
+                       s32Tmp = 1;
+                    }
+                    else
+                    {
+                       retCbCrBuf[s32RowCbCrNum+col]  = GETJSAMPLE(inptr1[col]);
+                       s32Tmp = 0;
+                    }
+
+                }
+
+        }
+
+
+}
+
+
+#endif
+
+METHODDEF(void)
+yuv422_21_sp_convert (j_decompress_ptr cinfo,
+           JSAMPIMAGE input_buf, JDIMENSION input_row,
+           JSAMPARRAY output_buf, int num_rows)
+{
+
+
+          HI_S32 s32RowYNum,s32RowCbCrNum;
+          HI_S32 s32Tmp = 0;
+
+          JPEG_HDEC_HANDLE_S_PTR    pJpegHandle = (JPEG_HDEC_HANDLE_S_PTR)(cinfo->client_data);
+
+          HI_CHAR* retYBuf    = (HI_CHAR*)output_buf;/** deal with warning **/
+          HI_CHAR* retCbCrBuf = pJpegHandle->stOutDesc.stOutSurface.pOutVir[1];
+
+          retYBuf       = pJpegHandle->stOutDesc.stOutSurface.pOutVir[0];
+          s32RowYNum    = (pJpegHandle->stOutDesc.stOutSurface.u32OutStride[0]) * cinfo->output_scanline;
+          s32RowCbCrNum = (pJpegHandle->stOutDesc.stOutSurface.u32OutStride[1]) * cinfo->output_scanline;
+
+          register JSAMPROW inptr0, inptr1, inptr2;
+          register HI_S32 col;
+          JDIMENSION num_cols = cinfo->output_width;
+
+
+          while (--num_rows >= 0)
+          {
+
+                inptr0 = input_buf[0][input_row];
+                inptr1 = input_buf[1][input_row];
+                inptr2 = input_buf[2][input_row];
+                input_row++;
+
+                for (col = 0; col < (HI_S32)num_cols; col++)
+                {
+                    retYBuf[s32RowYNum+col] = GETJSAMPLE(inptr0[col]);
+                    #ifdef CONFIG_JPEG_OUTPUT_LUPIXSUM
+                    if(HI_TRUE == pJpegHandle->bLuPixSum)
+                    {
+                       pJpegHandle->u64LuPixValue += retYBuf[s32RowYNum+col];
+                    }
+                    #endif
+                    if(0==s32Tmp)
+                    {/**
+                      ** 宽度是Y的一半
+                      ** UV交替着取
+                      **/
+                       retCbCrBuf[s32RowCbCrNum+col] = GETJSAMPLE(inptr2[col]);
+                       s32Tmp = 1;
+                    }
+                    else
+                    {
+                       retCbCrBuf[s32RowCbCrNum+col]  = GETJSAMPLE(inptr1[col]);
+                       s32Tmp = 0;
+                    }
+
+                }
+
+        }
+
+
+}
+#endif
+
+HI_S32 JPEG_DRV_ColorConvert(HI_DRV_JPEG_OUTMSG_S *pstOutMsg, HI_U32 Row, HI_U32 Col)
+{
+     switch(pstOutMsg->enOutFmt)
+     {
+        case JPG_FMT_YUV400:
+           break;
+        case JPG_FMT_YUV420:
+           JPEG_DRV_OutYUV420SP(pstOutMsg,Row, Col);
+           break;
+        case JPG_FMT_YUV422_21:
+           break;
+        case JPG_FMT_YUV422_12:
+           break;
+        case JPG_FMT_YUV444:
+           break;
+        default:
+           break;
+     }
+     return HI_SUCCESS;
+}
+
+extern int SampRate_Y_H;
+extern int SampRate_Y_V;
+extern unsigned int ImgWidth;
+extern unsigned int ImgHeight;
+extern int Y[256];
+extern int U[256];
+extern int V[256];
+extern int V_YtoU;
+extern int V_YtoV;
+extern int H_YtoU;
+extern int H_YtoV;
+
+
+static HI_VOID JPEG_DRV_OutYUV420SP(HI_DRV_JPEG_OUTMSG_S *pstOutMsg, HI_U32 Row, HI_U32 Col)
+{
+     int i,j;
+     int yy,uu,vv;
+     int TempSamp1,TempSamp2;
+
+     int *pY;
+     int *pU;
+     int *pV;
+
+     HI_U32 Scanlines;
+     HI_U32 RowYNum;
+     HI_U32 RowCbCrNum;
+     HI_U32 Tmp = 0;
+     HI_CHAR* retYBuf    = (HI_CHAR*)(unsigned long)pstOutMsg->u32OutVir[0];
+     HI_CHAR* retCbCrBuf = (HI_CHAR*)(unsigned long)pstOutMsg->u32OutVir[1];
+
+     TempSamp1 = SampRate_Y_V << 3;
+     TempSamp2 = SampRate_Y_H << 3;
+
+     for (i = 0;i < TempSamp1;i++){
+         Scanlines = Row + i;
+         if (Scanlines < ImgHeight){
+
+            RowYNum    = pstOutMsg->u32OutStride[0] * Scanlines;
+            RowCbCrNum = pstOutMsg->u32OutStride[1] * Scanlines / 2;
+
+            pY = Y + i*TempSamp2;
+            pU = U + (i / V_YtoU)*TempSamp2;
+            pV = V + (i / V_YtoV)*TempSamp2;
+
+            for(j = 0;j < TempSamp2;j++){
+
+                if((Col + j) < ImgWidth){
+
+                   yy = *pY++;
+                   uu = pU[ j/H_YtoU ];
+
+                   vv = pV[ j/H_YtoV];
+
+                   retYBuf[RowYNum + Col] = yy;
+
+                   if (0 == Tmp){
+                      retCbCrBuf[RowCbCrNum + Col] = uu;
+                      Tmp = 1;
+                    }else{
+                      retCbCrBuf[RowCbCrNum + Col] = vv;
+                      Tmp = 0;
+                    }
+
+                }else{
+                   break;
+                }
+             }
+         }else{
+            break;
+         }
+     }
+
+     return;
+}
+#endif

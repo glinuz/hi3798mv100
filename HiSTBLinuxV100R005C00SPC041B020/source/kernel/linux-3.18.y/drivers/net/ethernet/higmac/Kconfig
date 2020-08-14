@@ -1,0 +1,36 @@
+#
+# higmac family network device configuration
+#
+
+menuconfig HIETH_GMAC
+	tristate "hieth gmac family network device support"
+	depends on (ARCH_S40 || ARCH_HIFONE || ARCH_HI3798CV2X || ARCH_HI3798MV2X || ARCH_HI3796MV2X)
+	select PHYLIB
+	select RESET_CONTROLLER
+	help
+	  This selects the hieth gmac family network device.
+	  The gigabit switch fabric (GSF) receives and transmits data over Ethernet
+	  ports at 10/100/1000 Mbit/s in full-duplex or half-duplex mode.
+	  The Ethernet port exchanges data with the CPU port, and supports
+	  the energy efficient Ethernet (EEE) and wake on LAN (WoL) functions.
+
+if HIETH_GMAC
+
+config HIGMAC_DESC_4WORD
+	bool "higmac descriptor size is 4 words"
+	default n
+	help
+	  This define the size of higmac descriptor structure.
+	  In the newest version, descriptor size is 4 words.
+	  But in some old version, the size is 8 words.
+	  The default value is false.
+
+config HIGMAC_RXCSUM
+	bool "higmac Receive checksumming offload supported"
+	default n
+	help
+	  This indicate MAC support Receive checksumming offload.
+	  Support IPv4 and IPv6, tcp and udp.
+	  The default value is disabled.
+	  If old version MAC does not support, disable this option please.
+endif # HIETH_GMAC

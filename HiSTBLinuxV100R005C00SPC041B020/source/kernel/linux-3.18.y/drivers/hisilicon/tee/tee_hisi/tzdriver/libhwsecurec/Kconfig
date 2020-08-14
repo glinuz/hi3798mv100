@@ -1,0 +1,9 @@
+#
+# secure function configuration
+#
+
+config TEE_LIBHWSECUREC
+	bool "Huawei secure c function library"
+	default n
+	help
+		this is a secure f function for kernel

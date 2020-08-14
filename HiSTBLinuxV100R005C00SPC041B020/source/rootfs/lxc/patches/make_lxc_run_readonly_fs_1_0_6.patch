@@ -1,0 +1,38 @@
+lxc does not support running on the system in a read only file system at default.
+here describe how to support it :
+1/.hold
+lxc will create .hold file at /usr/lib/lxc/rootfs which will fail for read only fs.
+so we change default path to /tmp.
+
+2/pivotdir
+lxc will create lxc_putold directory and pivot oldrootfs in it at /usr/lib/lxc/rootfs which will fail for read only fs.
+a) providing independent /opt/stb/fstab replace lxc.mount.entry items in lxc config file.
+        lxc.mount = $lxc_config_dir/fstab
+b) adding new config item in lxc config file
+        lxc.pivotdir = /tmp/lxc_putold
+   /tmp mounted as tmpfs accroding to $lxc_config_dir/fstab, such as:
+        tmp             /home/stb/tmp            tmpfs   nosuid,noexec,nodev,mode=1777
+diff -Nur lxc-1.0.6/src/lxc/conf.c lxc-1.0.6.new/src/lxc/conf.c
+--- lxc-1.0.6/src/lxc/conf.c	2014-09-25 04:00:20.000000000 +0800
++++ lxc-1.0.6.new/src/lxc/conf.c	2015-07-13 14:40:59.420557446 +0800
+@@ -680,7 +680,7 @@
+ 	if (!S_ISDIR(s.st_mode))
+ 		return -2;
+ 
+-	ret = snprintf(absrootfspin, MAXPATHLEN, "%s/lxc.hold", absrootfs);
++	ret = snprintf(absrootfspin, MAXPATHLEN, "/tmp/lxc.hold");
+ 	if (ret >= MAXPATHLEN)
+ 		return -1;
+ 
+@@ -1093,7 +1093,10 @@
+ 	lxc_list_init(&mountlist);
+ 
+ 	/* oldrootfs is on the top tree directory now */
+-	rc = snprintf(path, sizeof(path), "/%s", oldrootfs);
++	if(strstr(oldrootfs, "/"))
++		rc = snprintf(path, sizeof(path), "%s", oldrootfs);
++	else
++		rc = snprintf(path, sizeof(path), "/%s", oldrootfs);
+ 	if (rc >= sizeof(path)) {
+ 		ERROR("rootfs name too long");
+ 		return -1;

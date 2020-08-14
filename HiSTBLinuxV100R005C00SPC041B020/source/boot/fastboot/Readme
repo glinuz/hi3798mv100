@@ -1,0 +1,140 @@
+                                  Guide
+================================================================================
+How To Compile uboot:
+
+1. select a reg file
+        cd lowlevel_reg_info/
+        cp hi3716cdmoverb_reg_info.reg ../.reg
+    The file "hi3716cdmoverb_reg_info.reg" is the reg file for board hi3716c,
+    you should select a reg file according to your dema board.
+
+2. compile uboot
+        make ARCH=arm CROSS_COMPILE=arm-xxx-linux- godbox -j 128
+    The "fastboot-burn.bin" is the last image file to be downloaded to board.
+
+3. compile mini-boot
+        make xxxx mini-boot.bin
+        make xxxx mini-boot.clean
+    you are compile mini-boot after compile fastboot-burn.bin
+    the mini-boot use lzma to compress fastboot-burn.bin.
+================================================================================
+About Compile option:
+
+1. Compile uboot with option
+        make ARCH=arm CROSS_COMPILE=arm-xxx-linux- godbox [OPTION=VALUE]
+    Example:
+        make ARCH=arm CROSS_COMPILE=arm-xxx-linux- godbox \
+            HISFV_PHY_U=1 HISFV_PHY_D=3
+
+2. compile options:
+
+    HISFV_PHY_U
+        Up port eth phy id
+        Example:
+            make xxxx HISFV_PHY_U=1
+
+    HISFV_PHY_D
+        Up port eth phy id
+        Example:
+            make xxxx HISFV_PHY_D=3
+
+    CONFIG_SUPPORT_CA
+        Support advance ca, no define means NOT support advance ca.
+        The ca define as follow, left define used in source, right define
+        used in Makefile
+            CONFIG_SUPPORT_CA_NAGRA    "NAGRA"
+            CONFIG_SUPPORT_CA_CONAX    "CONAX"
+            CONFIG_SUPPORT_CA_NOVEL    "NOVEL"
+            CONFIG_SUPPORT_CA_SUMA     "SUMA"
+            CONFIG_SUPPORT_CA_CTI      "CTI"
+            CONFIG_SUPPORT_CA_OTHER    "OTHER"
+
+        Make parameter as follow:
+            make xxxx CONFIG_SUPPORT_CA="NAGRA"    // used nagra ca
+            make xxxx CONFIG_SUPPORT_CA="OTHER"    // used other ca
+            make xxxx                              // NOT support ca
+            make xxxx CONFIG_SUPPORT_CA=""         // NOT support ca
+
+        In source code:
+            #if defined(CONFIG_SUPPORT_CA_NAGRA)
+            // Do nagra ca code
+            #elif defined(CONFIG_SUPPORT_CA_OTHER)
+            // Do other ca code
+            #endif
+
+            #ifdef CONFIG_SUPPORT_CA
+            // Do support ca code
+            #else
+            // Do NOT support ca code
+            #endif
+
+    CONFIG_SUPPORT_CA_RELEASE
+        support release in ca config
+
+    CONFIG_SUPPORT_CA_DEBUG
+        support debug in ca config
+
+    CONFIG_SDKVERSION
+        fastboot support a sdk version, the version can pass to kernel.
+            make xxxx CONFIG_SDKVERSION="0.1.0.0"
+
+    CONFIG_WITH_PRODUCT
+        Compile without product directory.
+            make xxxx CONFIG_WITH_PRODUCT=""
+        Compile with product directory.
+            make xxxx CONFIG_WITH_PRODUCT="y"
+
+    CONFIG_DDR_TRAINING
+        Enable ddr training 
+
+    CONFIG_FORCE_ENV_IN_NAND
+    CONFIG_FORCE_ENV_IN_SPI
+    CONFIG_FORCE_ENV_IN_EMMC
+        If not defined, environment value will save in startup media;
+        if define CONFIG_FORCE_ENV_IN_NAND/CONFIG_FORCE_ENV_IN_SPI
+        /CONFIG_FORCE_ENV_IN_EMMC, environment will force save in NAND/SPIFlash/eMMC.
+
+    CONFIG_SHOW_RESERVE_MEM_LAYOUT
+        Show reserve memory layout
+
+    CONFIG_MERGE_IMAGE
+        this image will merge to fastboot-burn.bin, and use command "run" to run it.
+            make xxxx CONFIG_MERGE_IMAGE=merge.img
+================================================================================
+Configure options
+
+    define or undefine this config file "include/configs/godbox.h"
+
+CONFIG_CMD_USB
+    Support usb ohci driver.
+
+CONFIG_CMD_FAT
+    Support vfat filesystem, this config should include CONFIG_CMD_USB first.
+    some operation command as follow:
+        usb start
+        fatls usb 0
+        fatload usb 0 0x82000000 kernel.img
+
+================================================================================
+u-boot debug command
+    the follow command is used in debug.
+
+        setenv phyaddrup   1  // set ethernet up port phy address 1
+        setenv phyaddrdown 3  // set ethernet down port phy address 3
+
+    Set ethernet phy addr, kernel and u-boot will use the phy addr.
+    If not set the value, u-boot will use marco "HISFV_PHY_U" and
+    "HISFV_PHY_D" as default value, and pass it to kernel.
+
+        setenv ethact down  // tftp file use ethernet down port 
+        setenv ethact up    // tftp file use ethernet up port
+
+    Set u-boot ethernet active port. this command only affect u-boot.
+    It will designate the ethernet port which we use transmit data by tftp.
+    If not set the value, u-boot will loop check which port is active, and
+    use the first active port. even if the port have not connect to a
+    tftp-server.
+
+       setenv unddrtr y // forbid boot ddr training.
+
+    Default config ddr training is enableed, 

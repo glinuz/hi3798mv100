@@ -1,0 +1,12 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "TSO Config"
+config HI_TSO_NUMBER
+	int "TSO Port Number"
+	default 2
+	range 0 2
+	help
+	  Configure the number of TSO port,range (0 ~ 2).	  	  
+source "scripts/kconfig/Kconfig.board.demux.tso0" 
+source "scripts/kconfig/Kconfig.board.demux.tso1"   
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

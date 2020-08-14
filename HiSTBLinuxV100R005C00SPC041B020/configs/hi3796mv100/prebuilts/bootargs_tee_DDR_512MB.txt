@@ -1,0 +1,16 @@
+baudrate=115200
+ethaddr=00:00:00:00:00:00
+ipaddr=192.168.1.10
+netmask=255.255.255.0
+gatewayip=192.168.1.1
+serverip=192.168.1.1
+bootcmd=nand read 0x1D700000 0xE00000 0x800000;bootm 0x1D700000;nand read 0x1FFFFC0 0x1600000 0x800000;bootm 0x1FFFFC0
+bootargs_512M=mem=464M mmz=ddr,0,0,150M vmalloc=500M
+bootargs_768M=mem=768M mmz=ddr,0,0,400M vmalloc=500M
+bootargs_1G=mem=688M mmz=ddr,0,0,400M vmalloc=500M
+bootargs_2G=mem=1712M mmz=ddr,0,0,800M vmalloc=500M
+bootargs=console=ttyAMA0,115200 root=/dev/mtdblock6 rootfstype=yaffs rootwait mtdparts=hinand:2M(boot),4M(baseparam),4M(pqparam),4M(logo),8M(trustedcore),8M(kernel),206M(rootfs),20M(fastplay)
+bootdelay=0
+stdin=serial
+stdout=serial
+stderr=serial

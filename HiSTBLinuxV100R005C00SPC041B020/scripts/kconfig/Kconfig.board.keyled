@@ -1,0 +1,42 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "Keyled Config"
+#--------------------------------
+choice
+        prompt "Keyled Device Used"
+        default HI_KEYLED_CT1642_SELECT
+config  HI_KEYLED_74HC164_SELECT
+        bool "74HC164 Keyled Select"
+        depends on HI_KEYLED_74HC164_SUPPORT
+config  HI_KEYLED_GPIOKEY_SELECT
+        bool "Gpio Key Select"
+        depends on HI_KEYLED_GPIOKEY_SUPPORT
+config  HI_KEYLED_CT1642_SELECT
+        bool "Ct1642 Keyled Select"
+        depends on HI_KEYLED_CT1642_SUPPORT
+config  HI_KEYLED_PT6961_SELECT
+        bool "Pt6961 Keyled Select"
+        depends on HI_KEYLED_PT6961_SUPPORT
+config  HI_KEYLED_PT6964_SELECT
+        bool "Pt6964 Keyled Select"
+        depends on HI_KEYLED_PT6964_SUPPORT
+config  HI_KEYLED_FD650_SELECT
+        bool "Fd650 Keyled Select"
+        depends on HI_KEYLED_FD650_SUPPORT
+endchoice
+
+config  HI_GPIO_LIGHT_SUPPORT
+        bool "Gpio Light Support"
+        default n
+config  HI_POSITIVE_GPIO_LIGHT_NUMBER
+        depends on HI_GPIO_LIGHT_SUPPORT
+        hex "Positive Gpio Number"
+        default 0x2f
+config  HI_NEGATIVE_GPIO_LIGHT_NUMBER
+        depends on HI_GPIO_LIGHT_SUPPORT
+        hex "Negative Gpio Number"
+        default 0x2f
+config  HI_POSITIVE_GPIO_LIGHT_NUMBER_QFP
+        depends on HI_GPIO_LIGHT_SUPPORT && HI3798MV100
+        hex "Positive Gpio Number For QFP"
+        default 0x2a
+endmenu

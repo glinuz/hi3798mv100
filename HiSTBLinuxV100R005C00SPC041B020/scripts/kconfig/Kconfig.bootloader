@@ -1,0 +1,75 @@
+menuconfig HI_LOADER_BOOTLOADER
+	bool "BootLoader Config"
+	depends on HI_BOOTLOADER_SUPPORT
+	default y
+
+#------------------------------------------------
+config  HI_BOOTLOADER_MODE_USB
+	bool "USB Upgrade Support"
+	depends on HI_LOADER_BOOTLOADER
+	default y
+	select HI_BOOT_USB_SUPPORT
+
+#------------------------------------------------
+choice
+        prompt "Protocol Type"
+        default HI_BOOTLOADER_USB_PROTOCOL_HISI_FILE
+        depends on HI_BOOTLOADER_MODE_USB
+
+config  HI_BOOTLOADER_USB_PROTOCOL_HISI_FILE
+        bool "Hisi File Protocol"
+endchoice
+
+#------------------------------------------------
+config  HI_BOOTLOADER_MODE_OTA
+	bool "OTA Upgrade Support"
+	depends on HI_LOADER_BOOTLOADER
+	default n
+	select HI_BUILD_WITH_FRONTEND
+	select HI_BUILD_WITH_DEMUX
+
+#------------------------------------------------
+choice
+	prompt "Tuner Type"
+	default HI_BOOTLOADER_TUNER_CAB
+	depends on HI_BOOTLOADER_MODE_OTA
+
+config  HI_BOOTLOADER_TUNER_CAB
+	bool "Cable"
+
+config  HI_BOOTLOADER_TUNER_SAT
+	bool "Satellite"
+
+config  HI_BOOTLOADER_TUNER_DVB_T
+    bool "Terrestrial DVB_T"
+
+config  HI_BOOTLOADER_TUNER_DVB_T2
+    bool "Terrestrial DVB_T2"
+endchoice
+
+#------------------------------------------------
+config HI_BOOTLOADER_TUNER_INDEX
+    int "Tuner Port Index (0,3)"
+    range 0 3
+    default 0
+    depends on HI_BOOTLOADER_MODE_OTA
+    ---help---
+        This option controls tuner port index, range from 0 to 3.
+          0-the cable tuner port index
+          1-the cable tuner port index
+          2-the cable tuner port index
+          3-the cable tuner port index
+          Default 0.
+        NOTICE: This value control the tuner port index, the default value always 0(cable).
+#------------------------------------------------
+choice
+	prompt "Protocol Type"
+	default HI_BOOTLOADER_PROTOCOL_HISI_OTA
+	depends on HI_BOOTLOADER_MODE_OTA
+
+config  HI_BOOTLOADER_PROTOCOL_SSU_OTA
+	bool "SSU Protocol"
+
+config  HI_BOOTLOADER_PROTOCOL_HISI_OTA
+	bool "Hisi OTA Protocol"
+endchoice

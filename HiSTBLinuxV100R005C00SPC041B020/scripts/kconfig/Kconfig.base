@@ -1,0 +1,200 @@
+###########################################################
+choice
+    prompt "Product Type"
+    default LINUX_PRODUCT
+
+config  LINUX_PRODUCT
+    bool "linux"
+config  ANDROID_PRODUCT
+    bool "android"
+endchoice
+
+config  PRODUCT_TYPE
+    string
+    default linux            if LINUX_PRODUCT
+    default android          if ANDROID_PRODUCT
+
+choice
+    prompt "Android Type"
+    default ANDROID_AOSP
+    depends on ANDROID_PRODUCT
+
+config  ANDROID_AOSP
+    bool "AOSP"
+config  ANDROID_TVOS
+    bool "TVOS"
+endchoice
+
+choice
+    prompt "Mode"
+    default HI_USER_MODE
+
+config  HI_USER_MODE
+    bool "user"
+
+config  HI_ENG_MODE
+    bool "engineer"
+endchoice
+
+###########################################################
+choice
+    prompt "Chip Type"
+    default HI3798CV200
+
+config  HI3716MV410
+    bool "hi3716mv410"
+config  HI3716MV420
+    bool "hi3716mv420"
+config  HI3798MV100
+    bool "hi3798mv100"
+config  HI3798MV200
+    bool "hi3798mv200"
+config  HI3798MV200_A
+    bool "hi3798mv200_a"
+config  HI3796MV100
+    bool "hi3796mv100"
+config  HI3796MV200
+    bool "hi3796mv200"
+config  HI3716DV100
+    bool "hi3716dv100"
+config  HI3798CV200
+    bool "hi3798cv200"
+endchoice
+
+config  HI_CHIP_TYPE
+    string
+    default hi3716mv410     if HI3716MV410
+    default hi3716mv420     if HI3716MV420
+    default hi3798mv100     if HI3798MV100
+    default hi3798mv200     if HI3798MV200
+    default hi3798mv200_a   if HI3798MV200_A
+    default hi3796mv100     if HI3796MV100
+    default hi3796mv200     if HI3796MV200
+    default hi3716dv100     if HI3716DV100
+    default hi3798cv200     if HI3798CV200
+
+config  HI_NVR_SUPPORT
+    bool
+    depends on LINUX_PRODUCT && (HI3798CV200 || HI3796MV200)
+    default n
+    help
+        The development of NVR(Network Video Recorder) related products need to be opened.
+
+config  HI_DONGLE_SUPPORT
+    bool "Dongle Board Support"
+    depends on HI3798CV200
+    default n
+    help
+        This option should be choose when dongle board is supported.
+
+###########################################################
+menu "System Config"
+
+choice
+    prompt "System Type"
+    default HI_32BIT_SYSTEM
+
+config  HI_32BIT_SYSTEM
+    bool "32bit system"
+
+config  HI_64BIT_SYSTEM
+    bool "64bit system"
+    depends on HI3798CV200 || HI3798MV200 || HI3798MV200_A || HI3796MV200
+endchoice
+
+choice
+    prompt "User Space Type"
+    default HI_USER_SPACE_LIB if HI_32BIT_SYSTEM
+    default HI_USER_SPACE_ALL_LIB if HI_64BIT_SYSTEM
+    depends on LINUX_PRODUCT
+
+config  HI_USER_SPACE_LIB
+    bool "32bit"
+
+config  HI_USER_SPACE_LIB64
+    bool "64bit"
+    depends on HI_64BIT_SYSTEM
+
+config  HI_USER_SPACE_ALL_LIB
+    bool "32bit + 64bit"
+    depends on HI_64BIT_SYSTEM
+endchoice
+
+config  HI_CPU_ARCH
+    string
+    default arm     if HI_32BIT_SYSTEM
+    default arm64   if HI_64BIT_SYSTEM
+
+endmenu
+
+menu "Toolchains Config"
+
+choice
+    prompt "32bit Toolchains"
+    default ARM_HISTBV310_LINUX
+
+config  ARM_HISTBV310_LINUX
+    bool "arm-histbv310-linux"
+endchoice
+
+config  HI_ARM_TOOLCHAINS_NAME
+    string
+    default arm-histbv310-linux     if ARM_HISTBV310_LINUX
+
+choice
+    prompt "64bit Toolchains"
+    default AARCH64_HISTBV100_LINUX
+    depends on HI_64BIT_SYSTEM
+
+config   AARCH64_HISTBV100_LINUX
+    bool "aarch64-histbv100-linux"
+endchoice
+
+config  HI_AARCH64_TOOLCHAINS_NAME
+    string
+    default aarch64-histbv100-linux if AARCH64_HISTBV100_LINUX
+
+endmenu
+
+config  HI_OUT_DIR
+    string "Out DIR"
+    depends on LINUX_PRODUCT
+
+config  HI_SMMU_SUPPORT
+    bool
+    depends on HI3798CV200 || HI3798MV200 || HI3798MV200_A || HI3796MV200
+    default y
+
+config  HI_HDR_SUPPORT
+    bool
+    depends on HI3798CV200 || HI3798MV200 || HI3798MV200_A || HI3796MV200
+    default y
+
+menuconfig  HI_RECOVERY_SUPPORT
+    bool "Recovery Support"
+    depends on ANDROID_PRODUCT
+    default n
+
+###########################################################
+menuconfig  HI_LOADER_SUPPORT
+    bool "Loader Support"
+    depends on !HI_RECOVERY_SUPPORT
+    default n
+
+choice
+    prompt "Loader Type"
+    depends on HI_LOADER_SUPPORT
+    default HI_APPLOADER_SUPPORT
+
+#config  HI_BOOTLOADER_SUPPORT
+#    bool "BootLoader"
+#    depends on LINUX_PRODUCT
+
+config  HI_APPLOADER_SUPPORT
+    bool "AppLoader"
+endchoice
+###########################################################
+
+config HI_OPTM_SIZE_SUPPORT
+    bool "Optimize For Size"
+    default n

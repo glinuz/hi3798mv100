@@ -1,0 +1,20 @@
+menuconfig SUPPORT_SRAM_MANAGER
+	bool "SRAM manager suppport"
+	default n
+	select GENERIC_ALLOCATOR
+	help
+	  If say y, SRAM manager is supported
+
+config SRAM_PHYS_START
+	hex "SRAM physical address"
+	default "0xFFFF2800"
+	depends on SUPPORT_SRAM_MANAGER
+	help
+	  SRAM physical address
+
+config SRAM_PHYS_SIZE
+	hex "SRAM size"
+	default "0x00002800"
+	depends on SUPPORT_SRAM_MANAGER
+	help
+	  SRAM size

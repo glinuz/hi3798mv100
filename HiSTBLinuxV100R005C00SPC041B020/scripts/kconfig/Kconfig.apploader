@@ -1,0 +1,129 @@
+menuconfig HI_LOADER_APPLOADER
+	bool "AppLoader Config"
+	depends on HI_APPLOADER_SUPPORT
+
+#------------------------------------------------
+choice
+	prompt "OSD Language Type"
+	default HI_APPLOADER_OSD_LANG_EN
+	depends on HI_LOADER_APPLOADER
+
+config  HI_APPLOADER_OSD_LANG_EN
+	bool "English"
+
+config  HI_APPLOADER_OSD_LANG_CN
+	bool "Chinese"
+endchoice
+
+#------------------------------------------------        
+config  HI_APPLOADER_INITRD_BASE_ADDR
+    hex "Initrd filesystem base addr in mkbootimg tool"
+    default 0x3500000
+    depends on HI_LOADER_APPLOADER && ADVCA_CONAX
+    help
+    Initrd filesystem base addr in mkbootimg tool,if initrd=0x4500000 in bootargs,here need set it as 0x3500000
+    As mkbootimg will add 0x1000000 kernel space before fs position.
+
+#------------------------------------------------
+config  HI_APPLOADER_MODE_USB
+	bool "USB Upgrade Support"
+	default y
+	depends on HI_LOADER_APPLOADER
+
+#------------------------------------------------
+choice
+        prompt "Protocol Type"
+        default HI_APPLOADER_USB_PROTOCOL_HISI_FILE
+        depends on HI_APPLOADER_MODE_USB
+
+config  HI_APPLOADER_USB_PROTOCOL_HISI_FILE
+        bool "Hisi File Protocol"
+endchoice
+
+#------------------------------------------------
+config  HI_APPLOADER_MODE_FS
+	bool "FileSystem Upgrade Support"
+	default y
+	depends on HI_LOADER_APPLOADER
+
+#------------------------------------------------
+choice
+        prompt "Protocol Type"
+        default HI_APPLOADER_FS_PROTOCOL_HISI_FILE
+        depends on HI_APPLOADER_MODE_FS
+
+config  HI_APPLOADER_FS_PROTOCOL_HISI_FILE
+        bool "Hisi File Protocol"
+endchoice
+
+#------------------------------------------------
+config  HI_APPLOADER_MODE_IP
+	bool "IP Upgrade Support"
+	depends on HI_LOADER_APPLOADER && !HI_ADVCA_SUPPORT
+	default y
+	select HI_CURL_SUPPORT
+
+#------------------------------------------------
+choice
+        prompt "Protocol Type"
+        default HI_APPLOADER_IP_PROTOCOL_HISI_FILE
+        depends on HI_APPLOADER_MODE_IP
+
+config  HI_APPLOADER_IP_PROTOCOL_HISI_FILE
+        bool "Hisi File Protocol"
+endchoice
+
+#------------------------------------------------
+config  HI_APPLOADER_MODE_OTA
+	bool "OTA Upgrade Support"
+	default y
+	depends on HI_LOADER_APPLOADER && HI_FRONTEND_SUPPORT
+
+#------------------------------------------------
+choice
+	prompt "Tuner Type"
+	default HI_APPLOADER_TUNER_CAB
+	depends on HI_APPLOADER_MODE_OTA
+
+config  HI_APPLOADER_TUNER_CAB
+	bool "Cable"
+
+config  HI_APPLOADER_TUNER_SAT
+	bool "Satellite"
+
+config  HI_APPLOADER_TUNER_DVB_T
+    bool "Terrestrial DVB_T"
+
+config  HI_APPLOADER_TUNER_DVB_T2
+  	bool "Terrestrial DVB_T2"
+endchoice
+
+#------------------------------------------------
+config HI_APPLOADER_TUNER_INDEX
+    int "Tuner Port Index (0,3)"
+    range 0 3
+    default 0
+    depends on HI_APPLOADER_MODE_OTA
+    ---help---
+        This option controls tuner port index, range from 0 to 3.
+          0-the cable tuner port index
+          1-the cable tuner port index
+          2-the cable tuner port index
+          3-the cable tuner port index
+          Default 0.
+        NOTICE: This value control the tuner port index, the default value always 0(cable).
+#------------------------------------------------
+choice
+	prompt "Protocol Type"
+	default HI_APPLOADER_PROTOCOL_HISI_OTA
+	depends on HI_APPLOADER_MODE_OTA
+
+config  HI_APPLOADER_PROTOCOL_SSU_OTA
+	bool "SSU Protocol"
+
+config  HI_APPLOADER_PROTOCOL_HISI_OTA
+	bool "Hisi OTA Protocol"
+endchoice
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+

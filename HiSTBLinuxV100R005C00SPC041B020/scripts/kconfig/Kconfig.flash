@@ -1,0 +1,66 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "Flash Config"
+#--------------------------------
+menuconfig HI_NAND_FLASH_SUPPORT
+	bool "Nand Flash support"
+
+choice
+	prompt "Nand Flash support"
+	depends on HI_NAND_FLASH_SUPPORT
+
+config HI_NAND_SUPPORT
+	bool "Nand Flash Support"
+	depends on HI_NAND_FLASH_SUPPORT
+	help
+
+config HI_SPI_NAND_SUPPORT
+	bool "Spi-Nand Flash Support"
+	depends on HI_NAND_FLASH_SUPPORT
+	help
+
+endchoice
+
+config  HI_NAND_BLOCK_SIZE
+	hex "Block Size"
+	depends on HI_NAND_SUPPORT || HI_SPI_NAND_SUPPORT
+	default 0x20000
+	help
+	  Nand flash block size if you have nand.
+
+config  HI_NAND_PAGE_SIZE
+	string "Page Size"
+	depends on HI_NAND_SUPPORT || HI_SPI_NAND_SUPPORT
+	default 2k
+	help
+	  Nand flash page size, such as 2k,4k,8k.
+
+config  HI_NAND_ECC_TYPE
+	string "ECC Type"
+	depends on HI_NAND_SUPPORT || HI_SPI_NAND_SUPPORT
+	default 1bit
+	help
+	  Nand flash chip ECC type, such as 1bit,4bit,8bit,24bit,40bit.
+
+#--------------------------------
+menuconfig HI_SPI_SUPPORT
+	bool "SPI Flash Support"
+	depends on !(HI3798MV100 || HI3796MV100 || HI3716DV100)
+	default y
+	help
+
+config  HI_SPI_BLOCK_SIZE
+	hex "Block Size"
+	depends on HI_SPI_SUPPORT
+	default 0x10000
+	help
+	  SPI flash block size.
+
+#--------------------------------
+
+config HI_EMMC_SUPPORT
+	bool "eMMC Flash Support"
+	default n
+	help
+	  Say y here to enables emmc flash support.
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+endmenu

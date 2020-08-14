@@ -1,0 +1,4 @@
+
+config HI_SPI_BUS_SUPPORT
+	bool "SPI bus Support"
+	default n

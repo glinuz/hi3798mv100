@@ -1,0 +1,93 @@
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "Video Decoder Config"
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+
+source "scripts/kconfig/Kconfig.vdec.mem256"
+source "scripts/kconfig/Kconfig.vdec.mem512"
+source "scripts/kconfig/Kconfig.vdec.mem768"
+source "scripts/kconfig/Kconfig.vdec.mem1024"
+source "scripts/kconfig/Kconfig.vdec.mem2048"
+
+#####################################################
+choice
+    prompt "Capability for reserve memory"
+    default HI_VIDEO_PRE_CAP_1080P
+	depends on HI3716MV410 || HI3716MV420 
+	config  HI_VIDEO_PRE_CAP_1080P
+    	bool "1080P"
+	config  HI_VIDEO_PRE_CAP_MVC
+    	bool "MVC"
+endchoice
+
+config HI_VIDEO_MAX_REF_FRAME_NUM
+    int "Max reference frame number(3-16)"
+    range 3 16
+    default 6
+	depends on HI3716MV410 || HI3716MV420
+
+config HI_VIDEO_MAX_DISP_FRAME_NUM
+    int "Extra frame number for schedule(2-16)"
+    range 2 16
+    default 2
+	depends on HI3716MV410 || HI3716MV420
+
+config HI_VIDEO_MAX_VDH_BUF
+    int "Max VDH buffer for one decoder(20M-300M)"
+    range 20 300
+    default 110
+	depends on HI3716MV410 || HI3716MV420
+######################################################
+
+config  HI_VDEC_DEINTERLACE_SUPPORT
+	bool "HD Deinterlace Support"
+	default y
+	help
+		Open deinterlace function, if you have enough memory, say y.
+
+config  HI_VDEC_SVDEC_SUPPORT
+	bool "Soft Video Decode(hi_svdec.ko) Support"
+	default y
+	help
+		For Hi3712, if you want to support H263, say y;
+		For Hi3716C/Hi3716H/Hi3716M, if you want to support H263 or VP6, say y;
+
+config  HI_VDEC_REG_CODEC_SUPPORT
+	bool "External Video Codec Register Support"
+	default n
+	help
+		If you want to use API "HI_UNF_AVPLAY_RegisterVcodecLib()", say y.
+
+config  HI_VDEC_MJPEG_SUPPORT
+	bool "Motion JPEG Decoder Support"
+	default n
+	help
+		If you want to use decode Motion JPEG stream, say y.
+
+config  HI_VDEC_USERDATA_CC_SUPPORT
+	bool "Closed Caption User Data Support"
+	default y
+	help
+		If you want to receive closed caption user data, say y.
+
+config  HI_VDEC_USERDATA_CC_BUFSIZE
+	hex "Closed Caption User Data Buffer Size(0x4000~0x40000)"
+	depends on HI_VDEC_USERDATA_CC_SUPPORT
+	range 0x4000 0x40000
+	default 0xC000
+	help
+		Closed caption user data buffer size. Recommend 0xC000.
+	
+config HI_VDEC_DFS_SUPPORT
+	bool "Dynamic Frame Store Support"
+	default n
+	help
+		if you want to use this feature, say y.
+
+config HI_VDEC_PRE_ALLOC_VDHMMZ_SUPPORT
+	bool "pre alloc video decoder frame buffer support"
+	default n
+	help
+		if you want to use this feature, say y.
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

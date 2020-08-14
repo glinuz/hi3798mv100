@@ -1,0 +1,77 @@
+一、HIFAT 文件系统组件
+1) himount/himount_glibc：        用来挂载分区. 注意: 后缀为glibc的himount，需要在arm-hisiv200 编译器编译的sdk环境下运行；
+2) himount_odirect/himount_odirect_glibc：    作用同上，运行时，它的cpu占有率比himount低，同时速率也比himount低。上层可以根据业务来选择使用。
+3)  libhimount_gcc-*.a
+    libhimount_gcc-*.so
+    himount_api.h：  提供himount函数方式，来挂载分区
+二、环境及准备工作：     
+     1) 用hifat提供的mount工具替换掉rootbox的/bin目录中原来的mount；将himount拷贝到/sbin/下；
+     2) 用fdisk/mkdosfs 分区并格式化硬盘；     
+
+三、shell命令方式操作步骤：  
+1、挂载分区到指定目录，参考命令；
+   #himount  /dev/sda1  /tmp
+2、挂载完成后，就可以在/tmp下进行文件操作
+3、卸载分区：
+   umount /tmp   
+
+四、API 调用方式操作步骤：  
+1、调用libhimount提供的接口挂载分区；
+   himount("/dev/sda1","/tmp/");
+2、调用read/write 操作；
+3、调用标准接口卸载分区：
+   umount("/tmp");
+   
+五、快速创建大文件
+  
+   在使用过程中，可以采用合适的读写方式快速创建比较大的文件，从而避免fat表碎片的情况。
+   比如，创建一个100M 的文件，则示例程序如下：
+   void file_create(void)
+   {
+	int file=-1;
+	char buf[1];
+	unsigned long long  len=0,writelen=0;
+	off_t ret=0;
+	int i=0;
+	file = open("/tmp/0303/rec_v370_a371.ts.idx",O_RDWR | O_CREAT | O_LARGEFILE);
+
+	if(file < 0)
+	{
+		printf("can not open file\r\n");
+		return 0;
+	}
+
+	len = 0x6400000;	
+	printf("file offset =%lu ,writing......\r\n",len);
+
+	ret = lseek64(file,len-1,SEEK_SET);
+
+	if(ret < 0)
+		printf("lseek fail ,ret :%ld \r\n",ret);
+	else
+		printf("lseek success ,ret :%ld\r\n",ret);
+
+	writelen = write(file,buf,1);
+	if(writelen > 0)
+		printf("write success:%ld\r\n",writelen);
+	else	
+		printf("write fail %ld \r\n",writelen);
+		printf(" counter:%d\r\n\r\n",i);
+	close(file);
+	printf("fclose\r\n");
+	return 0;
+} 
+ 
+六、重要参数
+1、  脏数据所占内存比  
+     可以根据系统内存大小（由bootargs中的 mem=xxM 指定），来调整脏页刷新的频率，从而使得刷数据比较平滑。
+     具体命令为：echo xx >/proc/sys/vm/dirty_ratio   //其中xx 代表脏页占总内存的百分比；
+     比如总内存为100M，则xx设置为3时，脏数据的值就是100M*3%=3M.     
+
+     !!!注意：　脏数据的大小配置为3M左右时，刷新比较平滑；
+
+     SDK中默认的系统内存大小为96M（mem=96M），所以默认设置为3%比较合适，
+     参考命令：echo 3 > /proc/sys/vm/dirty_ratio
+
+2、读写粒度
+      hifat读写粒度建议为64K至128K，具体数值可根据业务调整。

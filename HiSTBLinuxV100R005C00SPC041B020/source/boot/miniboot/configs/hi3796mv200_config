@@ -1,0 +1,104 @@
+# hi3798mv2x config
+
+VERSION    = 1
+PATCHLEVEL = 0
+SUBLEVEL   = 0
+
+CONFIG_ARCH_HI3798MV2X = y
+#CONFIG_HI3798MV2X_FPGA = y
+TEXT_BASE  = 0x00C00000
+ARCH       = "armv7-a"
+PLATFORM   = hi3798mv2x
+CONFIG_CPU_HI3798MV2X   = y
+CONFIG_CACHE_ARMV7       = y
+CONFIG_DDR_TRAINING_V2   = y
+
+CONFIG_BOOTHEAD_GAP      = 0
+CONFIG_RESERVE_MEM_GAP   = 0x100000
+
+CONFIG_DEBUG             = y
+CONFIG_PRINT             = y
+CONFIG_UNIFIED_BOOT      = y
+#
+#  serial driver
+#
+CONFIG_UART           = y
+CONFIG_UART_P101X     = y
+
+#
+#  FMC controller(NAND/SPI-NAND) driver
+#
+CONFIG_GENERIC_NAND       = y
+CONFIG_GENERIC_SPI_NAND  = y
+CONFIG_NAND_MAX_CHIP      = 1
+
+#
+#  FMC controller(SPI-NOR) driver
+#
+CONFIG_GENERIC_SFC       = y
+
+#
+# SDIO controller driver
+#
+#CONFIG_GENERIC_MMC                = y
+CONFIG_HIMCI_V200                 = 1
+CONFIG_MMC_BOOT_ADDR              = 0
+CONFIG_MMC_POWER_OFF_TIMEOUT      = 50
+CONFIG_MMC_POWER_ON_TIMEROUT      = 50
+CONFIG_MMC_RESET_LOW_TIMEOUT      = 10
+CONFIG_MMC_RESET_HIGH_TIMEROUT    = 300
+
+CONFIG_EXT4_SPARSE    = y
+
+#
+# show xls table information on start
+#
+CONFIG_SHOW_REG_INFO = y
+CONFIG_START_TIMEOUT = 2
+
+#
+# compress miniboot
+#
+#CONFIG_COMPRESS = y
+CONFIG_UNCOMP_ADDR = 0x1100000
+CONFIG_UNCMOP_MAX_SIZE = 0x100000
+
+CONFIG_ENV_FROM        = 0x80000
+#CONFIG_ENV_BACKUP_FROM
+CONFIG_ENV_RANGE       = 0x20000
+CONFIG_ENV_SIZE        = 0x10000
+CONFIG_DEFAULT_BOOTCMD = ""
+CONFIG_VERIFY_KERNEL   = y
+#CONFIG_ENV_FLASH_SPI    = y
+#CONFIG_ENV_FLASH_NAND        = y
+
+#
+#CONFIG_PRODUCT_WITH_BOOT = y
+#
+#  support ethernet
+#
+#CONFIG_NET = y
+
+CONFIG_CMDLINE          = y
+CONFIG_BOOTROM_SUPPORT  = y
+CONFIG_RESERVE_MEMORY_GAP = 0x8000000
+CONFIG_RESERVE_MEMORY_DEBUG = y
+CONFIG_RESERVE_MEMORY_SIZE = 0x8000000
+
+#
+# bootargs
+#
+CONFIG_BOOTARGS_MERGE = y
+CONFIG_BOOTARGS_512M  = "mem=512M mmz=ddr,0,0,215M"
+CONFIG_BOOTARGS_1G    = "mem=1G mmz=ddr,0,0,420M"
+CONFIG_BOOTARGS_2G    = "mem=2G mmz=ddr,0,0,580M"
+
+#
+# boot reglist
+#
+
+CONFIG_AUXIMAGE       = "auxcode_sign.img"
+
+#
+# end of config.hi3798mv2x
+#

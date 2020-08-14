@@ -1,0 +1,31 @@
+menu "Video Memory Config In 2048M DDR"
+    depends on !(HI3716MV410 || HI3716MV420)
+
+choice
+    prompt "Capability for reserve memory"
+    default HI_VIDEO_PRE_CAP_4K_IN_2048
+config  HI_VIDEO_PRE_CAP_1080P_IN_2048
+    bool "1080P"
+config  HI_VIDEO_PRE_CAP_MVC_IN_2048
+    bool "MVC"
+config  HI_VIDEO_PRE_CAP_2160P_IN_2048
+    bool "2160P"
+config  HI_VIDEO_PRE_CAP_4K_IN_2048
+    bool "4K"
+endchoice
+
+config HI_VIDEO_MAX_REF_FRAME_NUM_IN_2048
+    int "Max reference frame number(3-16)"
+    range 3 16
+    default 6
+
+config HI_VIDEO_MAX_DISP_FRAME_NUM_IN_2048
+    int "Extra frame number for schedule(2-16)"
+    range 2 16
+    default 6
+
+config HI_VIDEO_MAX_VDH_BUF_IN_2048
+    int "Max VDH buffer for one decoder(20M-300M)"
+    range 20 300
+    default 250
+endmenu

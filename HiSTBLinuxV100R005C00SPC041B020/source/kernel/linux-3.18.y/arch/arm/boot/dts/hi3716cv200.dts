@@ -1,0 +1,227 @@
+/dts-v1/;
+
+#include <dt-bindings/clock/hi3716cv200-clock.h>
+
+/ {
+	model = "Hisilicon";
+	compatible = "hi3716cv200-series";
+	#address-cells = <1>;
+	#size-cells = <1>;
+	interrupt-parent = <&gic>;
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a9";
+			reg = <0>;
+		};
+
+		cpu@1 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a9";
+			reg = <1>;
+		};
+	};
+
+	clocks {
+		xtal_clk: xtal_clk {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <24000000>;
+			clock-output-names = "clk24M";
+		};
+
+		clk_83p3m: clk_83p3m {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <83300000>;
+			clock-output-names = "clk83.3M";
+		};
+
+		clk_3m: clk_3m{
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <3000000>;
+			clock-output-names = "clk3M";
+		};
+	};
+
+	gic: interrupt-controller {
+		compatible = "arm,cortex-a9-gic";
+		#interrupt-cells = <3>;
+		#address-cells = <0>;
+		interrupt-controller;
+		reg = <0xf8a01000 0x1000>,
+		      <0xf8a00100 0x100>;
+	};
+
+	soc {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "simple-bus";
+		device_type = "soc";
+		ranges = <0x0 0x0 0xffffffff>;
+
+		amba {
+			compatible = "arm,amba-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges;
+
+			/*
+			 * Used for clocksource and local timer
+			 */
+			timer@0xf8a29000 {
+				compatible = "hisilicon,timer";
+				reg = <0xf8a29000 0x20>, /* clocksource */
+				      <0xf8a29020 0x20>, /* local timer for each cpu */
+				      <0xf8a2a000 0x20>;
+				interrupts = <0 25 4>, /* irq of local timer */
+					     <0 26 4>;
+				clocks = <&xtal_clk>;
+				clock-names = "apb_pclk";
+			};
+
+			uart0: uart@0xf8b00000 {
+				compatible = "arm,pl011", "arm,primecell";
+				reg = <0xf8b00000 0x1000>;
+				interrupts = <0 49 4>;
+				clocks = <&clk_83p3m>;
+				clock-names = "apb_pclk";
+			};
+
+			uart1: uart@0xf8006000 {
+				compatible = "arm,pl011", "arm,primecell";
+				reg = <0xf8006000 0x1000>;
+				interrupts = <0 50 4>;
+				clocks = <&clk_3m>;
+				clock-names = "apb_pclk";
+			};
+
+			uart2: uart@0xf8b02000 {
+				compatible = "arm,pl011", "arm,primecell";
+				reg = <0xf8b02000 0x1000>;
+				interrupts = <0 51 4>;
+				clocks = <&clk_83p3m>;
+				clock-names = "apb_pclk";
+			};
+
+			uart3: uart@0xf8b03000 {
+				compatible = "arm,pl011", "arm,primecell";
+				reg = <0xf8b03000 0x1000>;
+				interrupts = <0 52 4>;
+				clocks = <&clk_83p3m>;
+				clock-names = "apb_pclk";
+			};
+
+			uart4: uart@0xf8b04000 {
+				compatible = "arm,pl011", "arm,primecell";
+				reg = <0xf8b04000 0x1000>;
+				interrupts = <0 53 4>;
+				clocks = <&clk_83p3m>;
+				clock-names = "apb_pclk";
+			};
+		};
+
+		himciv200.MMC@0xf9830000 {
+			compatible = "hi3716cv200,himciv200";
+			reg = <0xf9830000 0x1000>;
+			interrupts = <0 35 4>;
+
+			clocks = <&hi3716cv200_clock PERI_CRG40_SDIO1>;
+			clock-names = "clk";
+
+			caps = <0x80000147>;
+			max-frequency = <50000000>;
+		}; 
+
+		himciv200.SD@0xf9820000 {
+			compatible = "hi3716cv200,himciv200";
+			reg = <0xf9820000 0x1000>;
+			interrupts = <0 34 4>;
+
+			clocks = <&hi3716cv200_clock PERI_CRG39_SDIO0>;
+			clock-names = "clk";
+
+			caps = <0x80000147>;
+			max-frequency = <50000000>;
+		};
+
+		hi3716cv200.hisfc350 {
+			compatible = "hi3716cv200.hisfc350";
+			reg = <0xf9800000 0x404>, <0xfa000000 0x4000000>;
+
+			clocks = <&hi3716cv200_clock PERI_CRG23_SFC>;
+			clock-names = "clk";
+		};
+
+		hi3716cv200.hinfc610 {
+			compatible = "hi3716cv200.hinfc610";
+			reg = <0xf9810000 0x100>, <0xfe000000 0x2176>;
+
+			clocks = <&hi3716cv200_clock PERI_CRG24_NANDC>;
+			clock-names = "clk";
+		};
+
+		hi3716cv200_clock: Hi3716Cv200_clock {
+			compatible = "hi3716cv200.clock";
+			reg = <0xF8A22000 0x200>,<0xF8A20000 0x0848>;
+			#clock-cells = <1>;
+		};
+
+		hiahci@0xF9900000 {
+			compatible = "generic-ahci";
+			reg = <0xF9900000 0x1000>;
+			interrupts = <0 70 4>;
+
+			phys = <&hi3716cv200_hiahci_phy>;
+			phy-names = "sata-phy";
+
+			clocks = <&hi3716cv200_clock PERI_CRG42_SATA3CTRL>;
+			clock-names = "clk";
+		};
+
+		hi3716cv200_hiahci_phy: hi3716cv200.hiahci-phy@0xF9900000 {
+			compatible = "hi3716cv200.hiahci-phy";
+			reg = <0xF9900000 0x1000>,<0xF8A20000 0x10>;
+			#phy-cells = <0>;
+		};
+
+		ehci@0xf9890000 {
+			compatible = "generic-ehci";
+			reg = <0xf9890000 0x10000>;
+			interrupts = <0 66 4>;
+
+			clocks = <&hi3716cv200_clock PERI_CRG46_USB2CTRL>;
+			clock-names = "clk";
+		};
+
+		ohci@0xf9880000 {
+			compatible = "generic-ohci";
+			reg = <0xf9880000 0x10000>;
+			interrupts = <0 67 4>;
+
+			clocks = <&hi3716cv200_clock PERI_CRG46_USB2CTRL>;
+			clock-names = "clk";
+		};
+
+		hiudc@0xf98c0000 {
+			compatible = "hiudc";
+			reg = <0xf98c0000 0x40000>;
+			interrupts = <0 68 4>;
+
+			clocks = <&hi3716cv200_clock PERI_CRG46_USB2CTRL>;
+			clock-names = "clk";
+		};
+
+		hi3716cv200.hiusbotg {
+			compatible = "hiusbotg";
+			reg = <0xf9880000 0x10000>,<0xf9890000 0x10000>,<0xf8a20120 0x4>;
+			host_time = <1500 4>;
+			device_time = <1000 4>;
+		};
+	};
+};

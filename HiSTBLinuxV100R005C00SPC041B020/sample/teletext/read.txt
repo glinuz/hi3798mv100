@@ -1,0 +1,23 @@
+Purpose: to play teletext from dvb stream.
+    The streams need to support teletext info.
+
+1.Command: sample_teletext -f file
+      file: path of the teletext stream file
+      
+example:
+    ./sample_teletext -f Stockholm_CH53_2004_09_17.ts
+   
+
+2.Command sample_teletext -t frequency symbol_rate qam
+      frequency: the frequency of tuner. 
+      symbol rate: optional field.
+      qam:optional field.
+     
+example:
+      ./sample_subtitle -t  610 6875 64
+ 
+      
+3.input ? to get help
+
+
+

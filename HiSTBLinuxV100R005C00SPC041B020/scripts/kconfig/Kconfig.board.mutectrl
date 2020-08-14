@@ -1,0 +1,23 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menuconfig HI_SND_MUTECTL_SUPPORT
+    bool "Snd Mute Control Support"
+    default n
+
+config HI_SND_MUTECTL_GPIO
+    hex  "Snd Mute Control Gpio"
+    depends on HI_SND_MUTECTL_SUPPORT
+    default 0x14
+    help
+      Mute control gpio
+        board_type      level   gpio_pin (gpio_pin = gpio_group * 8 + gpio_num)
+
+config HI_SND_MUTECTL_LEVEL
+    int "Snd Mute Control Level (0, 1)"
+    depends on HI_SND_MUTECTL_SUPPORT
+    range 0 1
+    default 0
+    help
+      mute control gpio
+        board_type      level   gpio_pin (gpio_pin = gpio_group * 8 + gpio_num)
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

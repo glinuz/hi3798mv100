@@ -1,0 +1,19 @@
+
+config MICRO_FREQUENCY_UP_THRESHOLD
+	int "Micro frequency up threshold"
+	default 80 if (ARCH_S40 || ARCH_HI3798MX || ARCH_HI3798CV2X || ARCH_HI3798MV2X || ARCH_HI3796MV2X)
+	default 95
+
+config DEFAULT_GO_HISPEED_LOAD
+	int "Default go hispeed load"
+	default 80 if (ARCH_S40 || ARCH_HI3798MX || ARCH_HI3798CV2X || ARCH_HI3798MV2X || ARCH_HI3796MV2X)
+	default 99
+	help 
+	  Go to hi speed when CPU load at or above this value.
+
+config DEFAULT_TARGET_LOAD
+	int "Default target load"
+	default 70 if (ARCH_S40 || ARCH_HI3798MX || ARCH_HI3798CV2X || ARCH_HI3798MV2X || ARCH_HI3796MV2X)
+	default 90
+	help
+	  Target load, lower values result in higher CPU speeds.

@@ -1,0 +1,140 @@
+#===============================================================================
+# export variables
+#===============================================================================
+ifeq ($(CFG_HI_EXPORT_FLAG),)
+    ifneq ($(srctree),)
+        KERNEL_DIR := $(srctree)
+
+        SDK_DIR := $(KERNEL_DIR)/../../..
+    else
+        SDK_DIR := $(CURDIR)/../../../../..
+    endif
+
+    include $(SDK_DIR)/base.mak
+endif
+
+export KBUILD_EXTRA_SYMBOLS += $(COMMON_DIR)/drv/Module.symvers
+
+#SDK include header files
+export EXTRA_CFLAGS += -I$(COMMON_UNF_INCLUDE)                 \
+                -I$(COMMON_DRV_INCLUDE)                 \
+                -I$(MSP_DRV_INCLUDE)                
+
+#build in or not
+export CONFIG_MALI400=$(HI_DRV_BUILDTYPE)
+
+ifeq ($(CFG_HI_GPU_MALI450_SUPPORT),y)
+export CONFIG_MALI450=$(HI_DRV_BUILDTYPE)
+endif
+
+ifneq ($(CONFIG_MALI450),)
+export EXTRA_DEFINES += -DCONFIG_MALI450=1
+export TARGET_PLATFORM=mali450
+else
+export TARGET_PLATFORM=mali400
+endif
+
+#SDK flags  
+export EXTRA_DEFINES += $(CFG_HI_KMOD_CFLAGS)
+
+#if use pmu, we need i2c driver
+ifeq ($(CFG_HI_PMU_DEVICE_SELECT),y)
+export EXTRA_DEFINES += -DCONFIG_HI_PMU_DEVICE_SELECT
+export EXTRA_DEFINES += -I$(COMMON_UNF_INCLUDE) -I$(COMMON_DRV_INCLUDE) -I$(MSP_DRV_INCLUDE)
+endif
+
+# Max GPU and OS shared memory size
+export EXTRA_DEFINES += -DCONFIG_GPU_MAX_SHARE_MEM_SIZE=0x20000000
+
+# Enable DMA Buffer map on attach
+export CONFIG_MALI_DMA_BUF_MAP_ON_ATTACH=y
+export EXTRA_DEFINES += -DCONFIG_MALI_DMA_BUF_MAP_ON_ATTACH
+
+#whether enable dvfs or not
+ifeq ($(CFG_HI_DVFS_GPU_SUPPORT),y)
+
+export CONFIG_GPU_DVFS_ENABLE=y
+export EXTRA_DEFINES += -DCONFIG_GPU_DVFS_ENABLE
+
+#enable gpu proc
+ifeq ($(CFG_HI_PROC_SUPPORT),y)
+export EXTRA_DEFINES += -DGPU_PROC_SUPPORT
+endif
+
+endif
+
+#whether enable avs or not
+ifeq ($(CFG_HI_AVS_SUPPORT),y)
+export CONFIG_GPU_AVS_ENABLE=y
+export EXTRA_DEFINES += -DCONFIG_GPU_AVS_ENABLE
+endif
+
+ifeq ($(CFG_HI_DONGLE_MODE_NORMAL),y)
+export EXTRA_DEFINES += -DHI_DONGLE_MODE_NORMAL
+endif
+
+ifeq ($(CFG_HI_DONGLE_MODE_LOW),y)
+export EXTRA_DEFINES += -DHI_DONGLE_MODE_LOW
+endif
+
+ifeq ($(CFG_HI_DONGLE_MODE_CRITICAL),y)
+export EXTRA_DEFINES += -DHI_DONGLE_MODE_CRITICAL
+endif
+
+#if buildin, we should enable share interrupt and FAKE Driver here
+export CONFIG_MALI_SHARED_INTERRUPTS=y
+export EXTRA_DEFINES += -DCONFIG_MALI_SHARED_INTERRUPTS
+
+#hisi integration
+export EXTRA_DEFINES += -DMALI_FAKE_PLATFORM_DEVICE=1
+export MALI_PLATFORM_FILES = platform/$(TARGET_PLATFORM)/mali4xx.c \
+                            platform/$(TARGET_PLATFORM)/mali4xx_clk.c \
+                            platform/$(TARGET_PLATFORM)/mali4xx_core_scaling.c \
+                            platform/$(TARGET_PLATFORM)/mali4xx_pmu.c \
+                            platform/$(TARGET_PLATFORM)/mali4xx_gpu_proc.c
+
+#debug or release
+ifeq ($(CFG_HI_GPU_DEBUG),y)
+BUILD=debug
+export CONFIG_MALI400_DEBUG=y
+else
+BUILD=release
+endif
+
+HI_GPU_PROFILING=y
+HI_GPU_INTERNAL_PROFILING=n
+
+#profiling
+ifeq ($(CFG_HI_ADVCA_SUPPORT), y)
+HI_GPU_PROFILING=n
+HI_GPU_INTERNAL_PROFILING=n
+MALI_QUIET=y
+endif
+
+ifeq ($(MALI_QUIET),y)
+export CONFIG_MALI_QUIET=y
+export EXTRA_DEFINES += -DCONFIG_MALI_QUIET
+endif
+
+ifeq ($(HI_GPU_PROFILING), y)
+USING_PROFILING=1
+export CONFIG_MALI400_PROFILING=y
+export EXTRA_DEFINES += -DCONFIG_MALI400_PROFILING=1
+else
+USING_PROFILING=0
+endif
+
+#internal profiling
+ifeq ($(HI_GPU_INTERNAL_PROFILING), y)
+USING_INTERNAL_PROFILING=1
+export CONFIG_MALI400_INTERNAL_PROFILING=y
+export EXTRA_DEFINES += -DCONFIG_MALI400_INTERNAL_PROFILING=1
+else
+USING_INTERNAL_PROFILING=0
+endif
+
+ifeq ($(CFG_HI_TEMP_CTRL_CONFIG), y)
+export EXTRA_DEFINES += -DCFG_TEMP_CTRL_CONFIG=1
+export EXTRA_DEFINES += -DCFG_TEMP_CTRL_DOWN_THRESHOLD=$(CFG_HI_TEMP_CTRL_DOWN_THRESHOLD)
+export EXTRA_DEFINES += -DCFG_TEMP_CTRL_UP_THRESHOLD=$(CFG_HI_TEMP_CTRL_UP_THRESHOLD)
+endif

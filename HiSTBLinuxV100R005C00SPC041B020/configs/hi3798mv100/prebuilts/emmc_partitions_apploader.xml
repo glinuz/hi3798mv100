@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<Partition_Info>
+<Part Sel="1" PartitionName="fastboot" FlashType="emmc" FileSystem="none" Start="0" Length="1M" SelectFile="fastboot-burn.bin"/>
+<Part Sel="1" PartitionName="bootargs" FlashType="emmc" FileSystem="none" Start="1M" Length="1M" SelectFile="bootargs.bin"/>
+<Part Sel="1" PartitionName="baseparam" FlashType="emmc" FileSystem="none" Start="2M" Length="1M" SelectFile="baseparam.img"/>
+<Part Sel="1" PartitionName="pqparam" FlashType="emmc" FileSystem="none" Start="3M" Length="1M" SelectFile="pq_param.bin"/>
+<Part Sel="1" PartitionName="logo" FlashType="emmc" FileSystem="none" Start="4M" Length="1M" SelectFile="logo.img"/>
+<Part Sel="1" PartitionName="deviceinfo" FlashType="emmc" FileSystem="none" Start="5M" Length="1M" SelectFile=""/>
+<Part Sel="1" PartitionName="softwareinfo" FlashType="emmc" FileSystem="none" Start="6M" Length="1M" SelectFile=""/>
+<Part Sel="1" PartitionName="loaderdb" FlashType="emmc" FileSystem="none" Start="7M" Length="1M" SelectFile=""/>
+<Part Sel="1" PartitionName="loaderdbbak" FlashType="emmc" FileSystem="none" Start="8M" Length="1M" SelectFile=""/>
+<Part Sel="1" PartitionName="loader" FlashType="emmc" FileSystem="none" Start="9M" Length="32M" SelectFile="apploader.bin"/>
+<Part Sel="1" PartitionName="loaderbak" FlashType="emmc" FileSystem="none" Start="41M" Length="32M" SelectFile="apploader.bin"/>
+<Part Sel="1" PartitionName="trustedcore" FlashType="emmc" FileSystem="none" Start="73M" Length="8M" SelectFile=""/>
+<Part Sel="1" PartitionName="kernel" FlashType="emmc" FileSystem="none" Start="81M" Length="16M" SelectFile="hi_kernel.bin"/>
+<Part Sel="1" PartitionName="rootfs" FlashType="emmc" FileSystem="ext3/4" Start="97M" Length="128M" SelectFile="rootfs_128M.ext4"/>
+</Partition_Info>

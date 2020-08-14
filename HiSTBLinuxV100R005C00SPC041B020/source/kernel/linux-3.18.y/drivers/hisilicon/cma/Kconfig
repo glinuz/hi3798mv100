@@ -1,0 +1,16 @@
+
+config CMA_MEM_SHARED
+	bool "Support sharing CMA memory with the heap"
+	depends on CMA && DMA_CMA
+	default no
+	help
+	  Support sharing CMA memory with the heap.
+
+config CMA_ADVANCE_SHARE
+	bool "Support cma advance share"
+	depends on CMA && DMA_CMA
+	select CMA_MEM_SHARED
+	default no
+	help
+	  Support advance sharing CMA memory with the heap.
+	  CMA Multiplex Ratio will be improved when this macro defined.

@@ -1,0 +1,84 @@
+menuconfig HI_HACODEC_SUPPORT
+    bool "HACODEC Support"
+    default y
+
+config HI_HACODEC_MP3DECODE_SUPPORT
+    bool "HACODEC MP3 Decode Support"
+    depends on HI_HACODEC_SUPPORT
+    default n
+
+config HI_HACODEC_AACDECODE_SUPPORT
+    bool "HACODEC AAC Decode Support"
+    depends on HI_HACODEC_SUPPORT
+    default n
+
+config HI_HACODEC_AACENCODE_SUPPORT
+    bool "HACODEC AAC Encode Support"
+    depends on HI_HACODEC_SUPPORT
+    default n
+
+config HI_HACODEC_AC3PASSTHROUGH_SUPPORT
+    bool "HACODEC AC3 Passthrough Support"
+    depends on HI_HACODEC_SUPPORT
+    default n
+
+config HI_HACODEC_AMRNBCODEC_SUPPORT
+    bool "HACODEC AMRNB Codec Support"
+    depends on HI_HACODEC_SUPPORT
+    default n
+
+config HI_HACODEC_AMRWBCODEC_SUPPORT
+    bool "HACODEC AMRWB Codec Support"
+    depends on HI_HACODEC_SUPPORT
+    default n
+
+config HI_HACODEC_BLURAYLPCMDECODE_SUPPORT
+    bool "HACODEC BLURAYLPCM Decode Support"
+    depends on HI_HACODEC_SUPPORT
+    default n
+
+config HI_HACODEC_COOKDECODE_SUPPORT
+    bool "HACODEC COOK Decode Support"
+    depends on HI_HACODEC_SUPPORT
+    default n
+
+config HI_HACODEC_DRADECODE_SUPPORT
+    bool "HACODEC DRA Decode Support"
+    depends on HI_HACODEC_SUPPORT
+    default n
+
+config HI_HACODEC_DTSPASSTHROUGH_SUPPORT
+    bool "HACODEC DTS Passthrough Support"
+    depends on HI_HACODEC_SUPPORT
+    default n
+
+config HI_HACODEC_G711CODEC_SUPPORT
+    bool "HACODEC G711 Codec Support"
+    depends on HI_HACODEC_SUPPORT
+    default n
+
+config HI_HACODEC_G722CODEC_SUPPORT
+    bool "HACODEC G722 Codec Support"
+    depends on HI_HACODEC_SUPPORT
+    default n
+
+config HI_HACODEC_PCMDECODE_SUPPORT
+    bool "HACODEC PCM Decode Support"
+    depends on HI_HACODEC_SUPPORT
+    default n
+
+config HI_HACODEC_TRUEHDPASSTHROUGH_SUPPORT
+    bool "HACODEC TRUEHD Passthrough Support"
+    depends on HI_HACODEC_SUPPORT
+    default n
+
+config HI_HACODEC_WMADECODE_SUPPORT
+    bool "HACODEC WMA Decode Support"
+    depends on HI_HACODEC_SUPPORT
+    default n
+
+config HI_HACODEC_DTSM6DECODE_SUPPORT
+    bool "HACODEC DTSM6 Decode Support"
+    depends on HI_HACODEC_SUPPORT && ANDROID_PRODUCT
+    default n
+

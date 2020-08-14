@@ -1,0 +1,45 @@
+
+menu "DRM Config"
+
+config HI_PLAYREADY_SUPPORT
+    bool "PlayReady Support"
+    depends on LINUX_PRODUCT && (HI3798CV200 || HI3798MV200)
+    default n
+
+choice
+    prompt "PlayReady Type"
+    default HI_PLAYREADY_3_0
+    depends on HI_PLAYREADY_SUPPORT
+
+config  HI_PLAYREADY_2_0
+    bool "PlayReady 2.0"
+    depends on ANDROID_PRODUCT
+
+config  HI_PLAYREADY_3_0
+    bool "PlayReady 3.0"
+    depends on (HI3798CV200 || HI3798MV200)
+
+endchoice
+
+config HI_WIDEVINE_SUPPORT
+    bool "Widevine Support"
+    depends on LINUX_PRODUCT && (HI3798CV200 || HI3798MV200)
+    default n
+
+choice
+    prompt "Widevine Type"
+    default HI_WIDEVINE_L1
+    depends on HI_WIDEVINE_SUPPORT
+
+config  HI_WIDEVINE_L1
+    bool "Widevine L1"
+    depends on (HI3798CV200 || HI3798MV200)
+
+endchoice
+
+config HI_PROTOBUF_SUPPORT
+    bool "Protobuf Support"
+    depends on HI_WIDEVINE_SUPPORT
+    default y
+
+endmenu

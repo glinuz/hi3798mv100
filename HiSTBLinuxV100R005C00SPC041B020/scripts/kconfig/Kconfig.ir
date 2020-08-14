@@ -1,0 +1,48 @@
+#++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "IR Config"
+#--------------------------------
+
+choice
+	prompt "IR Device Type"
+	default HI_IR_TYPE_S2
+config  HI_IR_TYPE_S2
+	bool "IR S2"
+config  HI_IR_TYPE_STD
+	bool "IR Standard"
+config  HI_IR_TYPE_LIRC
+	bool "IR LIRC"
+endchoice
+
+
+config  HI_IR_NEC_SUPPORT
+	bool "NEC Support"
+	depends on HI_IR_TYPE_S2
+	default y
+
+config  HI_IR_RC6_SUPPORT
+	bool "RC6 Support"
+	depends on HI_IR_TYPE_S2
+	default n
+
+config  HI_IR_RC5_SUPPORT
+	bool "RC5 Support"
+	depends on HI_IR_TYPE_S2
+	default n
+ 
+config  HI_IR_SONY_SUPPORT
+	bool "SONY Support"
+	depends on HI_IR_TYPE_S2
+	default n
+
+config  HI_IR_TC9012_SUPPORT
+	bool "TC9012 Support"
+	depends on HI_IR_TYPE_S2
+	default n
+
+config  HI_IR_CREDIT_SUPPORT
+	bool "Credit Support"
+	depends on HI_IR_TYPE_S2
+	default n
+
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

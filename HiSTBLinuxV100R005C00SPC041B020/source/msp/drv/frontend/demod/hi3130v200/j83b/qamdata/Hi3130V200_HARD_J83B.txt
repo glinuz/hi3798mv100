@@ -1,0 +1,26 @@
+{    HARD_CTRL_7_ADDR           ,0x08}, 
+{    HARD_CTRL_8_ADDR           ,0x77}, 
+{    HARD_CTRL_9_ADDR           ,0x01}, 
+{    HARD_CTRL_13_ADDR          ,0x19},
+{    CRG_CTRL_0_ADDR            ,0x3d}, //I2C切到qam_clk,TS选odd,串行模式
+{    CRG_CTRL_1_ADDR            ,0x00}, 
+{    CRG_CTRL_2_ADDR            ,0xff}, 
+{    CRG_CTRL_3_ADDR            ,0x07}, //TS_ODD,串行时钟64.3/74.1
+{    CRG_CTRL_4_ADDR            ,0x05}, //TS_EVEN，并行时钟9.38/10.8
+{    CRG_CTRL_5_ADDR            ,0x00},
+{    HARD_CTRL_0_ADDR           ,0x23}, 
+{    HARD_CTRL_1_ADDR           ,0x00}, 
+{    HARD_CTRL_2_ADDR           ,0x00}, 
+{    HARD_CTRL_3_ADDR           ,0x00}, 
+{    HARD_CTRL_4_ADDR           ,0x00}, 
+{    HARD_CTRL_5_ADDR           ,0x00}, 
+{    HARD_CTRL_6_ADDR           ,0x00}, 
+{    HARD_CTRL_10_ADDR          ,0x00}, 
+{    HARD_CTRL_11_ADDR          ,0x00}, 
+{    HARD_CTRL_12_ADDR          ,0x00}, 
+{    HARD_CTRL_14_ADDR          ,0x16}, 
+{    IOSHARE_CTRL_0_ADDR        ,0x00},
+{    IOSHARE_CTRL_1_ADDR        ,0x00},
+{    IOSHARE_CTRL_2_ADDR        ,0x30},
+                                        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          

@@ -1,0 +1,14 @@
+#++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "Pvr Config"
+#--------------------------------
+config HI_PVR_SUPPORT
+	bool "PVR Support"
+	default y
+
+config HI_PVR_EXTRA_BUF_SUPPORT
+	depends on HI_PVR_SUPPORT
+	bool "use Extra PVR Buffer to optimize the recording"
+	default n
+#--------------------------------
+endmenu
+#++++++++++++++++++++++++++++++++++++++++++++++++++++

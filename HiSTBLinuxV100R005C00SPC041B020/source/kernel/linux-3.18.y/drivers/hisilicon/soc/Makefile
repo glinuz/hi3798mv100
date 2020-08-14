@@ -1,0 +1,8 @@
+
+obj-y	+= cputable.o
+obj-$(CONFIG_ARCH_S40)		+= hi3716cv200/
+obj-$(CONFIG_ARCH_HI3798MX)	+= hi3798mv100/
+obj-$(CONFIG_ARCH_HIFONE)	+= hifone/
+obj-$(CONFIG_ARCH_HI3798CV2X)	+= hi3798cv200/
+obj-$(CONFIG_ARCH_HI3798MV2X)	+= hi3798mv200/
+obj-$(CONFIG_ARCH_HI3796MV2X)	+= hi3796mv200/

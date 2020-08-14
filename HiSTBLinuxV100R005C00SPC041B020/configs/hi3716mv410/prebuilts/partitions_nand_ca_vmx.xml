@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<Partition_Info>
+<Part Sel="1" PartitionName="fastboot" FlashType="nand" FileSystem="none" Start="0" Length="1M" SelectFile="FinalBoot.bin"/>
+<Part Sel="1" PartitionName="bootargs" FlashType="nand" FileSystem="none" Start="1M" Length="1M" SelectFile="bootargs_signature.bin"/>
+<Part Sel="1" PartitionName="baseparam" FlashType="nand" FileSystem="none" Start="2M" Length="1M" SelectFile="baseparam.img"/>
+<Part Sel="1" PartitionName="pqparam" FlashType="nand" FileSystem="none" Start="3M" Length="1M" SelectFile="pq_param.bin"/>
+<Part Sel="1" PartitionName="logo" FlashType="nand" FileSystem="none" Start="4M" Length="1M" SelectFile="logo.img"/>
+<Part Sel="1" PartitionName="deviceinfo" FlashType="nand" FileSystem="none" Start="5M" Length="1M" SelectFile=""/>
+<Part Sel="1" PartitionName="softwareinfo" FlashType="nand" FileSystem="none" Start="6M" Length="1M" SelectFile=""/>
+<Part Sel="1" PartitionName="loaderdb" FlashType="nand" FileSystem="none" Start="7M" Length="1M" SelectFile=""/>
+<Part Sel="1" PartitionName="loaderdbbak" FlashType="nand" FileSystem="none" Start="8M" Length="1M" SelectFile=""/>
+<Part Sel="1" PartitionName="loader" FlashType="nand" FileSystem="none" Start="9M" Length="8M" SelectFile="apploader_signature.bin"/>
+<Part Sel="1" PartitionName="loaderbak" FlashType="nand" FileSystem="none" Start="17M" Length="8M" SelectFile=""/>
+<Part Sel="1" PartitionName="trustedcore" FlashType="nand" FileSystem="none" Start="25M" Length="8M" SelectFile=""/>
+<Part Sel="1" PartitionName="kernel" FlashType="nand" FileSystem="none" Start="33M" Length="8M" SelectFile="hi_kernel_signature.bin"/>
+<Part Sel="1" PartitionName="rootfs" FlashType="nand" FileSystem="squashfs" Start="41M" Length="64M" SelectFile="rootfs_signature.squashfs"/>
+<Part Sel="1" PartitionName="cadata" FlashType="nand" FileSystem="yaffs" Start="105M" Length="8M" SelectFile=""/>
+</Partition_Info>

@@ -1,0 +1,8 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+#--------------------------------
+config HI_3G_SUPPORT
+	bool "3G Card Support"
+	select HI_TOOL_PPPD_SUPPORT
+	default n 
+	help
+	  If you want to use 3G card, Say Y here.

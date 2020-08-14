@@ -1,0 +1,13 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menuconfig HI_NTFS_SUPPORT
+	bool "NTFS Support"
+	default n
+config  HI_NTFS_MODULE_SUPPORT
+	bool "NTFS Module Support"
+	depends on HI_NTFS_SUPPORT
+	default y
+config  HI_NTFS_TOOLS_SUPPORT
+	bool "NTFS Tools Support"
+	depends on HI_NTFS_SUPPORT
+	default y
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

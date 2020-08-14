@@ -1,0 +1,987 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "Third Tuner Config"
+
+choice
+	prompt "Signal Type"
+#	depends on HI_TUNER2_USE
+	help
+	    Signal type of the tuner.
+	default HI_TUNER2_SIGNAL_CAB
+
+config  HI_TUNER2_SIGNAL_CAB
+	bool "Cable"
+config  HI_TUNER2_SIGNAL_SAT
+	bool "Satellite"
+config  HI_TUNER2_SIGNAL_DVB_T
+	bool "Terrestrial DVB_T"
+config  HI_TUNER2_SIGNAL_DVB_T2
+	bool "Terrestrial DVB_T2"
+config  HI_TUNER2_SIGNAL_ISDB_T
+	bool "Terrestrial ISDB_T"
+config  HI_TUNER2_SIGNAL_ATSC_T
+	bool "Terrestrial ATSC_T"
+config  HI_TUNER2_SIGNAL_DTMB
+	bool "Terrestrial DTMB"
+config  HI_TUNER2_SIGNAL_J83B
+	bool "J83B"
+config  HI_TUNER2_SIGNAL_ABSS
+	bool "ABSS"
+endchoice
+
+choice
+	prompt "Tuner Type"
+#	depends on HI_TUNER2_USE
+	help
+	    The first tuner type on your board.
+	default HI_TUNER2_DEV_TYPE_TDA18250
+
+config  HI_TUNER2_DEV_TYPE_XG_3BL
+	bool "HI_UNF_TUNER_DEV_TYPE_XG_3BL"
+config  HI_TUNER2_DEV_TYPE_CD1616
+	bool "HI_UNF_TUNER_DEV_TYPE_CD1616"
+config  HI_TUNER2_DEV_TYPE_ALPS_TDAE
+	bool "HI_UNF_TUNER_DEV_TYPE_ALPS_TDAE"
+config  HI_TUNER2_DEV_TYPE_TDCC
+	bool "HI_UNF_TUNER_DEV_TYPE_TDCC"
+config  HI_TUNER2_DEV_TYPE_TDA18250
+	bool "HI_UNF_TUNER_DEV_TYPE_TDA18250"
+config  HI_TUNER2_DEV_TYPE_CD1616_DOUBLE
+	bool "HI_UNF_TUNER_DEV_TYPE_CD1616_DOUBLE"
+config  HI_TUNER2_DEV_TYPE_MT2081
+	bool "HI_UNF_TUNER_DEV_TYPE_MT2081"
+config  HI_TUNER2_DEV_TYPE_TMX7070X
+	bool "HI_UNF_TUNER_DEV_TYPE_TMX7070X"
+config  HI_TUNER2_DEV_TYPE_R820C
+	bool "HI_UNF_TUNER_DEV_TYPE_R820C"
+config  HI_TUNER2_DEV_TYPE_MXL203
+	bool "HI_UNF_TUNER_DEV_TYPE_MXL203"
+config  HI_TUNER2_DEV_TYPE_AV2011
+	bool "HI_UNF_TUNER_DEV_TYPE_AV2011"
+config  HI_TUNER2_DEV_TYPE_AV2018
+	bool "HI_UNF_TUNER_DEV_TYPE_AV2018"
+config  HI_TUNER2_DEV_TYPE_SHARP7903
+	bool "HI_UNF_TUNER_DEV_TYPE_SHARP7903"
+config  HI_TUNER2_DEV_TYPE_MXL101
+	bool "HI_UNF_TUNER_DEV_TYPE_MXL101"
+config  HI_TUNER2_DEV_TYPE_MXL603
+	bool "HI_UNF_TUNER_DEV_TYPE_MXL603"
+config  HI_TUNER2_DEV_TYPE_CXD2861
+	bool "HI_UNF_TUNER_DEV_TYPE_CXD2861"
+config  HI_TUNER2_DEV_TYPE_IT9170
+	bool "HI_UNF_TUNER_DEV_TYPE_IT9170"
+config  HI_TUNER2_DEV_TYPE_TDA6651
+	bool "HI_UNF_TUNER_DEV_TYPE_TDA6651"
+config  HI_TUNER2_DEV_TYPE_TDA18250B
+	bool "HI_UNF_TUNER_DEV_TYPE_TDA18250B"
+config  HI_TUNER2_DEV_TYPE_M88TS2022
+	bool "HI_UNF_TUNER_DEV_TYPE_M88TS2022"
+config  HI_TUNER2_DEV_TYPE_RDA5815
+	bool "HI_UNF_TUNER_DEV_TYPE_RDA5815"
+config  HI_TUNER2_DEV_TYPE_MXL254
+	bool "HI_UNF_TUNER_DEV_TYPE_MXL254"
+config  HI_TUNER2_DEV_TYPE_SI2147
+	bool "HI_UNF_TUNER_DEV_TYPE_SI2147"
+config  HI_TUNER2_DEV_TYPE_RAFAEL836
+	bool "HI_UNF_TUNER_DEV_TYPE_RAFAEL836"
+config  HI_TUNER2_DEV_TYPE_MXL608
+	bool "HI_UNF_TUNER_DEV_TYPE_MXL608"
+config  HI_TUNER2_DEV_TYPE_MXL214
+        bool "HI_UNF_TUNER_DEV_TYPE_MXL214"
+config  HI_TUNER2_DEV_TYPE_TDA18280
+        bool "HI_UNF_TUNER_DEV_TYPE_TDA18280"
+config  HI_TUNER2_DEV_TYPE_TDA182I5A
+        bool "HI_UNF_TUNER_DEV_TYPE_TDA182I5A"
+config  HI_TUNER2_DEV_TYPE_SI2144
+        bool "HI_UNF_TUNER_DEV_TYPE_SI2144"
+config  HI_TUNER2_DEV_TYPE_M88TC3800
+        bool "HI_UNF_TUNER_DEV_TYPE_M88TC3800"
+config  HI_TUNER2_DEV_TYPE_MXL683
+        bool "HI_UNF_TUNER_DEV_TYPE_MXL683"
+config  HI_TUNER2_DEV_TYPE_AV2026
+        bool "HI_UNF_TUNER_DEV_TYPE_AV2026"
+endchoice
+
+config  HI_TUNER2_DEV_ADDR
+	hex "Tuner Device Address"
+	range 0x00 0xff
+#	depends on HI_TUNER2_USE
+	help
+		Tuner device I2C slave address.
+	default 0xc0
+
+choice
+	prompt "Demod Type"
+#	depends on HI_TUNER2_USE
+	help
+	    The demod type on your board.
+	default HI_DEMOD2_DEV_TYPE_3130I
+
+config  HI_DEMOD2_DEV_TYPE_NONE
+	bool "HI_UNF_DEMOD_DEV_TYPE_NONE"
+config  HI_DEMOD2_DEV_TYPE_3130I
+	bool "HI_UNF_DEMOD_DEV_TYPE_3130I"
+config  HI_DEMOD2_DEV_TYPE_3130E
+	bool "HI_UNF_DEMOD_DEV_TYPE_3130E"
+config  HI_DEMOD2_DEV_TYPE_J83B
+	bool "HI_UNF_DEMOD_DEV_TYPE_J83B"
+config  HI_DEMOD2_DEV_TYPE_AVL6211
+	bool "HI_UNF_DEMOD_DEV_TYPE_AVL6211"
+config  HI_DEMOD2_DEV_TYPE_MXL101
+	bool "HI_UNF_DEMOD_DEV_TYPE_MXL101"
+config  HI_DEMOD2_DEV_TYPE_MN88472
+	bool "HI_UNF_DEMOD_DEV_TYPE_MN88472"
+config  HI_DEMOD2_DEV_TYPE_MN88473
+	bool "HI_UNF_DEMOD_DEV_TYPE_MN88473"
+config  HI_DEMOD2_DEV_TYPE_CXD2837
+	bool "HI_UNF_DEMOD_DEV_TYPE_CXD2837"
+config  HI_DEMOD2_DEV_TYPE_IT9170
+	bool "HI_UNF_DEMOD_DEV_TYPE_IT9170"
+config  HI_DEMOD2_DEV_TYPE_3136
+	bool "HI_UNF_DEMOD_DEV_TYPE_3136"
+config  HI_DEMOD2_DEV_TYPE_3137
+	bool "HI_UNF_DEMOD_DEV_TYPE_3137"
+config  HI_DEMOD2_DEV_TYPE_MXL254
+        bool "HI_UNF_DEMOD_DEV_TYPE_MXL254"
+config  HI_DEMOD2_DEV_TYPE_MXL214
+        bool "HI_UNF_DEMOD_DEV_TYPE_MXL214"
+config  HI_DEMOD2_DEV_TYPE_TDA18280
+        bool "HI_UNF_DEMOD_DEV_TYPE_TDA18280"
+config  HI_DEMOD2_DEV_TYPE_HIFDVBC100
+        bool "HI_UNF_DEMOD_DEV_TYPE_HIFDVBC100"
+config  HI_DEMOD2_DEV_TYPE_HIFJ83B100
+        bool "HI_UNF_DEMOD_DEV_TYPE_HIFJ83B100"
+config  HI_DEMOD2_DEV_TYPE_3138
+        bool "HI_UNF_DEMOD_DEV_TYPE_3138"
+config  HI_DEMOD2_DEV_TYPE_ATBM888X
+        bool "HI_UNF_DEMOD_DEV_TYPE_ATBM888X"
+config  HI_DEMOD2_DEV_TYPE_MXL683
+        bool "HI_UNF_DEMOD_DEV_TYPE_MXL683"
+config  HI_DEMOD2_DEV_TYPE_TP5001
+        bool "HI_UNF_DEMOD_DEV_TYPE_TP5001"
+config  HI_DEMOD2_DEV_TYPE_HD2501
+        bool "HI_UNF_DEMOD_DEV_TYPE_HD2501"
+config  HI_DEMOD_DEV_TYPE_AVL6381
+        bool "HI_UNF_DEMOD_DEV_TYPE_AVL6381"
+endchoice
+
+config  HI_DEMOD2_DEV_ADDR
+	hex "Demod Device Address"
+	range 0x00 0xff
+#	depends on HI_TUNER2_USE
+	help
+		Demod device I2C slave address.
+	default 0xa0
+
+choice
+	prompt "Demod TS Output Mode"
+#	depends on HI_TUNER2_USE
+	help
+	    The demod TS output mode on your board.
+	default HI_DEMOD2_TS_PARALLEL_MODE_A
+
+config  HI_DEMOD2_TS_DEFAULT
+	bool "HI_UNF_TUNER_OUTPUT_MODE_DEFAULT"
+config  HI_DEMOD2_TS_PARALLEL_MODE_A
+	bool "HI_UNF_TUNER_OUTPUT_MODE_PARALLEL_MODE_A"
+config  HI_DEMOD2_TS_PARALLEL_MODE_B
+	bool "HI_UNF_TUNER_OUTPUT_MODE_PARALLEL_MODE_B"
+config  HI_DEMOD2_TS_SERIAL
+	bool "HI_UNF_TUNER_OUTPUT_MODE_SERIAL"
+config  HI_DEMOD2_TS_SERIAL_50
+	bool "HI_UNF_TUNER_OUTPUT_MODE_SERIAL_50"
+config  HI_DEMOD2_TS_SERIAL_2BIT
+	bool "HI_UNF_TUNER_OUTPUT_MODE_SERIAL_2BIT"
+endchoice
+
+choice
+	prompt "Demod Channel"
+	default HI_DEMOD2_I2C
+config  HI_DEMOD2_I2C
+	bool "I2C"
+config  HI_DEMOD2_GPIO
+	bool "GPIO"
+endchoice
+
+config	HI_DEMOD2_I2C_CHANNEL
+	int "Demod I2C Channel Number"
+	depends on HI_DEMOD2_I2C
+	range 0 16
+	default 5
+
+config	HI_DEMOD2_GPIO_SDA
+	int "Demod GPIO SDA Number"
+	depends on HI_DEMOD2_GPIO
+	default 0
+
+config	HI_DEMOD2_GPIO_SCL
+	int "Demod GPIO SCL Number"
+	depends on HI_DEMOD2_GPIO
+	default 1
+
+config	HI_DEMOD2_RESET_GPIO
+	hex "Demod Reset GPIO number"
+#	depends on HI_TUNER2_USE
+	range 0x0 0xff
+	help
+	    If your board use a GPIO to reset demod, you need configure GPIO number here.
+	default 0x0
+
+config	HI_DEMUX2_PORT
+	int "Demux Port"
+#	depends on HI_TUNER2_USE
+	help
+	    The demux port used by this tuner.
+	default 0
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "Satellite Attribute Config"
+	depends on HI_TUNER2_SIGNAL_SAT
+
+config HI_DEMOD2_REF_CLOCK
+	int "Demod Reference Clock Frequency(KHz)"
+#	depends on HI_TUNER2_SAT
+	default 24000
+
+config HI_TUNER2_MAX_LPF
+	int "Tuner Max LPF(MHz)"
+#	depends on HI_TUNER2_SAT
+	default 34
+
+config HI_TUNER2_I2C_CLOCK
+	int "Tuner I2C Clock Frequency(KHz)"
+#	depends on HI_TUNER2_SAT
+	default 400
+
+choice
+	prompt "Tuner RF AGC Mode"
+#	depends on HI_TUNER_SAT
+	help
+	    HI_UNF_TUNER_RFAGC_INVERT polarization is used for a tuner whose gain decreases with increased AGC voltage, HI_UNF_TUNER_RFAGC_NORMAL polarization is used for a tuner whose gain increases with increased AGC voltage.
+	default HI_TUNER2_RFAGC_INVERT
+
+config  HI_TUNER2_RFAGC_INVERT
+	bool "HI_UNF_TUNER_RFAGC_INVERT"
+config  HI_TUNER2_RFAGC_NORMAL
+	bool "HI_UNF_TUNER_RFAGC_NORMAL"
+endchoice
+
+choice
+	prompt "Tuner IQ Spectrum Mode"
+#	depends on HI_TUNER2_SAT
+	help
+	     The received signal spectrum is inverted or not.
+	default HI_TUNER2_IQSPECTRUM_NORMAL
+
+config  HI_TUNER2_IQSPECTRUM_NORMAL
+	bool "HI_UNF_TUNER_IQSPECTRUM_NORMAL"
+config  HI_TUNER2_IQSPECTRUM_INVERT
+	bool "HI_UNF_TUNER_IQSPECTRUM_INVERT"
+endchoice
+
+choice
+	prompt "TS Clock Polarization"
+#	depends on HI_TUNER2_SAT
+	help
+	     TS clock rising edge or falling edge configurate.
+	default HI_TUNER2_TSCLK_POLAR_RISING
+
+config  HI_TUNER2_TSCLK_POLAR_FALLING
+	bool "HI_UNF_TUNER_TSCLK_POLAR_FALLING"
+config  HI_TUNER2_TSCLK_POLAR_RISING
+	bool "HI_UNF_TUNER_TSCLK_POLAR_RISING"
+endchoice
+
+choice
+	prompt "TS Packet Format"
+#	depends on HI_TUNER2_SAT
+	help
+	     188 or 204.
+	default HI_TUNER2_TS_FORMAT_TS
+
+config  HI_TUNER2_TS_FORMAT_TS
+	bool "HI_UNF_TUNER_TS_FORMAT_TS"
+config  HI_TUNER2_TS_FORMAT_TSP
+	bool "HI_UNF_TUNER_TS_FORMAT_TSP"
+endchoice
+
+choice
+	prompt "TS Serial PIN"
+#	depends on HI_TUNER2_SAT
+	help
+	     If you use serial TS, you should configurate this option.
+	default HI_TUNER2_TS_SERIAL_PIN_0
+
+config  HI_TUNER2_TS_SERIAL_PIN_0
+	bool "HI_UNF_TUNER_TS_SERIAL_PIN_0"
+config  HI_TUNER2_TS_SERIAL_PIN_7
+	bool "HI_UNF_TUNER_TS_SERIAL_PIN_7"
+endchoice
+
+choice
+	prompt "DiSEqC Wave Mode"
+#	depends on HI_TUNER2_SAT
+	help
+	     HI_UNF_TUNER_DISEQCWAVE_NORMAL means waveform produced by demod, HI_TUNER_DISEQCWAVE_ENVELOPE means waveform produced by LNB control device.
+	default HI_TUNER2_DISEQCWAVE_NORMAL
+
+config  HI_TUNER2_DISEQCWAVE_NORMAL
+	bool "HI_UNF_TUNER_DISEQCWAVE_NORMAL"
+config  HI_TUNER2_DISEQCWAVE_ENVELOPE
+	bool "HI_UNF_TUNER_DISEQCWAVE_ENVELOPE"
+endchoice
+
+choice
+	prompt "LNB Control Device"
+#	depends on HI_TUNER2_SAT
+	help
+	     Select LNB control device type.
+	default HI_LNBCTRL2_DEV_TYPE_MPS8125
+
+config  HI_LNBCTRL2_DEV_TYPE_NONE
+	bool "HI_UNF_LNBCTRL_DEV_TYPE_NONE"
+config  HI_LNBCTRL2_DEV_TYPE_MPS8125
+	bool "HI_UNF_LNBCTRL_DEV_TYPE_MPS8125"
+config  HI_LNBCTRL2_DEV_TYPE_ISL9492
+	bool "HI_UNF_LNBCTRL_DEV_TYPE_ISL9492"
+endchoice
+
+choice
+	prompt "MPS8125 LNB Ctrl Pin"
+	depends on HI_LNBCTRL2_DEV_TYPE_MPS8125
+	help
+	    MPS8125 LNB Ctrl Pin, either GPIO or demod pin.
+	default HI_LNB2_CTRL_DEMOD
+
+config  HI_LNB2_CTRL_DEMOD
+	bool "DEMOD"
+
+config  HI_LNB2_CTRL_GPIO
+	bool "GPIO"
+endchoice
+
+config  HI_LNB2_EN_GPIO_NO
+	hex "LNB_EN GPIO PIN NO"
+	range 0 0xff
+	depends on HI_LNB2_CTRL_GPIO
+	help
+		LNB_EN GPIO PIN NO.
+	default 0
+config  HI_LNB2_HV_SEL_GPIO_NO
+	hex "LNB_HV_SEL GPIO PIN NO"
+	range 0 0xff
+	depends on HI_LNB2_CTRL_GPIO
+	help
+		LNB_HV_SEL GPIO PIN NO.
+	default 0
+
+config  HI_LNBCTRL2_DEV_ADDR
+	hex "LNB Control Device Address"
+	range 0x00 0xff
+	depends on !HI_LNBCTRL2_DEV_TYPE_NONE
+	help
+		LNB control device I2C slave address.
+	default 0x0
+endmenu
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "Terrestrial Attribute Config"
+	depends on HI_TUNER2_SIGNAL_DVB_T || HI_TUNER2_SIGNAL_DVB_T2 || HI_TUNER2_SIGNAL_DTMB || HI_TUNER2_SIGNAL_ISDB_T || HI_TUNER2_SIGNAL_ATSC_T
+
+config HI_TER_DEMOD2_REF_CLOCK
+	int "Demod Reference Clock Frequency(KHz)"
+	default 24000
+
+config HI_TER_TUNER2_MAX_LPF
+	int "Tuner Max LPF(MHz)"
+	default 34
+
+config HI_TER_TUNER2_I2C_CLOCK
+	int "Tuner I2C Clock Frequency(KHz)"
+	default 400
+
+choice
+	prompt "Tuner RF AGC Mode"
+	help
+	    HI_UNF_TUNER_RFAGC_INVERT polarization is used for a tuner whose gain decreases with increased AGC voltage, HI_UNF_TUNER_RFAGC_NORMAL polarization is used for a tuner whose gain increases with increased AGC voltage.
+	default HI_TER_TUNER2_RFAGC_NORMAL
+
+config  HI_TER_TUNER2_RFAGC_INVERT
+	bool "HI_UNF_TUNER_RFAGC_INVERT"
+config  HI_TER_TUNER2_RFAGC_NORMAL
+	bool "HI_UNF_TUNER_RFAGC_NORMAL"
+endchoice
+
+choice
+	prompt "Tuner IQ Spectrum Mode"
+	help
+	     The received signal spectrum is inverted or not.
+	default HI_TER_TUNER2_IQSPECTRUM_NORMAL
+
+config  HI_TER_TUNER2_IQSPECTRUM_NORMAL
+	bool "HI_UNF_TUNER_IQSPECTRUM_NORMAL"
+config  HI_TER_TUNER2_IQSPECTRUM_INVERT
+	bool "HI_UNF_TUNER_IQSPECTRUM_INVERT"
+endchoice
+
+choice
+	prompt "TS Clock Polarization"
+	help
+	     TS clock rising edge or falling edge configurate.
+	default HI_TER_TUNER2_TSCLK_POLAR_RISING
+
+config  HI_TER_TUNER2_TSCLK_POLAR_FALLING
+	bool "HI_UNF_TUNER_TSCLK_POLAR_FALLING"
+config  HI_TER_TUNER2_TSCLK_POLAR_RISING
+	bool "HI_UNF_TUNER_TSCLK_POLAR_RISING"
+endchoice
+
+choice
+	prompt "TS Packet Format"
+	help
+	     188 or 204.
+	default HI_TER_TUNER2_TS_FORMAT_TS
+
+config  HI_TER_TUNER2_TS_FORMAT_TS
+	bool "HI_UNF_TUNER_TS_FORMAT_TS"
+config  HI_TER_TUNER2_TS_FORMAT_TSP
+	bool "HI_UNF_TUNER_TS_FORMAT_TSP"
+endchoice
+
+choice
+	prompt "TS Serial PIN"
+	help
+	     If you use serial TS, you should configurate this option.
+	default HI_TER_TUNER2_TS_SERIAL_PIN_0
+
+config  HI_TER_TUNER2_TS_SERIAL_PIN_0
+	bool "HI_UNF_TUNER_TS_SERIAL_PIN_0"
+config  HI_TER_TUNER2_TS_SERIAL_PIN_7
+	bool "HI_UNF_TUNER_TS_SERIAL_PIN_7"
+endchoice
+
+choice
+	prompt "TS Sync Head Length"
+	help
+	     TS sync head length, auto or 8bit.
+	default HI_TER_TUNER2_TS_SYNC_HEAD_AUTO
+
+config  HI_TER_TUNER2_TS_SYNC_HEAD_AUTO
+	bool "HI_UNF_TUNER_TS_SYNC_HEAD_AUTO"
+config  HI_TER_TUNER2_TS_SYNC_HEAD_8BIT
+	bool "HI_UNF_TUNER_TS_SYNC_HEAD_8BIT"
+endchoice
+
+endmenu
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "Cable Attribute Config"
+	depends on HI_TUNER2_SIGNAL_CAB || HI_TUNER2_SIGNAL_J83B
+
+config HI_DEMOD2_CAB_REF_CLOCK
+	int "Demod2 Cab Reference Clock Frequency(KHz)"
+#	depends on HI_TUNER_SAT	
+	default 24000
+
+choice
+	prompt "TS Serial PIN"
+#	depends on HI_TUNER_SAT
+	help 
+	     If you use serial TS, you should configurate this option.
+	default HI_TUNER2_CAB_TS_SERIAL_PIN_0
+
+config  HI_TUNER2_CAB_TS_SERIAL_PIN_0
+	bool "HI_UNF_TUNER_TS_SERIAL_PIN_0"
+config  HI_TUNER2_CAB_TS_SERIAL_PIN_7
+	bool "HI_UNF_TUNER_TS_SERIAL_PIN_7"
+endchoice
+
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+
+menuconfig HI_MULTI2_MODE_ATTR
+	depends on HI_DEMOD2_DEV_TYPE_3138
+	bool "MultiMode Demod Config"
+	default y
+	
+choice
+	prompt "ADC Port"
+	depends on HI_MULTI2_MODE_ATTR
+	help
+	    Select which adc port
+	default HI_MULTIMODE_DEMOD2_ADC1
+
+config HI_MULTIMODE_DEMOD2_ADC0
+	bool "HI_UNF_TUNER_ADC0"
+config HI_MULTIMODE_DEMOD2_ADC1
+	bool "HI_UNF_TUNER_ADC1"
+endchoice
+
+choice
+	prompt "TS Output Port"
+	depends on HI_MULTI2_MODE_ATTR
+	help
+	    Select which port to output ts
+	default HI_MULTIMODE_DEMOD2_TS1_OUTPUT
+
+config HI_MULTIMODE_DEMOD2_TS0_OUTPUT
+	bool "HI_UNF_TUNER_TS0_OUTPUT"
+config HI_MULTIMODE_DEMOD2_TS1_OUTPUT
+	bool "HI_UNF_TUNER_TS1_OUTPUT"
+endchoice
+
+choice
+	prompt "TUNER I2C GATEWAY"
+	depends on HI_MULTI2_MODE_ATTR
+	help
+	    Select Gateway for tuner i2c transmission
+	default HI_MULTIMODE_DEMOD2_I2C_TRANSMISSION_SEL_SCLT_SDAT
+
+config HI_MULTIMODE_DEMOD2_I2C_TRANSMISSION_SEL_SCLT_SDAT
+	bool "HI_UNF_TUNER_I2C_TRANSMISSION_SEL_SCLT_SDAT"
+config HI_MULTIMODE_DEMOD2_I2C_TRANSMISSION_SEL_TS1_DATAx
+	bool "HI_UNF_TUNER_I2C_TRANSMISSION_SEL_TS1_DATAx"
+endchoice
+
+choice
+	prompt "SYNC PIN MUX"
+	depends on HI_MULTI2_MODE_ATTR
+	help
+	    set sync pin mux
+	default HI_MULTIMODE_DEMOD2_SYNC_PIN_MUX_SYNC
+
+config HI_MULTIMODE_DEMOD2_SYNC_PIN_MUX_SYNC
+	bool "HI_UNF_TUNER_SYNC_PIN_MUX_SYNC"
+config HI_MULTIMODE_DEMOD2_SYNC_PIN_MUX_HV_SEL
+	bool "HI_UNF_TUNER_SYNC_PIN_MUX_HV_SEL"
+config HI_MULTIMODE_DEMOD2_SYNC_PIN_MUX_LNB_EN
+	bool "HI_UNF_TUNER_SYNC_PIN_MUX_LNB_EN"
+config HI_MULTIMODE_DEMOD2_SYNC_PIN_MUX_GPIO
+	bool "HI_UNF_TUNER_SYNC_PIN_MUX_GPIO"
+endchoice
+
+choice
+	prompt "IF Output Select"
+	depends on HI_MULTI2_MODE_ATTR
+	help
+	    Select which port to output if
+	default HI_MULTIMODE_DEMOD2_SINGLE_Q_OUTPUT if HI_TUNER2_SIGNAL_DVB_T || HI_TUNER2_SIGNAL_DVB_T2 || HI_TUNER2_SIGNAL_DTMB || HI_TUNER2_SIGNAL_ISDB_T || HI_TUNER2_SIGNAL_ATSC_T|| HI_TUNER2_SIGNAL_CAB || HI_TUNER2_SIGNAL_J83B
+
+config HI_MULTIMODE_DEMOD2_BOTH_IQ_OUTPUT
+	bool "HI_UNF_TUNER_IF_OUTPUT_SEL_BOTH_IQ"
+config HI_MULTIMODE_DEMOD2_SINGLE_I_OUTPUT
+	bool "HI_UNF_TUNER_IF_OUTPUT_SEL_SINGLE_I"
+config HI_MULTIMODE_DEMOD2_SINGLE_Q_OUTPUT
+	bool "HI_UNF_TUNER_IF_OUTPUT_SEL_SINGLE_Q"
+endchoice
+
+config  HI_MULTIMODE_DEMOD2_TS_COMBINATION_FLAG
+	hex "MULTI DEMOD2 TS COMB FLAG"
+	range 0 0x1
+	depends on HI_MULTI2_MODE_ATTR
+	help
+		MULTI DEMOD2 TS COMB FLAG.
+	default 0
+	
+choice
+	prompt "TS Tag Length"
+	depends on HI_MULTI2_MODE_ATTR
+	help
+	    Config ts tag length
+	default HI_MULTIMODE_DEMOD2_TS_TAG_LENGTH_4BYTE
+
+config HI_MULTIMODE_DEMOD2_TS_TAG_LENGTH_1BYTE
+	bool "HI_UNF_TUNER_TS_TAG_1BYTE_LENGTH"
+config HI_MULTIMODE_DEMOD2_TS_TAG_LENGTH_2BYTE
+	bool "HI_UNF_TUNER_TS_TAG_2BYTE_LENGTH"
+config HI_MULTIMODE_DEMOD2_TS_TAG_LENGTH_3BYTE
+	bool "HI_UNF_TUNER_TS_TAG_3BYTE_LENGTH"
+config HI_MULTIMODE_DEMOD2_TS_TAG_LENGTH_4BYTE
+	bool "HI_UNF_TUNER_TS_TAG_4BYTE_LENGTH"
+endchoice
+	
+config  HI_MULTIMODE_DEMOD2_TS_TAG_TEXT0
+	hex "MULTI DEMOD2 TS TAG TEXT0"
+	range 0 0xFF
+	depends on HI_MULTI2_MODE_ATTR
+	help
+		MULTI DEMOD2 TS TAG TEXT0
+	default 0
+	
+config  HI_MULTIMODE_DEMOD2_TS_TAG_TEXT1
+	hex "MULTI DEMOD2 TS TAG TEXT1"
+	range 0 0xFF
+	depends on HI_MULTI2_MODE_ATTR
+	help
+		MULTI DEMOD2 TS TAG TEXT1
+	default 0
+	
+config  HI_MULTIMODE_DEMOD2_TS_TAG_TEXT2
+	hex "MULTI DEMOD2 TS TAG TEXT2"
+	range 0 0xFF
+	depends on HI_MULTI2_MODE_ATTR
+	help
+		MULTI DEMOD2 TS TAG TEXT2
+	default 0
+	
+config  HI_MULTIMODE_DEMOD2_TS_TAG_TEXT3
+	hex "MULTI DEMOD2 TS TAG TEXT3"
+	range 0 0xFF
+	depends on HI_MULTI2_MODE_ATTR
+	help
+		MULTI DEMOD2 TS TAG TEXT3
+	default 0
+
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menuconfig HI_TUNER2_TSOUT
+	depends on HI_TUNER2_SIGNAL_SAT || HI_TUNER2_SIGNAL_DVB_T || HI_TUNER2_SIGNAL_DVB_T2
+	bool "Demod TSOUT Config"
+	default n
+
+choice
+	prompt "Output PIN 0"
+	depends on HI_TUNER2_TSOUT
+	help
+	    The function of demod TS output PIN 0.
+	default HI_TUNER2_OUTPUT_PIN0_TSDAT0
+
+config  HI_TUNER2_OUTPUT_PIN0_TSDAT0
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT0"
+config  HI_TUNER2_OUTPUT_PIN0_TSDAT1
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT1"
+config  HI_TUNER2_OUTPUT_PIN0_TSDAT2
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT2"
+config  HI_TUNER2_OUTPUT_PIN0_TSDAT3
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT3"
+config  HI_TUNER2_OUTPUT_PIN0_TSDAT4
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT4"
+config  HI_TUNER2_OUTPUT_PIN0_TSDAT5
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT5"
+config  HI_TUNER2_OUTPUT_PIN0_TSDAT6
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT6"
+config  HI_TUNER2_OUTPUT_PIN0_TSDAT7
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT7"
+config  HI_TUNER2_OUTPUT_PIN0_TSSYNC
+	bool "HI_UNF_TUNER_OUTPUT_TSSYNC"
+config  HI_TUNER2_OUTPUT_PIN0_TSVLD
+	bool "HI_UNF_TUNER_OUTPUT_TSVLD"
+config  HI_TUNER2_OUTPUT_PIN0_TSERR
+	bool "HI_UNF_TUNER_OUTPUT_TSERR"
+endchoice
+
+choice
+	prompt "Output PIN 1"
+	depends on HI_TUNER2_TSOUT
+	help
+	    The function of demod TS output PIN 1.
+	default HI_TUNER2_OUTPUT_PIN1_TSDAT1
+
+config  HI_TUNER2_OUTPUT_PIN1_TSDAT0
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT0"
+config  HI_TUNER2_OUTPUT_PIN1_TSDAT1
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT1"
+config  HI_TUNER2_OUTPUT_PIN1_TSDAT2
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT2"
+config  HI_TUNER2_OUTPUT_PIN1_TSDAT3
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT3"
+config  HI_TUNER2_OUTPUT_PIN1_TSDAT4
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT4"
+config  HI_TUNER2_OUTPUT_PIN1_TSDAT5
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT5"
+config  HI_TUNER2_OUTPUT_PIN1_TSDAT6
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT6"
+config  HI_TUNER2_OUTPUT_PIN1_TSDAT7
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT7"
+config  HI_TUNER2_OUTPUT_PIN1_TSSYNC
+	bool "HI_UNF_TUNER_OUTPUT_TSSYNC"
+config  HI_TUNER2_OUTPUT_PIN1_TSVLD
+	bool "HI_UNF_TUNER_OUTPUT_TSVLD"
+config  HI_TUNER2_OUTPUT_PIN1_TSERR
+	bool "HI_UNF_TUNER_OUTPUT_TSERR"
+endchoice
+
+choice
+	prompt "Output PIN 2"
+	depends on HI_TUNER2_TSOUT
+	help
+	    The function of demod TS output PIN 2.
+	default HI_TUNER2_OUTPUT_PIN2_TSDAT2
+
+config  HI_TUNER2_OUTPUT_PIN2_TSDAT0
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT0"
+config  HI_TUNER2_OUTPUT_PIN2_TSDAT1
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT1"
+config  HI_TUNER2_OUTPUT_PIN2_TSDAT2
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT2"
+config  HI_TUNER2_OUTPUT_PIN2_TSDAT3
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT3"
+config  HI_TUNER2_OUTPUT_PIN2_TSDAT4
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT4"
+config  HI_TUNER2_OUTPUT_PIN2_TSDAT5
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT5"
+config  HI_TUNER2_OUTPUT_PIN2_TSDAT6
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT6"
+config  HI_TUNER2_OUTPUT_PIN2_TSDAT7
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT7"
+config  HI_TUNER2_OUTPUT_PIN2_TSSYNC
+	bool "HI_UNF_TUNER_OUTPUT_TSSYNC"
+config  HI_TUNER2_OUTPUT_PIN2_TSVLD
+	bool "HI_UNF_TUNER_OUTPUT_TSVLD"
+config  HI_TUNER2_OUTPUT_PIN2_TSERR
+	bool "HI_UNF_TUNER_OUTPUT_TSERR"
+endchoice
+
+choice
+	prompt "Output PIN 3"
+	depends on HI_TUNER2_TSOUT
+	help
+	    The function of demod TS output PIN 3.
+	default HI_TUNER2_OUTPUT_PIN3_TSDAT3
+
+config  HI_TUNER2_OUTPUT_PIN3_TSDAT0
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT0"
+config  HI_TUNER2_OUTPUT_PIN3_TSDAT1
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT1"
+config  HI_TUNER2_OUTPUT_PIN3_TSDAT2
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT2"
+config  HI_TUNER2_OUTPUT_PIN3_TSDAT3
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT3"
+config  HI_TUNER2_OUTPUT_PIN3_TSDAT4
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT4"
+config  HI_TUNER2_OUTPUT_PIN3_TSDAT5
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT5"
+config  HI_TUNER2_OUTPUT_PIN3_TSDAT6
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT6"
+config  HI_TUNER2_OUTPUT_PIN3_TSDAT7
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT7"
+config  HI_TUNER2_OUTPUT_PIN3_TSSYNC
+	bool "HI_UNF_TUNER_OUTPUT_TSSYNC"
+config  HI_TUNER2_OUTPUT_PIN3_TSVLD
+	bool "HI_UNF_TUNER_OUTPUT_TSVLD"
+config  HI_TUNER2_OUTPUT_PIN3_TSERR
+	bool "HI_UNF_TUNER_OUTPUT_TSERR"
+endchoice
+
+choice
+	prompt "Output PIN 4"
+	depends on HI_TUNER2_TSOUT
+	help
+	    The function of demod TS output PIN 4.
+	default HI_TUNER2_OUTPUT_PIN4_TSDAT4
+
+config  HI_TUNER2_OUTPUT_PIN4_TSDAT0
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT0"
+config  HI_TUNER2_OUTPUT_PIN4_TSDAT1
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT1"
+config  HI_TUNER2_OUTPUT_PIN4_TSDAT2
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT2"
+config  HI_TUNER2_OUTPUT_PIN4_TSDAT3
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT3"
+config  HI_TUNER2_OUTPUT_PIN4_TSDAT4
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT4"
+config  HI_TUNER2_OUTPUT_PIN4_TSDAT5
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT5"
+config  HI_TUNER2_OUTPUT_PIN4_TSDAT6
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT6"
+config  HI_TUNER2_OUTPUT_PIN4_TSDAT7
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT7"
+config  HI_TUNER2_OUTPUT_PIN4_TSSYNC
+	bool "HI_UNF_TUNER_OUTPUT_TSSYNC"
+config  HI_TUNER2_OUTPUT_PIN4_TSVLD
+	bool "HI_UNF_TUNER_OUTPUT_TSVLD"
+config  HI_TUNER2_OUTPUT_PIN4_TSERR
+	bool "HI_UNF_TUNER_OUTPUT_TSERR"
+endchoice
+
+choice
+	prompt "Output PIN 5"
+	depends on HI_TUNER2_TSOUT
+	help
+	    The function of demod TS output PIN 5.
+	default HI_TUNER2_OUTPUT_PIN5_TSDAT5
+
+config  HI_TUNER2_OUTPUT_PIN5_TSDAT0
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT0"
+config  HI_TUNER2_OUTPUT_PIN5_TSDAT1
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT1"
+config  HI_TUNER2_OUTPUT_PIN5_TSDAT2
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT2"
+config  HI_TUNER2_OUTPUT_PIN5_TSDAT3
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT3"
+config  HI_TUNER2_OUTPUT_PIN5_TSDAT4
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT4"
+config  HI_TUNER2_OUTPUT_PIN5_TSDAT5
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT5"
+config  HI_TUNER2_OUTPUT_PIN5_TSDAT6
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT6"
+config  HI_TUNER2_OUTPUT_PIN5_TSDAT7
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT7"
+config  HI_TUNER2_OUTPUT_PIN5_TSSYNC
+	bool "HI_UNF_TUNER_OUTPUT_TSSYNC"
+config  HI_TUNER2_OUTPUT_PIN5_TSVLD
+	bool "HI_UNF_TUNER_OUTPUT_TSVLD"
+config  HI_TUNER2_OUTPUT_PIN5_TSERR
+	bool "HI_UNF_TUNER_OUTPUT_TSERR"
+endchoice
+
+choice
+	prompt "Output PIN 6"
+	depends on HI_TUNER2_TSOUT
+	help
+	    The function of demod TS output PIN 6.
+	default HI_TUNER2_OUTPUT_PIN6_TSDAT6
+
+config  HI_TUNER2_OUTPUT_PIN6_TSDAT0
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT0"
+config  HI_TUNER2_OUTPUT_PIN6_TSDAT1
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT1"
+config  HI_TUNER2_OUTPUT_PIN6_TSDAT2
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT2"
+config  HI_TUNER2_OUTPUT_PIN6_TSDAT3
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT3"
+config  HI_TUNER2_OUTPUT_PIN6_TSDAT4
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT4"
+config  HI_TUNER2_OUTPUT_PIN6_TSDAT5
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT5"
+config  HI_TUNER2_OUTPUT_PIN6_TSDAT6
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT6"
+config  HI_TUNER2_OUTPUT_PIN6_TSDAT7
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT7"
+config  HI_TUNER2_OUTPUT_PIN6_TSSYNC
+	bool "HI_UNF_TUNER_OUTPUT_TSSYNC"
+config  HI_TUNER2_OUTPUT_PIN6_TSVLD
+	bool "HI_UNF_TUNER_OUTPUT_TSVLD"
+config  HI_TUNER2_OUTPUT_PIN6_TSERR
+	bool "HI_UNF_TUNER_OUTPUT_TSERR"
+endchoice
+
+choice
+	prompt "Output PIN 7"
+	depends on HI_TUNER2_TSOUT
+	help
+	    The function of demod TS output PIN 7.
+	default HI_TUNER2_OUTPUT_PIN7_TSDAT7
+
+config  HI_TUNER2_OUTPUT_PIN7_TSDAT0
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT0"
+config  HI_TUNER2_OUTPUT_PIN7_TSDAT1
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT1"
+config  HI_TUNER2_OUTPUT_PIN7_TSDAT2
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT2"
+config  HI_TUNER2_OUTPUT_PIN7_TSDAT3
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT3"
+config  HI_TUNER2_OUTPUT_PIN7_TSDAT4
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT4"
+config  HI_TUNER2_OUTPUT_PIN7_TSDAT5
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT5"
+config  HI_TUNER2_OUTPUT_PIN7_TSDAT6
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT6"
+config  HI_TUNER2_OUTPUT_PIN7_TSDAT7
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT7"
+config  HI_TUNER2_OUTPUT_PIN7_TSSYNC
+	bool "HI_UNF_TUNER_OUTPUT_TSSYNC"
+config  HI_TUNER2_OUTPUT_PIN7_TSVLD
+	bool "HI_UNF_TUNER_OUTPUT_TSVLD"
+config  HI_TUNER2_OUTPUT_PIN7_TSERR
+	bool "HI_UNF_TUNER_OUTPUT_TSERR"
+endchoice
+
+choice
+	prompt "Output PIN 8"
+	depends on HI_TUNER2_TSOUT
+	help
+	    The function of demod TS output PIN 8.
+	default HI_TUNER2_OUTPUT_PIN8_TSSYNC
+
+config  HI_TUNER2_OUTPUT_PIN8_TSDAT0
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT0"
+config  HI_TUNER2_OUTPUT_PIN8_TSDAT1
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT1"
+config  HI_TUNER2_OUTPUT_PIN8_TSDAT2
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT2"
+config  HI_TUNER2_OUTPUT_PIN8_TSDAT3
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT3"
+config  HI_TUNER2_OUTPUT_PIN8_TSDAT4
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT4"
+config  HI_TUNER2_OUTPUT_PIN8_TSDAT5
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT5"
+config  HI_TUNER2_OUTPUT_PIN8_TSDAT6
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT6"
+config  HI_TUNER2_OUTPUT_PIN8_TSDAT7
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT7"
+config  HI_TUNER2_OUTPUT_PIN8_TSSYNC
+	bool "HI_UNF_TUNER_OUTPUT_TSSYNC"
+config  HI_TUNER2_OUTPUT_PIN8_TSVLD
+	bool "HI_UNF_TUNER_OUTPUT_TSVLD"
+config  HI_TUNER2_OUTPUT_PIN8_TSERR
+	bool "HI_UNF_TUNER_OUTPUT_TSERR"
+endchoice
+
+choice
+	prompt "Output PIN 9"
+	depends on HI_TUNER2_TSOUT
+	help
+	    The function of demod TS output PIN 9.
+	default HI_TUNER2_OUTPUT_PIN9_TSVLD
+
+config  HI_TUNER2_OUTPUT_PIN9_TSDAT0
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT0"
+config  HI_TUNER2_OUTPUT_PIN9_TSDAT1
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT1"
+config  HI_TUNER2_OUTPUT_PIN9_TSDAT2
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT2"
+config  HI_TUNER2_OUTPUT_PIN9_TSDAT3
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT3"
+config  HI_TUNER2_OUTPUT_PIN9_TSDAT4
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT4"
+config  HI_TUNER2_OUTPUT_PIN9_TSDAT5
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT5"
+config  HI_TUNER2_OUTPUT_PIN9_TSDAT6
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT6"
+config  HI_TUNER2_OUTPUT_PIN9_TSDAT7
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT7"
+config  HI_TUNER2_OUTPUT_PIN9_TSSYNC
+	bool "HI_UNF_TUNER_OUTPUT_TSSYNC"
+config  HI_TUNER2_OUTPUT_PIN9_TSVLD
+	bool "HI_UNF_TUNER_OUTPUT_TSVLD"
+config  HI_TUNER2_OUTPUT_PIN9_TSERR
+	bool "HI_UNF_TUNER_OUTPUT_TSERR"
+endchoice
+
+choice
+	prompt "Output PIN 10"
+	depends on HI_TUNER2_TSOUT
+	help
+	    The function of demod TS output PIN 10.
+	default HI_TUNER2_OUTPUT_PIN10_TSERR
+
+config  HI_TUNER2_OUTPUT_PIN10_TSDAT0
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT0"
+config  HI_TUNER2_OUTPUT_PIN10_TSDAT1
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT1"
+config  HI_TUNER2_OUTPUT_PIN10_TSDAT2
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT2"
+config  HI_TUNER2_OUTPUT_PIN10_TSDAT3
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT3"
+config  HI_TUNER2_OUTPUT_PIN10_TSDAT4
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT4"
+config  HI_TUNER2_OUTPUT_PIN10_TSDAT5
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT5"
+config  HI_TUNER2_OUTPUT_PIN10_TSDAT6
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT6"
+config  HI_TUNER2_OUTPUT_PIN10_TSDAT7
+	bool "HI_UNF_TUNER_OUTPUT_TSDAT7"
+config  HI_TUNER2_OUTPUT_PIN10_TSSYNC
+	bool "HI_UNF_TUNER_OUTPUT_TSSYNC"
+config  HI_TUNER2_OUTPUT_PIN10_TSVLD
+	bool "HI_UNF_TUNER_OUTPUT_TSVLD"
+config  HI_TUNER2_OUTPUT_PIN10_TSERR
+	bool "HI_UNF_TUNER_OUTPUT_TSERR"
+endchoice
+
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

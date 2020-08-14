@@ -1,0 +1,237 @@
+{                   FOUR_REG_SEL_ADDR  ,0x00  },
+{ 		      AGC_CTRL_1_ADDR  ,0xF0  },
+{ 		      AGC_CTRL_2_ADDR  ,0x02  },
+{		      AGC_CTRL_3_ADDR  ,0xFF  },
+{ 		      AGC_CTRL_4_ADDR  ,0x02  },	
+{ 		      AGC_CTRL_6_ADDR  ,0x89  },			
+{ 		     BAGC_CTRL_2_ADDR  ,0x01  },
+{ 		     BAGC_CTRL_3_ADDR  ,0xD5  },	
+{ 		    BAGC_CTRL_15_ADDR  ,0x20  },
+{ 		    BAGC_CTRL_16_ADDR  ,0x20  },
+{ 		    BAGC_CTRL_17_ADDR  ,0x34  },			
+{ 		       FS_CTRL_1_ADDR  ,0x02  },    //A:0xb1 0x05		
+{		       FS_CTRL_2_ADDR  ,0x9D  },    //A:0xb2 0x88
+{ 		 SFREQ_AGC1_INIT_ADDR  ,0xF0  },
+{                     EQU_CTRL_2_ADDR  ,0xf0  },    //20130305   A:0x01
+{                     EQU_CTRL_3_ADDR  ,0x22},      //           A:0x02
+{                     EQU_CTRL_4_ADDR  ,0x6F},      //20130305   A:0x03
+{                     EQU_CTRL_6_ADDR  ,0x00},      //           A:0x04
+{                     EQU_CTRL_7_ADDR  ,0x00},
+{                     EQU_CTRL_8_ADDR  ,0x00},
+{                     EQU_CTRL_9_ADDR  ,0x00},
+{                    EQU_CTRL_10_ADDR  ,0x00},
+{                     EQU_STAT_2_ADDR  ,0x00},
+{                     EQU_STAT_3_ADDR  ,0x86},
+{		      EQU_STAT_4_ADDR  ,0x48},    //20130305     A:0x0c
+{		      EQU_STAT_5_ADDR  ,0x26},    //20130305     A:0x0d
+{		      EQU_STAT_6_ADDR  ,0x3b},    //20130305     A:0x0e
+{		      EQU_STAT_7_ADDR  ,0x0a},    //20130305     A:0x0f
+{                      TR_CTRL_2_ADDR  ,0xFA},
+{                      TR_CTRL_4_ADDR  ,0xFA},
+{                      TR_CTRL_5_ADDR  ,0x10},
+{                      TR_CTRL_6_ADDR  ,0x33},
+{                      TR_CTRL_8_ADDR  ,0x00},
+{                      TR_CTRL_9_ADDR  ,0x9E},
+{                     TR_CTRL_10_ADDR  ,0x32},
+{                     TR_CTRL_11_ADDR  ,0x1C},
+{                     TR_CTRL_12_ADDR  ,0x0C},
+{                     TR_CTRL_13_ADDR  ,0x09},
+{                     TR_CTRL_14_ADDR  ,0x05},
+{                     TR_CTRL_15_ADDR  ,0x66},
+{                     TR_CTRL_16_ADDR  ,0x33},
+{                     TR_CTRL_17_ADDR  ,0x63},
+{                      TR_STAT_1_ADDR  ,0x43},
+{                      TR_STAT_2_ADDR  ,0x07},
+{                      CR_CTRL_3_ADDR  ,0x23},
+{                      CR_CTRL_4_ADDR  ,0x36},
+{                     CR_CTRL_16_ADDR  ,0x05},
+{                     CR_CTRL_17_ADDR  ,0x63},
+{                     CR_CTRL_20_ADDR  ,0x08},
+{                     CR_CTRL_21_ADDR  ,0x00},
+{                     CR_CTRL_22_ADDR  ,0x16},    //  A:0x26
+{                     CR_CTRL_23_ADDR  ,0x00},    //  A:0x27
+{                     CR_CTRL_24_ADDR  ,0x15},    //  A:0x28
+{                     CR_CTRL_25_ADDR  ,0x00},    //  A:0x29
+{                     CR_CTRL_26_ADDR  ,0x88},
+{                     CR_CTRL_27_ADDR  ,0x88},
+{                     CR_CTRL_28_ADDR  ,0x28},
+{                     CR_CTRL_29_ADDR  ,0x88},
+{                     CR_CTRL_30_ADDR  ,0x08},
+{                     CR_CTRL_31_ADDR  ,0x26},
+{                      CR_STAT_2_ADDR  ,0x16},
+{                      CR_STAT_3_ADDR  ,0x65},
+{                      CR_STAT_4_ADDR  ,0x00},
+{                      CR_STAT_5_ADDR  ,0xA6},
+{                      CR_STAT_6_ADDR  ,0x89},
+{                      CR_STAT_7_ADDR  ,0x92},
+{                        MCTRL_1_ADDR  ,0x00},
+{                        MCTRL_2_ADDR  ,0x10},
+{                        MCTRL_3_ADDR  ,0x31},
+{                        MCTRL_5_ADDR  ,0x68},
+{                        MCTRL_6_ADDR  ,0xF7},
+{                        MCTRL_7_ADDR  ,0x60},
+{                        MCTRL_8_ADDR  ,0x8A},
+{                        MCTRL_9_ADDR  ,0x08},
+{                       MCTRL_10_ADDR  ,0x00},  //  A:0x49
+{                       MCTRL_11_ADDR  ,0xF8},
+{                     AGC_CTRL_5_ADDR  ,0x00},
+{                     AGC_CTRL_9_ADDR  ,0x00},
+{                    AGC_CTRL_11_ADDR  ,0x00},
+{                    AGC_CTRL_13_ADDR  ,0x0A},
+{                    AGC_CTRL_15_ADDR  ,0x80},
+{                    AGC_CTRL_17_ADDR  ,0x00},
+{                    AGC_CTRL_18_ADDR  ,0x00},
+{                    AGC_CTRL_19_ADDR  ,0xFF},
+{                    AGC_CTRL_20_ADDR  ,0x40},
+{                    AGC_CTRL_21_ADDR  ,0x00},
+{                    AGC_CTRL_22_ADDR  ,0xC0},
+{                    BAGC_CTRL_1_ADDR  ,0x11},
+{                    BAGC_CTRL_4_ADDR  ,0x07},
+{                    BAGC_CTRL_5_ADDR  ,0x20},
+{                    BAGC_CTRL_6_ADDR  ,0x10},
+{                    BAGC_CTRL_7_ADDR  ,0x0B},
+{                    BAGC_CTRL_8_ADDR  ,0x16},
+{                    BAGC_CTRL_9_ADDR  ,0x20},
+{                   BAGC_CTRL_10_ADDR  ,0xB0},
+{                   BAGC_CTRL_12_ADDR  ,0x00},
+{                   BAGC_CTRL_13_ADDR  ,0x00},
+{                   BAGC_CTRL_14_ADDR  ,0x00},
+{                    BAGC_STAT_1_ADDR  ,0xBD},
+{                    BAGC_STAT_2_ADDR  ,0x50},
+{                    BAGC_STAT_3_ADDR  ,0x46},
+{                    BAGC_STAT_4_ADDR  ,0x50},
+{                    BAGC_STAT_5_ADDR  ,0x46},
+{                    BAGC_STAT_6_ADDR  ,0x50},
+{                    BAGC_STAT_7_ADDR  ,0x14},
+{                   BAGC_CTRL_18_ADDR  ,0x19},
+{                   BAGC_CTRL_19_ADDR  ,0x0C},
+{                    SYNC_CTRL_1_ADDR  ,0x0A},
+{                    SYNC_CTRL_3_ADDR  ,0x30},
+{                          BER_1_ADDR  ,0xB0},
+{                          BER_2_ADDR  ,0x00},
+{                          BER_3_ADDR  ,0x00},
+{                          BER_4_ADDR  ,0x00},
+{                      TS_CTRL_1_ADDR  ,0x8E},
+{                      TS_CTRL_2_ADDR  ,0x60},
+{                      TS_CTRL_3_ADDR  ,0x12},
+{                      RS_CTRL_1_ADDR  ,0xA0},
+{                      RS_CTRL_2_ADDR  ,0x70},
+{                      RS_CTRL_3_ADDR  ,0xA0},
+{                      RS_CTRL_4_ADDR  ,0x70},
+{                      RS_CTRL_5_ADDR  ,0x00},
+{                      RS_CTRL_6_ADDR  ,0x00},
+{                      RS_CTRL_8_ADDR  ,0x02},
+{                      FS_CTRL_4_ADDR  ,0x00},
+{                      FS_CTRL_5_ADDR  ,0x70},
+{                      FS_CTRL_6_ADDR  ,0x00},
+{                      FS_CTRL_7_ADDR  ,0x0A},
+{                      FS_STAT_1_ADDR  ,0x00},
+{                      FS_STAT_2_ADDR  ,0x00},
+{                    QAM_DEBUG_1_ADDR  ,0x37},
+{                    QAM_DEBUG_5_ADDR  ,0x64},
+{                    QAM_DEBUG_6_ADDR  ,0x00},
+{                    QAM_DEBUG_7_ADDR  ,0x00},
+{                   J83B_DEBUG_0_ADDR  ,0x00},    //20130305   A:0xc7
+{                    DAGC_CTRL_1_ADDR  ,0xd2},    //20130305   A:0xd0
+{                    DAGC_CTRL_2_ADDR  ,0x35},    //20130305   A:0xd1
+{                    DAGC_CTRL_3_ADDR  ,0x07},    //20130305   A:0xd2
+{                    DAGC_CTRL_4_ADDR  ,0x9b},    //20130305   A:0xd3
+{                    DAGC_CTRL_5_ADDR  ,0x62},    //20130305   A:0xd4
+{                    DAGC_CTRL_6_ADDR  ,0xba},    //20130305   A:0xd5
+{                    DAGC_CTRL_7_ADDR  ,0x1f},    //20130305   A:0xd6
+{                    DAGC_CTRL_8_ADDR  ,0x32},    //20130305   A:0xd7
+{                    DAGC_CTRL_9_ADDR  ,0x53},    //20130319   A:0xd8
+{                   DAGC_CTRL_10_ADDR  ,0x00},    //20130305   A:0xd9
+{                    DAGC_STAT_1_ADDR  ,0x40},
+{                    DAGC_STAT_2_ADDR  ,0x27},
+{                      BS_CTRL_1_ADDR  ,0x04},
+{                      BS_CTRL_2_ADDR  ,0x10},
+{                      BS_CTRL_3_ADDR  ,0x62},
+{                      BS_CTRL_4_ADDR  ,0x40},
+{                      BS_CTRL_5_ADDR  ,0x0C},
+{                      BS_CTRL_6_ADDR  ,0x05},
+{                      BS_STAT_1_ADDR  ,0x80},
+{                      BS_STAT_2_ADDR  ,0x0F},
+{                      BS_STAT_3_ADDR  ,0x00},
+{                      BS_STAT_4_ADDR  ,0x86},
+{                      BS_STAT_5_ADDR  ,0x0D},
+{                      BS_PARA_1_ADDR  ,0xC8},
+{                      BS_PARA_2_ADDR  ,0xCD},
+{                      BS_PARA_3_ADDR  ,0x00},
+{                      BS_PARA_4_ADDR  ,0x64},
+{                   DEPHASE_CTRL_ADDR  ,0x0b},   //  A:0xea
+{              DEPHASE_GAIN_K_HI_ADDR  ,0x07},   //  A:0xe1
+{              DEPHASE_GAIN_K_LO_ADDR  ,0xC2},   //  A:0xe2
+{        DEPHASE_STA_NUM_BASE_HI_ADDR  ,0x08},
+{        DEPHASE_STA_NUM_BASE_LO_ADDR  ,0x00},
+{           DEPHASE_SNR_THRES_HI_ADDR  ,0x01},
+{           DEPHASE_SNR_THRES_LO_ADDR  ,0x37},
+{        DEPHASE_SELECT_KL_THRES_ADDR  ,0x0F},
+{        DEPHASE_SELECT_EQ_THRES_ADDR  ,0x0F},
+{       DEPHASE_STATE4WORK_DELAY_ADDR  ,0x13},
+{                 CR_STATE1COUNT_ADDR  ,0x08},    //  A:0xeb
+{                 CR_STATE2COUNT_ADDR  ,0x1F},    //  A:0xec
+{                 CR_STATE3COUNT_ADDR  ,0x02},    //  A:0xed
+{                 CR_STATE4COUNT_ADDR  ,0x02},    //  A:0xee
+{                 CR_STATE5COUNT_ADDR  ,0x02},    //20130305   A:0xef
+{                 CR_STATE6COUNT_ADDR  ,0x00},    //20130305   A:0xf0
+{            CR_LOST_UP_THRES_HI_ADDR  ,0x03},    //20130305   A:0xf1
+{            CR_LOST_UP_THRES_LO_ADDR  ,0xff},    //  A:0xf2
+{          CR_LOST_DOWN_THRES_HI_ADDR  ,0x00},    //  A:0xf3
+{          CR_LOST_DOWN_THRES_LO_ADDR  ,0x00},    //  A:0xf4
+{               CR_KPROP_SCALE12_ADDR  ,0x22},    //  A:0xf5
+{               CR_KPROP_SCALE34_ADDR  ,0x23},    //  A:0xf6
+{                CR_KINT_SCALE12_ADDR  ,0x01},    //  A:0xf7
+{                CR_KINT_SCALE34_ADDR  ,0x25},    //  A:0xf8
+{               SFREQ_CENTER_SEL_ADDR  ,0x01},
+{                       SFREQ_N6_ADDR  ,0x0F},
+{                     SFREQ_MASK_ADDR  ,0x3C},
+{                     SFREQ_STEP_ADDR  ,0x0A},
+{               SFREQ_COEFFTHRES_ADDR  ,0x00},
+{         SFREQ_REMOVE_AGC_SCALE_ADDR  ,0x06},
+{          SFREQ_REMOVE_AGC_COEF_ADDR  ,0x12},    //  A:0xff
+{                    SFREQ_ERR_CTRL_1  ,0x40},
+{                    SFREQ_ERR_CTRL_2  ,0x01},
+{                    SFREQ_ERR_CTRL_3  ,0x00},
+{                  SFREQ_FIR_SEL_ADDR  ,0x00},
+{                 SFREQ_FIR_READ_ADDR  ,0x00},
+{            SFREQ_CR_LOST_COUNT_ADDR  ,0x00},
+{                SFREQ_ERR_SCALE_ADDR  ,0x33},
+{           SFREQ_AGC_BIT_SELECT_ADDR  ,0x0A},
+{                  SFREQ_SCALE77_ADDR  ,0x20},    //20130305  A:0x89
+{                  SFREQ_SCALE88_ADDR  ,0x36},    //20130305  A:0x8e
+{              SFREQ_PHASE_LARGE_ADDR  ,0x03},
+{              SFREQ_PHASE_SMALL_ADDR  ,0x03},
+{               SFREQ_HOLD_COUNT_ADDR  ,0xF8},
+{                SFREQ_STA_COUNT_ADDR  ,0x04},
+{                 SFREQ_FREQ_JIT_ADDR  ,0x13},
+{              SFREQ_COUNT_OUT_1_ADDR  ,0x00},
+{              SFREQ_COUNT_OUT_2_ADDR  ,0x00},
+{              SFREQ_COUNT_OUT_3_ADDR  ,0x00},
+{                  SFREQ_TR_GAIN_ADDR  ,0x57},  //  A:0xa5
+{                   J83B_MCTRL_0_ADDR  ,0x00},  //  A:0x4b
+{                   J83B_MCTRL_1_ADDR  ,0x00},
+{                   J83B_MCTRL_2_ADDR  ,0x08},
+{                   J83B_MCTRL_3_ADDR  ,0x22},
+{                   J83B_MCTRL_4_ADDR  ,0x20},
+{                     J83B_TCM_1_ADDR  ,0x08},
+{                     J83B_TCM_2_ADDR  ,0x7F},
+{                     J83B_TCM_3_ADDR  ,0x8a},//  A:0x38
+{                     J83B_TCM_4_ADDR  ,0x32},//  A:0x39
+{                     J83B_TCM_5_ADDR  ,0x00},
+{                     J83B_TCM_6_ADDR  ,0x11}, 
+{                      J83B_DI_1_ADDR  ,0x46},//  A:0x3c
+{                      J83B_DI_2_ADDR  ,0x40},
+{                  J83B_MFSYNC_1_ADDR  ,0xB7},//  A:0x3e
+{                  J83B_MFSYNC_2_ADDR  ,0x36},
+{                  J83B_TCM_BER0_ADDR  ,0x00},
+{                  J83B_TCM_BER1_ADDR  ,0x00},
+{                  J83B_TCM_BER2_ADDR  ,0x00},
+{                  J83B_TCM_BER3_ADDR  ,0x00},
+{                  J83B_FFSYNC_1_ADDR  ,0x17},//  A:0xba
+{                  J83B_FFSYNC_2_ADDR  ,0x00},
+{                  J83B_FFSYNC_3_ADDR  ,0x00},
+{                      J83B_DR_1_ADDR  ,0x7F},
+{                      J83B_DR_2_ADDR  ,0x7F},
+{                      J83B_DR_3_ADDR  ,0x7F},
+{                    J83B_MCTRL5_ADDR  ,0xc0},  //20130305   A:0x00

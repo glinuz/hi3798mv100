@@ -1,0 +1,60 @@
+menu "TEE OS"
+
+config SECURE_EXTENSION
+	bool "security extension support"
+	default n
+	help
+	  Include Security Extension.
+
+config  TZDRIVER
+	tristate "Secure Execution Communicator driver"
+	default n
+	depends on SECURE_EXTENSION
+	help
+	  Provides a communication interface between userspace and
+	  TrustZone Operating Environment.
+
+config TEELOG
+	tristate "Secure Execution Log driver"
+	default n
+	depends on TZDRIVER
+	help
+	  TEEOS log
+
+config TEE_TUI
+	tristate "Trusted user interface driver"
+	default n
+	depends on TZDRIVER
+	help
+	  Trusted user interface diver
+
+#config IMAX_CIPHER
+#	tristate "Imax cipher interface driver"
+#	default n
+#	depends on TZDRIVER
+#	help
+#	  Imax cipher interface diver
+
+#config TEE_RANDOM
+#	tristate "TEE based random driver"
+#	default n
+#	depends on TZDRIVER
+#	help
+#	  TEE based random diver
+
+#config HISI_SPI_SMC
+#	bool "hisi spi smc"
+#	default n
+
+#config HISI_SPI1_SMC
+#	bool "hisi spi1 smc"
+#	default n
+
+config DEVCHIP_PLATFORM
+	bool "when we are DEVCHIP PLATFORM"
+	default n
+
+#source drivers/hisi/tzdriver/ca_antiroot/Kconfig
+source drivers/hisilicon/tee/tee_hisi/tzdriver/libhwsecurec/Kconfig
+
+endmenu

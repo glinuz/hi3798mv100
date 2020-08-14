@@ -1,0 +1,99 @@
+LOCAL_PATH := $(my-dir)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := pkg_gettext
+
+EXT_TYPE_GZ := tar.gz
+#EXT_TYPE_XZ := tar.xz
+PKG_GETTEXT_NAME := gettext-0.18.2
+
+
+LOCAL_INTERMEDIATE_TARGETS := $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/.$(LOCAL_MODULE) \
+	$(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/.$(LOCAL_MODULE)_prepare \
+	$(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/.$(LOCAL_MODULE)_configure \
+	$(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/.$(LOCAL_MODULE)_make \
+	$(LOCAL_MODULE)-clean
+
+PRIVATE_PKG_GETTEXT_NAME_PREPARE := $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/.$(LOCAL_MODULE)_prepare
+PRIVATE_PKG_GETTEXT_NAME_CONFIGURE := $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/.$(LOCAL_MODULE)_configure
+PRIVATE_PKG_GETTEXT_NAME_MAKE := $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/.$(LOCAL_MODULE)_make
+PRIVATE_PKG_GETTEXT_NAME_INSTALL := $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/.$(LOCAL_MODULE)_install
+
+$(LOCAL_MODULE)-deps:$(LOCAL_MODULE)
+$(LOCAL_MODULE):$(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/.$(LOCAL_MODULE)
+
+$(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/.$(LOCAL_MODULE):$(PRIVATE_PKG_GETTEXT_NAME_INSTALL)
+
+ifeq ($(CFG_ENABLE_NDK), y)
+GETTEXT_INTLNAME:=libintl
+else
+GETTEXT_INTLNAME:=libgnuintl
+endif
+$(PRIVATE_PKG_GETTEXT_NAME_INSTALL):$(PRIVATE_PKG_GETTEXT_NAME_MAKE)
+	$(NS)echo "begin INSTALL $(PKG_GETTEXT_NAME)!"
+	$(NC)rm -rf $(TARGET_OUT_LIB_DIR)/$(GETTEXT_INTLNAME).so
+	$(NC)rm -rf $(TARGET_OUT_LIB_DIR)/$(GETTEXT_INTLNAME).so.8
+	$(NC)rm -rf $(TARGET_OUT_LIB_DIR)/$(GETTEXT_INTLNAME).so.8.1.2
+	cp -af $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/gettext-runtime/intl/.libs/$(GETTEXT_INTLNAME).so.8.1.2 $(TARGET_OUT_LIB_DIR)/$(GETTEXT_INTLNAME).so.8.1.2
+	cp -af $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/gettext-runtime/intl/.libs/$(GETTEXT_INTLNAME).so.8 $(TARGET_OUT_LIB_DIR)/$(GETTEXT_INTLNAME).so.8
+	cp -af $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/gettext-runtime/intl/.libs/$(GETTEXT_INTLNAME).so $(TARGET_OUT_LIB_DIR)/$(GETTEXT_INTLNAME).so
+ifeq ($(STRIP_IN_RELEASE_VERSION), y)
+	$(TARGET_STRIP) $(TARGET_OUT_LIB_DIR)/$(GETTEXT_INTLNAME).so.8.1.2
+endif
+
+	$(NS)echo "end INSTALL $(PKG_GETTEXT_NAME)!"
+
+$(PRIVATE_PKG_GETTEXT_NAME_MAKE):$(PRIVATE_PKG_GETTEXT_NAME_CONFIGURE)
+	$(NS)echo "begin make $(PKG_GETTEXT_NAME)!"
+	make -C $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/gettext-runtime $(MAKE_PARALLEL)
+	make -C $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/gettext-runtime install $(MAKE_PARALLEL)
+	$(NS)echo "end make $(PKG_GETTEXT_NAME)!"
+
+$(PRIVATE_PKG_GETTEXT_NAME_CONFIGURE):$(PRIVATE_PKG_GETTEXT_NAME_PREPARE)
+	$(NS)echo "begin configure $(PKG_GETTEXT_NAME)..."
+	chmod 777 $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/gettext-runtime/configure
+	-cd $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/gettext-runtime;sed -i "s/1.12/1.11/g" `grep "1.12" -rnsl ./configure`
+	cd $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/gettext-runtime;ac_cv_path_install="/usr/bin/install -cp" ./configure --prefix="${THIRDPARTY_OBJ_DIR}" \
+		--disable-libasprintf \
+		--host=$(CFG_HOST_TYPE) \
+	    CFLAGS="$(OPENSOURCE_CFLAGS) --sysroot=$(CFG_COMPILE_SYSROOT)" \
+	    CPPFLAGS="$(OPENSOURCE_CXXFLAGS)" \
+	    LDFLAGS="$(OPENSOURCE_LDFLAGS)" \
+		--disable-static --enable-shared --disable-java --disable-native-java \
+		--enable-fast-install CXX=$(TARGET_CXX) CC=$(TARGET_CC)
+	-cd $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/gettext-runtime;sed -i "s/install: install-exec install-data/install:/g" `grep "install: install-exec install-data" -rnsl ./po/Makefile`
+	$(NS)touch $@
+	$(NS)echo "end configure $(PKG_GETTEXT_NAME)..."
+
+$(PRIVATE_PKG_GETTEXT_NAME_PREPARE):
+	$(NS)echo "begin prepare $(PKG_GETTEXT_NAME)..."
+	$(NC)rm -rf $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)
+	$(NC) mkdir -p $(SME_THIRDPARTY_MERGE_DIR)
+	tar -xf $(SME_THIRDPARTY_ORG_DIR)/$(PKG_GETTEXT_NAME).$(EXT_TYPE_GZ) -C $(SME_THIRDPARTY_MERGE_DIR)
+	cp -af $(SME_THIRDPARTY_PATCH_DIR)/$(PKG_GETTEXT_NAME) $(SME_THIRDPARTY_MERGE_DIR)/
+	$(NS)touch $@
+	$(NS)echo "end prepare $(PKG_GETTEXT_NAME)!"
+
+$(LOCAL_MODULE)-clean:
+	$(NS)echo "begin make clean $(PKG_GETTEXT_NAME) ..."
+	$(NC)rm -rf $(TARGET_OUT_LIB_DIR)/$(GETTEXT_INTLNAME).so
+	$(NC)rm -rf $(TARGET_OUT_LIB_DIR)/$(GETTEXT_INTLNAME).so.8
+	$(NC)rm -rf $(TARGET_OUT_LIB_DIR)/$(GETTEXT_INTLNAME).so.8.1.2
+	$(NC)make -C $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/gettext-runtime uninstall $(MAKE_PARALLEL)
+	$(NC)make -C $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)/gettext-runtime clean $(MAKE_PARALLEL)
+	$(NS)echo "end make clean $(PKG_GETTEXT_NAME)"
+
+$(LOCAL_MODULE)-cfg-clean:
+	$(NS)echo "begin make clean $(PKG_GETTEXT_NAME)-cfg ..."
+	$(NC)rm -rf $(PRIVATE_PKG_GETTEXT_NAME_CONFIGURE)
+	$(NS)echo "end make clean $(PKG_GETTEXT_NAME)-cfg ..."
+
+$(LOCAL_MODULE)-prepare-clean:$(LOCAL_MODULE)-clean
+	$(NS)echo "begin make clean $(PKG_GETTEXT_NAME)-prepare ..."
+	$(NC)rm -rf $(PRIVATE_PKG_GETTEXT_NAME_CONFIGURE)
+	$(NC)rm -rf $(PRIVATE_PKG_GETTEXT_NAME_PREPARE)
+	$(NC)rm -rf $(SME_THIRDPARTY_MERGE_DIR)/$(PKG_GETTEXT_NAME)
+	$(NS)echo "end make clean $(PKG_GETTEXT_NAME)-prepare ..."
+
+include $(BUILD_OPENSOURCE_PKG)

@@ -1,0 +1,10 @@
+#
+# hisilicon spi flash controller device version 350
+#
+
+menuconfig MTD_HISFC350
+	tristate "hisilicon spi flash controller device version 350 driver"
+	default n
+	select MTD_SPI_IDS
+	help
+	  hisilicon spi flash controller device version 350.

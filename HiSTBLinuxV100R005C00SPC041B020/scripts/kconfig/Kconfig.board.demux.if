@@ -1,0 +1,30 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "IF Config"	  	  
+config HI_IF_TYPE
+	prompt "Port Type"
+	string
+	default parallel_nosync_188
+	help
+	  The port type on board. Optional values:
+	  value            		comment
+	  parallel_burst        	-- HI_UNF_DMX_PORT_TYPE_PARALLEL_BURST 
+	  parallel_valid        	-- HI_UNF_DMX_PORT_TYPE_PARALLEL_VALID
+	  parallel_nosync_188   	-- HI_UNF_DMX_PORT_TYPE_PARALLEL_NOSYNC_188
+	  parallel_nosync_204   	-- HI_UNF_DMX_PORT_TYPE_PARALLEL_NOSYNC_204
+	  parallel_nosync_188_204       -- HI_UNF_DMX_PORT_TYPE_PARALLEL_NOSYNC_188_204
+	  serial 			-- HI_UNF_DMX_PORT_TYPE_SERIAL
+	  serial2bit        		-- HI_UNF_DMX_PORT_TYPE_SERIAL2BIT
+	  serial_nosync      		-- HI_UNF_DMX_PORT_TYPE_SERIAL_NOSYNC
+	  serial2bit_nosync     	-- HI_UNF_DMX_PORT_TYPE_SERIAL2BIT_NOSYNC
+        	  
+config HI_IF_BIT_SELECTOR
+	prompt "Bit Selector"
+	string
+	default 1
+	help
+	  Port bit selector:
+	  value            		comment
+	  0 		-- 7 is the serial data line or the MSB of parallel mode               
+	  1		-- 0 is the serial data line or the MSB of parallel mode     
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

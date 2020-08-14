@@ -1,0 +1,7 @@
+.PHONY:clean all
+
+all:
+	@echo "make ha_install done!"
+clean:
+	@echo "make ha_clean done!"     
+

@@ -1,0 +1,74 @@
+menu "DVB-S/S2 Demod Config"
+    depends on HI_DVBS_SUPPORT
+
+config  HI_DEMOD_TYPE_AVL6211
+    bool "AVL6211 Support"
+    default y
+    select HI_GPIOI2C_SUPPORT
+
+config  HI_DEMOD_TYPE_HI3136
+    bool "HI3136 Support"
+    default y
+    select HI_GPIOI2C_SUPPORT
+
+config  HI_DEMOD_TYPE_HI3138
+    bool "HI3138 Support"
+    default y
+    select HI_GPIOI2C_SUPPORT
+config  HI_DEMOD_TYPE_TP5001
+    bool "TP5001 Support"
+    default n
+    select HI_GPIOI2C_SUPPORT
+
+config  HI_DEMOD_TYPE_HD2501
+    bool "HD2501 Support"
+    default n
+    select HI_GPIOI2C_SUPPORT	
+endmenu
+
+menu "DVB-S/S2 Tuner Config"
+    depends on HI_DVBS_SUPPORT
+
+config  HI_TUNER_TYPE_AV2011
+    bool "AV2011 Support"
+    default y
+
+config  HI_TUNER_TYPE_AV2018
+    bool "AV2018 Support"
+    default y
+
+config  HI_TUNER_TYPE_SHARP7903
+    bool "SHARP7903 Support"
+    default y
+
+config  HI_TUNER_TYPE_RDA5815
+    bool "RDA5815 Support"
+    default y
+
+config  HI_TUNER_TYPE_M88TS2022
+    bool "M88TS2022 Support"
+    default y
+
+config  HI_TUNER_TYPE_AV2026
+    bool "AV2026 Support"
+    default n
+endmenu
+
+#--------------------------------
+config HI_DISEQC_SUPPORT
+    bool "DISEQC Support"
+    depends on HI_DVBS_SUPPORT
+    default n
+
+menu "LNB Chip Config"
+    depends on HI_DVBS_SUPPORT
+
+config  HI_LNB_CTRL_ISL9492
+    bool "ISL9492 Support"
+    default n
+
+config  HI_LNB_CTRL_MPS8125
+    bool "MPS8125 Support"
+    default n
+endmenu
+

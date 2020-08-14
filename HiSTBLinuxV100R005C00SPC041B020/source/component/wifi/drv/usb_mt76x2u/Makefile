@@ -1,0 +1,1 @@
+obj-y += JEDI.MP2.mt76x2u.wifi.v3.3.1/os/linux/

@@ -1,0 +1,27 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "Caption Config"
+
+#------------------------------------------------
+config  HI_CAPTION_SUBT_SUPPORT
+	bool "Dvb Subtitle Support"
+	default n
+
+#------------------------------------------------
+config  HI_CAPTION_TTX_SUPPORT
+	bool "Teletext Support"
+	default n
+
+#------------------------------------------------
+config  HI_CAPTION_SO_SUPPORT
+	bool "Subtitle Output Support"
+	default y
+
+#------------------------------------------------
+config  HI_CAPTION_CC_SUPPORT
+	bool "Closed Caption Support"
+	default n
+
+#------------------------------------------------
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+

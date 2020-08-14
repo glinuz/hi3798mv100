@@ -1,0 +1,104 @@
+
+menu "Hisilicon IR drivers"
+config HISI_IR
+	tristate "Hisilicon IR remote control"
+	select MEDIA_SUPPORT
+	select MEDIA_RC_SUPPORT
+	select RC_DECODERS
+	select RC_DEVICES
+	select RC_CORE
+	select INPUT
+	default n
+	---help---
+	   Say Y here if you want to use hisilicon remote control.
+
+if RC_DECODERS
+config IR_NEC_2HDR_40BIT_DECODER
+	tristate "Enable IR raw decoder for the NEC 2 head 40bit protocol"
+	depends on RC_CORE
+	select BITREVERSE
+	default y
+	---help---
+	   Enable this option if you have IR with NEC protocol, and
+	   if the IR is decoded in software
+
+config IR_NEC_FULL_40BIT_DECODER
+	tristate "Enable IR raw decoder for the NEC full 40bit protocol"
+	depends on RC_CORE
+	select BITREVERSE
+	default y
+	---help---
+	   Enable this option if you have IR with NEC protocol, and
+	   if the IR is decoded in software
+
+config IR_NEC_FULL_48BIT_DECODER
+	tristate "Enable IR raw decoder for the NEC full 48bit protocol"
+	depends on RC_CORE
+	select BITREVERSE
+	default y
+	---help---
+	   Enable this option if you have IR with NEC protocol, and
+	   if the IR is decoded in software
+
+endif #RC_DECODERS
+
+if HISI_IR
+menu "Hisilicon IR key map driver"
+
+config HISI_IR_NEC_SIMPLE_2HDR_GD
+	tristate "GuangDong nec simple 2 headers(U hudong)"
+	default m
+
+config HISI_IR_NEC_SIMPLE_UPD61261
+	tristate "uPD61216 nec simple"
+	default m
+
+config HISI_NEC_FULL_DEZHOU
+	tristate "DeZhou nec full"
+	default m
+
+config HISI_NEC_FULL_BANK
+	tristate "YinLian nec full"
+	default m
+
+
+config HISI_NEC_SIMPLE_HISILICON
+	tristate "hisilicon nec simple"
+	default m
+
+config HISI_NEC_SIMPLE_BLACK
+	tristate "Black nec simple"
+	default m
+
+config HISI_NEC_TC9012
+	tristate "TC9012 nec simple"
+	default m
+
+config HISI_EXTENDED_RC5_DONGFANG
+	tristate "DongFang YouXian rc-5 14bits"
+	default m
+
+config HISI_SONY
+	tristate "Sony d745"
+	default m
+
+config HISI_RC5_14BIT_SKYWORTH
+	tristate "Skyworth rc-5 14bits"
+	default m
+
+config HISI_RC5_14BIT_LUFENG
+	tristate "LuFeng rc-5 14bits"
+	default m
+
+config HISI_RC6_16BIT_PHILIPS
+	tristate "Philips rc-6 16bits"
+	default m
+
+config HISI_RC6_32BIT_BGCTV
+	tristate "BGCTV rc-6 32bits"
+	default m
+
+endmenu #HISI_IR
+endif #HISI_IR
+
+endmenu #HISI_IR

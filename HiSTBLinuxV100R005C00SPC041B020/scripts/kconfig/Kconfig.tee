@@ -1,0 +1,109 @@
+
+config HI_TEE_SUPPORT
+    bool "TEE Support"
+    depends on (HI3798MV100 || HI3796MV100 || HI3716DV100 || HI3798CV200 || HI3798MV200 || HI3798MV200_A)
+    default n
+    help
+        Support trust execution environment enables you to use secure os and memory.
+        You should say n here, unless you really know what are you doing.
+        Say yes here can get tee.
+
+choice
+    prompt "TEE Memory Layout"
+    depends on HI_TEE_SUPPORT
+    default 1G
+
+config  TVP_MEM_512M
+    bool "512M"
+config  TVP_MEM_1G
+    bool "1G"
+config  TVP_MEM_1_5G
+    bool "1.5G"
+    depends on !(HI3798MV100 || HI3796MV100 || HI3716DV100)
+config  TVP_MEM_2G
+    bool "2G"
+endchoice
+
+config  HI_TVP_MEM_LAYOUT
+    string
+    depends on HI_TEE_SUPPORT
+    default 512M   if TVP_MEM_512M
+    default 1G     if TVP_MEM_1G
+    default 1_5G     if TVP_MEM_1_5G
+    default 2G     if TVP_MEM_2G
+
+menu    "TEE Module List"
+	depends on HI_TEE_SUPPORT
+	
+menuconfig  HI_TEE_VFMW_SUPPORT
+    bool "VFMW Support"
+    depends on HI_TEE_SUPPORT
+    default y
+             
+menuconfig  HI_TEE_ADVCA_SUPPORT
+    bool "ADVCA Support"
+    depends on HI_TEE_SUPPORT
+    default y
+         
+menuconfig  HI_TEE_PVR_SUPPORT
+    bool "PVR Support"
+    depends on HI_TEE_SUPPORT && !(HI3798MV100 || HI3796MV100 || HI3716DV100)
+    default y
+    
+menuconfig  HI_TEE_DEMUX_SUPPORT
+    bool "Demux Support"
+    depends on HI_TEE_SUPPORT
+    default y    
+
+menuconfig  HI_TEE_HDMI_SUPPORT
+    bool "HDMI Support"
+    depends on HI_TEE_SUPPORT && !(HI3798MV100 || HI3796MV100 || HI3716DV100)
+    default y
+    
+menuconfig  HI_TEE_DEMO_SUPPORT
+    bool "DEMO Support"
+    depends on HI_TEE_SUPPORT
+    default y
+    
+menuconfig  HI_TEE_VDP_SUPPORT
+    bool "VDP Support"
+    depends on HI_TEE_SUPPORT && !(HI3798MV100 || HI3796MV100 || HI3716DV100)
+    default y 
+	
+menuconfig  HI_TEE_BEIDOU_SUPPORT
+    bool "Beidou Support"
+    depends on HI_TEE_SUPPORT && HI3716DV100
+    default y 	  
+
+menuconfig  HI_TEE_I2C_SUPPORT
+    bool "I2C driver Support"
+    depends on HI_TEE_SUPPORT && HI3716DV100
+    default y 	
+
+menuconfig  HI_TEE_WIDEVINE_SUPPORT
+    bool "Widevine Support"
+    depends on HI_TEE_SUPPORT && !(HI3798MV100 || HI3796MV100 || HI3716DV100)
+    default y
+
+menuconfig  HI_TEE_PLAYREADY_SUPPORT
+    bool "PlayReady Support"
+    depends on HI_TEE_SUPPORT && !(HI3798MV100 || HI3796MV100 || HI3716DV100)
+    default y 
+
+menuconfig  HI_TEE_VMX_ULTRA_SUPPORT
+    bool "Verimatrix Ultra Support"
+    depends on VERIMATRIX && HI_TEE_SUPPORT && !(HI3798MV100 || HI3796MV100 || HI3716DV100)
+    default y 
+
+config  HI_TEE_VMXTAC_TEST_SUPPORT
+	bool "VMXTAC TEST Support"
+	depends on VMX_ULTRA_SUPPORT
+	default y
+	
+config  HI_TEE_ITAC_TEST_SUPPORT
+	bool "ITAC TEST Support"
+	depends on VMX_ULTRA_SUPPORT
+    default y
+    
+endmenu    
+

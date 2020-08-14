@@ -1,0 +1,18 @@
+baudrate=115200
+ethaddr=00:00:00:00:00:00
+ipaddr=192.168.1.10
+netmask=255.255.255.0
+gatewayip=192.168.1.1
+serverip=192.168.1.1
+bootcmd=mmc read 0 0x5E700000 0x2F000 0x4000;bootm 0x5E700000;mmc read 0 0x1FFFFC0 0x33000 0x10000;bootm 0x1FFFFC0
+bootargs_512M=mem=447M mmz=ddr,0,0,48M vmalloc=500M
+bootargs_1G=mem=959M mmz=ddr,0,0,48M vmalloc=500M
+bootargs_2G=mem=1983M mmz=ddr,0,0,48M vmalloc=500M
+bootargs_768M=mem=703M mmz=ddr,0,0,48M vmalloc=500M
+bootargs_1536M=mem=1471M mmz=ddr,0,0,48M vmalloc=500M
+bootargs_3840M=mem=3775M mmz=ddr,0,0,48M vmalloc=500M
+bootargs=console=ttyAMA0,115200 root=/dev/mmcblk0p14 rootfstype=ext4 rootwait blkdevparts=mmcblk0:1M(boot),1M(bootargs),4M(baseparam),4M(pqparam),4M(logo),4M(deviceinfo),4M(softwareinfo),4M(loaderdb),4M(loaderdbbak),32M(loader),32M(loaderbak),8M(trustedcore),32M(kernel),256M(rootfs),-(others)
+bootdelay=0
+stdin=serial
+stdout=serial
+stderr=serial

@@ -1,0 +1,52 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "Video DAC Config"
+
+config HI_DAC_CVBS
+    int "CVBS"
+    range 0 5
+    help
+        DAC number used as CVBS.
+    default 3
+
+config HI_DAC_YPBPR_Y
+    depends on !(HI3798MV100 || HI3796MV100 || HI3716DV100 || HI3798CV200 || HI3798MV200 || HI3798MV200_A)
+    int "YPBPR_Y"
+    range 0 5
+    help
+        DAC number used as YPBPR_Y.
+    default 1
+
+config HI_DAC_YPBPR_PB
+    depends on !(HI3798MV100 || HI3796MV100 || HI3716DV100 || HI3798CV200 || HI3798MV200 || HI3798MV200_A)
+    int "YPBPR_PB"
+    range 0 5
+    help
+        DAC number used as YPBPR_PB.
+    default 2
+
+config HI_DAC_YPBPR_PR
+    depends on !(HI3798MV100 || HI3796MV100 || HI3716DV100 || HI3798CV200 || HI3798MV200 || HI3798MV200_A)
+    int "YPBPR_PR"
+    range 0 5
+    help
+        DAC number used as YPBPR_PR.
+    default 0
+
+choice
+    prompt "Select Chip's Driving Capability"
+    default HI_VDP_VDAC_QUARTER_DRIVE
+
+config  HI_VDP_VDAC_FULL_DRIVE
+    bool "set the chip to full drive mode "
+
+config  HI_VDP_VDAC_HALF_DRIVE
+    bool "set the chip to half drive mode "
+    depends on (HI3716MV410 || HI3716MV420)
+
+config  HI_VDP_VDAC_QUARTER_DRIVE
+    bool "set the chip to quarter drive mode "
+    depends on (HI3716MV410 || HI3716MV420 || HI3798CV200 || HI3798MV200 || HI3798MV200_A)
+
+endchoice
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

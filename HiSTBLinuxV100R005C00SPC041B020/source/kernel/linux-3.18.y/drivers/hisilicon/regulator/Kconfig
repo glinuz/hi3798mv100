@@ -1,0 +1,31 @@
+menuconfig REGULATOR
+	bool "Voltage and Current Regulator Support"
+	help
+	  Generic Voltage and Current Regulator support.
+
+	  This framework is designed to provide a generic interface to voltage
+	  and current regulators within the Linux kernel. It's intended to
+	  provide voltage and current control to client or consumer drivers and
+	  also provide status information to user space applications through a
+	  sysfs interface.
+
+	  The intention is to allow systems to dynamically control regulator
+	  output in order to save power and prolong battery life. This applies
+	  to both voltage regulators (where voltage output is controllable) and
+	  current sinks (where current output is controllable).
+
+	  This framework safely compiles out if not selected so that client
+	  drivers can still be used in systems with no software controllable
+	  regulators.
+
+	  If unsure, say no.
+
+
+if REGULATOR
+
+config REGULATOR_Hi3798CV200
+	tristate "Hisilicon Hi3798CV200 regulators"
+	help
+	  This driver provides support for the voltage regulators on the
+	  Hi3798CV200.
+endif

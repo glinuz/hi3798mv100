@@ -1,0 +1,35 @@
+
+menuconfig SUPPORT_CA
+	bool "Support CA"
+	default n
+	help
+	  If support ca, user privileges will be limit.
+	  select y, support ca, otherwise not support ca.
+
+config CA_SUPPORT_ADVCA
+	bool "Support advca"
+	depends on SUPPORT_CA
+	select CA_NET_CONFIG
+	select CA_FILE_AUTHORITY
+	default n
+	help
+	  support advca, which is the real CA.
+
+config CA_WARKUP_CHECK
+	bool "Support CA wakeup ddr check"
+	depends on SUPPORT_CA
+	default n
+	help
+	  support ca suspend get hash value, and wakeup check ddr.
+
+config CA_FILE_AUTHORITY
+	bool
+	default n
+	help
+	  support advca file authority.
+
+config CA_NET_CONFIG
+	bool
+	default n
+	help
+	  support advca net config.

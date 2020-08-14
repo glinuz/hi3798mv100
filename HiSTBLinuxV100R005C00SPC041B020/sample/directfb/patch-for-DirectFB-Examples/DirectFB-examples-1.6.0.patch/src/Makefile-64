@@ -1,0 +1,142 @@
+DFB_EXAMPLE=$(shell pwd)
+
+#===============================================================================
+# export variable
+#===============================================================================
+ifeq ($(CFG_HI_EXPORT_FLAG),)
+SDK_DIR := $(CURDIR)/../../../..
+include $(SDK_DIR)/base.mak
+endif
+
+include $(SAMPLE_DIR)/base.mak
+
+#===============================================================================
+# local variable
+#===============================================================================
+CFLAGS := $(subst -Werror,,$(CFG_HI_SAMPLE_CFLAGS))
+ifeq (${CFG_HI_DIRECTFB_CA_SUPPORT},y)
+CFLAGS += -DHI_ADVCA_FUNCTION_RELEASE
+endif
+
+CFLAGS +=   -I$(HI_INCLUDE_DIR)                    \
+            -I$(SAMPLE_DIR)/common              \
+	    -I${DFB_EXAMPLE}                    \
+	    -I${DFB_EXAMPLE}/../include         \
+            -I$(SDK_DIR)/source/component/directfb/directfb/include/directfb \
+
+
+CFLAGS += -DFONT=\"./../share/directfb-examples/fonts/decker.ttf\"
+CFLAGS += -DDATADIR=\"./../share/directfb-examples\"
+CFLAGS += -DVERSION=\"1.6.0\"
+
+LIBPATH = -L$(HI_SHARED_LIB64_DIR)          \
+          -L$(SDK_DIR)/source/component/directfb/directfb/lib64
+
+
+LIB = -Wl,--start-group
+
+LIB += -lhi_common -lfreetype -ljpeg -lpng  -ldirectfb -ldirect -lfusion -lstdc++ -lz -lpthread -ldl -lm -lrt
+
+ifneq ($(findstring $(CFG_HI_CHIP_TYPE), hi3716mv310 hi3716mv320 hi3110ev500),)
+LIB +=-lhi_mpi
+else
+LIB +=-lhi_msp
+endif
+
+LIB += -Wl,--end-group
+
+
+#COMMON_SRC := $(patsubst %.o, %.c, $(COMMON_FILES))
+SAMPLE_COMMOE_DIR := $(SAMPLE_DIR)/common
+#COMMON_SRC := $(foreach d, $(SAMPLE_COMMOE_DIR),$(wildcard $d/*.c))
+COMMON_SRC := $(SAMPLE_COMMOE_DIR)/hi_adp_hdmi.c
+COMMON_SRC += ${DFB_EXAMPLE}/../include/sample_displayInit.c
+
+SAMPLE_DEPEND := ${COMMON_SRC}
+SAMPLE_DEPEND += ${DFB_EXAMPLE}/ve.c
+
+SRC := $(wildcard *.c)
+
+SRC_TMP := $(filter-out %df_texture.c, $(SRC))
+SRC := $(SRC_TMP)
+
+SRC_TMP := $(filter-out %ve.c, $(SRC))
+SRC := $(SRC_TMP)
+
+SRC_TMP := $(filter-out %ve_test.c, $(SRC))
+SRC := $(SRC_TMP)
+
+SRC_TMP := $(filter-out %df_andi3d.c, $(SRC))
+SRC := $(SRC_TMP)
+
+SRC_TMP := $(filter-out %df_cpuload.c, $(SRC))
+SRC := $(SRC_TMP)
+
+SRC_TMP := $(filter-out %df_databuffer.c, $(SRC))
+SRC := $(SRC_TMP)
+
+SRC_TMP := $(filter-out %df_dioload.c, $(SRC))
+SRC := $(SRC_TMP)
+
+SRC_TMP := $(filter-out %df_drivertest.c, $(SRC))
+SRC := $(SRC_TMP)
+
+SRC_TMP := $(filter-out %df_drivertest2.c, $(SRC))
+SRC := $(SRC_TMP)
+
+SRC_TMP := $(filter-out %df_joystick.c, $(SRC))
+SRC := $(SRC_TMP)
+
+SRC_TMP := $(filter-out %df_texture3d.c, $(SRC))
+SRC := $(SRC_TMP)
+
+SRC_TMP := $(filter-out %df_video.c, $(SRC))
+SRC := $(SRC_TMP)
+
+SRC_TMP := $(filter-out %df_video_particle.c, $(SRC))
+SRC := $(SRC_TMP)
+
+SRC_TMP := $(filter-out %df_fonts.c, $(SRC))
+SRC := $(SRC_TMP)
+
+SRC_TMP := $(filter-out %df_layer.c, $(SRC))
+SRC := $(SRC_TMP)
+
+#=======================================================================
+
+APP= $(SRC:%.c=%)
+
+#===============================================================================
+# rules
+#===============================================================================
+.PHONY: all clean install uninstall
+
+all: $(APP) df_texture
+
+$(APP):  %: %.c
+	$(AT)echo $(CFG_HI_AARCH64_TOOLCHAINS_NAME)-gcc $(COMMON_SRC)
+	$(AT)$(CFG_HI_AARCH64_TOOLCHAINS_NAME)-gcc -o $@  $< $(COMMON_SRC) $(LIBPATH) $(LIB) $(CFLAGS)
+	$(AT)rm -f *.o
+df_texture: %: %.c
+	$(AT)$(CFG_HI_AARCH64_TOOLCHAINS_NAME)-gcc -o $@  $< $(SAMPLE_DEPEND) $(LIBPATH) $(LIB) $(CFLAGS)
+	$(AT)rm -f *.o
+clean:
+	$(AT)rm -f $(APP)
+	$(AT)rm -f df_texture
+	$(AT)rm -f *.o
+install:all
+	$(AT)cp -rf $(APP) ${DFB_EXAMPLE}/../../sample/bin64
+	$(AT)cp -rf ${DFB_EXAMPLE}/../data/*             ${DFB_EXAMPLE}/../../sample/share/directfb-examples
+	$(AT)cp -rf ${DFB_EXAMPLE}/../data/df_neo/*      ${DFB_EXAMPLE}/../../sample/share/directfb-examples
+ifeq (${CFG_HI_DIRECTFB_1_6_1},y)
+	$(AT)cp -rf ${DFB_EXAMPLE}/../data/decker.dgiff  ${DFB_EXAMPLE}/../../sample/share/directfb-examples/fonts
+endif
+	$(AT)cp -rf ${DFB_EXAMPLE}/../data/decker.ttf    ${DFB_EXAMPLE}/../../sample/share/directfb-examples/fonts
+	$(AT)rm -rf ${DFB_EXAMPLE}/../../sample/share/directfb-examples/decker.dgiff
+	$(AT)rm -rf ${DFB_EXAMPLE}/../../sample/share/directfb-examples/decker.ttf
+	$(AT)rm -rf ${DFB_EXAMPLE}/../../sample/share/directfb-examples/spacedream/Makefile*
+	$(AT)rm -rf ${DFB_EXAMPLE}/../../sample/share/directfb-examples/df_neo
+	$(AT)rm -rf ${DFB_EXAMPLE}/../../sample/share/directfb-examples/pngtest3.png
+	$(AT)rm -rf ${DFB_EXAMPLE}/../../sample/share/directfb-examples/Makefile*
+uninstall:clean
+	

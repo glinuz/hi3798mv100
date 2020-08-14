@@ -1,0 +1,56 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "VO Config"
+choice
+	prompt "Video Buffer Type"
+	default HI_VIDEO_BUFF_DEMO
+
+config  HI_VIDEO_BUFF_DEMO
+	bool "FMS6141 + FMS6363"
+
+config  HI_VIDEO_BUFF_TYPE0
+	bool "FMS6143a + FMS6363"
+endchoice
+
+config	HI_DISP_USE_QPLL_SOLELY
+	bool "QPLL Be Used By Display Solely"
+	help
+	  If you select true, QPLL should be used by Display solely.
+	  As a result display can suppport dobuble HD output with different pixel clock.
+	default n
+
+config	HI_DISP_TTX_INBUFFERSIZE
+	hex "TTX Input Buffer Size"
+	help
+	  You can adjust teletext input buffer size if you need.
+	default 0x4000
+
+config	HI_DISP_CC_INBUFFERSIZE
+	hex "SD CC Input Buffer Size"
+	help
+	  You can adjust Closed Caption input buffer size if you need.
+	default 0x4000
+
+config  HI_VDP_VIDEO_LINEDCMP
+    bool
+    depends on (HI3716MV410 || HI3716MV420)
+    default y
+
+config  HI_PQ_V3_0
+	bool
+	depends on HI3798MV100 || HI3796MV100 || HI3716DV100 || HI3716MV410 || HI3716MV420
+	default y
+
+config  HI_PQ_V4_0
+	bool
+	depends on HI3798CV200 || HI3798MV200 || HI3798MV200_A || HI3796MV200
+	default y
+
+config	HI_DISP_VIRT_OFFSET_EFFECT_WHEN_FULLSCREEN
+	bool "disp offset take effect when window full screen."
+	default n if ANDROID_PRODUCT
+	default n if LINUX_PRODUCT
+	help
+	  If you select true, when window is full size,it also be effected by display offset.
+
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

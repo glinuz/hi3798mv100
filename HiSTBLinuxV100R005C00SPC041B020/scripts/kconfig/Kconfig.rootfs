@@ -1,0 +1,58 @@
+#---------------------------------------------
+
+menu "File System Config"
+config  HI_ROOTFS_STRIP
+	bool "Enable Strip"
+	default y
+	help
+	  Whether strip the root filesystem.
+	  If you select strip option, you will get fail when use gdb, because the clib is striped.
+	       y - strip /bin /lib /sbin /usr
+	       n - not strip
+
+config  HI_ROOTFS_INSTALL_SHARED_LIBS
+	bool "Install Share Libs to Rootfs"
+	default y
+
+config  HI_ROOTFS_CRAMFS
+	bool "Create Cramfs Rootfs Image"
+	default y
+
+config  HI_ROOTFS_JFFS2
+	bool "Create Jffs2 Rootfs Image"
+	depends on HI_SPI_SUPPORT
+	default y
+
+config  HI_ROOTFS_YAFFS
+	bool "Create Yaffs Rootfs Image"
+	depends on HI_NAND_SUPPORT || HI_SPI_NAND_SUPPORT
+	default y
+
+config  HI_ROOTFS_SQUASHFS
+	bool "Create Squashfs Rootfs Image"
+	default y
+
+config  HI_ROOTFS_EXT4
+	bool "Create ext4 Rootfs Image"
+	depends on HI_EMMC_SUPPORT
+	default n
+
+config  HI_EMMC_ROOTFS_SIZE
+	int "eMMC Rootfs Size"
+	depends on HI_ROOTFS_EXT4
+	default "96"
+	help
+	  eMMC rootfs size, unit is M.
+
+config HI_ROOTFS_UBIIMG
+	bool "Create Ubi Rootfs Image"
+	depends on HI_NAND_SUPPORT
+	default y
+
+config HI_UBI_PARTITION_SIZE
+	string "UBI Rootfs Size"
+	depends on HI_ROOTFS_UBIIMG
+	default "96M"
+
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

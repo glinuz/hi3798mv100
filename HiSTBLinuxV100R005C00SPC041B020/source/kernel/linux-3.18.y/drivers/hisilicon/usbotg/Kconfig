@@ -1,0 +1,6 @@
+
+config USB_OTG_HISI
+	tristate "Hisilicon OTG driver support"
+	default n
+	help
+	  Enable support for the Hisilicon USB OTG function.

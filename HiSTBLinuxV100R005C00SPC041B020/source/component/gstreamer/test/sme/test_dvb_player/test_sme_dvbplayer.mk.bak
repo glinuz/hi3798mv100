@@ -1,0 +1,109 @@
+LOCAL_PATH := $(my-dir)
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := test_sme_dvbplayer
+
+ifeq ($(findstring -D__LINUX__, $(CFG_COMMON_MACRO)), -D__LINUX__)
+#for linux
+ifeq ($(CFG_HI_EXPORT_FLAG),)
+SDK_DIR := $(TOPDIR)/$(CFG_RT_HI_SDK_DIR)
+-include $(SDK_DIR)/base.mak
+endif
+
+-include $(SAMPLE_DIR)/base.mak
+
+endif
+
+LOCAL_SRC_FILES := test_sme_dvbplayer.cpp
+LOCAL_CFLAGS += $(EXTRA_CFLAGS)
+LOCAL_CPPFLAGS += $(EXTRA_CXXFLAGS)
+LOCAL_LDFLAGS += $(EXTRA_LDFLAGS)
+
+LOCAL_C_INCLUDES += \
+    $(TOPDIR)/source/sme/source/osal/inc \
+    $(TOPDIR)/source/sme/api \
+    $(TOPDIR)/source/sme/source/common/inc \
+    $(TOPDIR)/source/sme/source/plugins/common
+
+LOCAL_LDLIBS += $(EXTRA_LDLIBS)
+
+LOCAL_SHARED_LIBRARIES := libsme_osal libsme_common libsme_dvbplayer
+LOCAL_REQUIRED_MODULES := libsme_osal libsme_common libsme_dvbplayer
+
+ifeq ($(findstring -D__LINUX__, $(CFG_COMMON_MACRO)), -D__LINUX__)
+
+
+LOCAL_CFLAGS += -I$(SDK_INC_DIR) -I$(SAMPLE_DIR)/common  $(CFG_HI_SAMPLE_CFLAGS)
+LOCAL_CPPFLAGS += -I$(SDK_INC_DIR) -I$(SAMPLE_DIR)/common  $(CFG_HI_SAMPLE_CFLAGS)
+LOCAL_C_INCLUDES += $(foreach h_tmp, $(CFG_RT_PLATFORM_SDK_INC_DIR), $(TOPDIR)/$(h_tmp))
+LOCAL_LDFLAGS += -L$(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DYNAMIC_LIB_DIR)/../extern \
+    -L$(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DYNAMIC_LIB_DIR)/alsa_bluez \
+    -Wl,-rpath-link=$(TARGET_OUT_TO_PREBUILT_DIR)
+
+LOCAL_C_INCLUDES += $(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DIR)/platform/linux_h5/base/include
+LOCAL_C_INCLUDES += $(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DIR)/platform/linux_h5/component/dtv/client
+LOCAL_C_INCLUDES += $(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DIR)/platform/linux_h5/component/dtv/com
+LOCAL_C_INCLUDES += $(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DIR)/platform/linux_h5/component/dtv/service
+LOCAL_C_INCLUDES += $(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DIR)/platform/linux_h5/component/dtv/service/src/common
+LOCAL_C_INCLUDES += $(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DIR)/platform/linux_h5/component/dtv/include
+LOCAL_C_INCLUDES += $(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DIR)/platform/linux_h5/component/dcas/include
+LOCAL_C_INCLUDES += $(libstlport_c_includes)
+LOCAL_C_INCLUDES += $(foreach h_tmp, $(CFG_RT_PLATFORM_SDK_INC_DIR), $(TOPDIR)/$(h_tmp))
+
+#$(info COMMON_FILES=$(COMMON_FILES))
+#LOCAL_PREBUILT_OBJ_FILES := $(COMMON_FILES)
+#$(info HI_LIBS=$(HI_LIBS))
+HI_LIBS_MIN=-lhi_common \
+    -lpng -lhigo -lhigoadp \
+    -ljpeg -lhi_msp -lz \
+    -lfreetype
+
+LOCAL_LDLIBS += -L$(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DYNAMIC_LIB_DIR) $(SYS_LIBS) $(HI_LIBS_MIN)\
+    -lcutils \
+    -lbinder_ipc \
+    -lutils \
+    -llog \
+    -lDTVClient \
+    -lDCASClient \
+    -lsme_player\
+
+ifneq ($(CFG_PROJECT_NAME), linux_hi3798m_generic)
+LOCAL_LDLIBS += -ldirectfb -ldirect -lfusion -llog
+endif
+
+else
+#for tvos-android
+LOCAL_CFLAGS += -D __STDC_CONSTANT_MACROS -D __USE_ANDROID_SURFACE__
+LOCAL_CPPFLAGS += -D __STDC_CONSTANT_MACROS -D __USE_ANDROID_SURFACE__
+
+LOCAL_C_INCLUDES += $(TOPDIR)/test/sme/utils_native_surface/inc
+
+libstlport_c_includes := $(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DIR)/platform/android/stlport/stlport
+libstlport_c_includes += bionic
+libstlport_c_includes += bionic/libstdc++/include
+
+LOCAL_C_INCLUDES += $(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DIR)/component/dtv/client
+LOCAL_C_INCLUDES += $(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DIR)/component/dtv/com
+LOCAL_C_INCLUDES += $(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DIR)/component/dtv/service
+LOCAL_C_INCLUDES += $(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DIR)/component/dtv/service/src/common
+LOCAL_C_INCLUDES += $(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DIR)/component/dtv/include
+LOCAL_C_INCLUDES += $(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DIR)/component/dcas/include
+LOCAL_C_INCLUDES += $(libstlport_c_includes)
+LOCAL_C_INCLUDES += $(foreach h_tmp, $(CFG_RT_PLATFORM_SDK_INC_DIR), $(TOPDIR)/$(h_tmp))
+
+LOCAL_LDLIBS += \
+    -L$(TOPDIR)/$(CFG_RT_PLATFORM_SDK_DYNAMIC_LIB_DIR) \
+    -lcutils \
+    -lbinder \
+    -lutils \
+    -llog \
+    -lgui \
+    -lDTVClient \
+    -lDCASClient \
+    -lsme_player\
+
+LOCAL_SHARED_LIBRARIES += libsme_native_sf
+LOCAL_REQUIRED_MODULES += libsme_native_sf
+endif
+
+include $(BUILD_EXECUTABLE)

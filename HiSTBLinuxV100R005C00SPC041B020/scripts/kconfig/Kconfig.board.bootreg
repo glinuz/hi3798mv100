@@ -1,0 +1,37 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "Boot Regfile Config"
+    depends on !HI_UNIFIED_BOOT_SUPPORT || HI_ADVCA_SUPPORT
+
+config  HI_BOOT_REG_NAME
+    prompt "Boot Reg File"
+    string
+endmenu
+
+menu "Boot Regfile Config List"
+    depends on HI_UNIFIED_BOOT_SUPPORT && !HI_ADVCA_SUPPORT
+
+config  HI_BOOT_REG_NAME
+    prompt "Boot Reg File 0 (3.3V)"
+    string
+
+config  HI_BOOT_REG1_NAME
+    prompt "Boot Reg File 1 (2.475V)"
+    string
+
+config  HI_BOOT_REG2_NAME
+    prompt "Boot Reg File 2 (1.925V)"
+    string
+
+config  HI_BOOT_REG3_NAME
+    prompt "Boot Reg File 3 (1.375V)"
+    string
+
+config  HI_BOOT_REG4_NAME
+    prompt "Boot Reg File 4 (0.825V)"
+    string
+
+config  HI_BOOT_REG5_NAME
+    prompt "Boot Reg File 5 (0V)"
+    string
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

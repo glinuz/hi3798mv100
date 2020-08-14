@@ -1,0 +1,18 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menuconfig HI_PLAYER_SUPPORT
+	bool "HiPlayer Support"
+	default y
+	depends on HI_CAPTION_SO_SUPPORT && LINUX_PRODUCT
+	select HI_OPENSSL_SUPPORT
+
+#------------------------------------------------
+choice
+	prompt "HiPlayer Version"
+	depends on HI_PLAYER_SUPPORT
+	default HI_PLAYER_FULL_SUPPORT
+
+config  HI_PLAYER_FULL_SUPPORT
+	bool "HiPlayer Full Support"
+
+endchoice
+

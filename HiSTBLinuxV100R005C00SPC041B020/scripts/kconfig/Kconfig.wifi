@@ -1,0 +1,63 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+#--------------------------------
+menuconfig HI_WIFI_SUPPORT
+	bool "WiFi Support"
+	default n
+	depends on LINUX_PRODUCT
+	help
+	  This section contains all the supported 802.11 wireless device drivers.
+	  Set to 'y' to support this device, 'n' not support.
+
+menu    "WiFi Device Type"
+	depends on HI_WIFI_SUPPORT
+
+config  HI_WIFI_DEVICE_RTL8188EUS
+	bool "Realtek RTL8188ETV and RTL8188EUS (11n 1x1 2.4G USB)"
+
+config  HI_WIFI_DEVICE_RTL8192EU
+	bool "Realtek RTL8192EU (11n 2x2 2.4G USB)"
+	depends on (HI3798MV100 || HI3796MV100 || HI3716DV100 || (HI3798CV200 && HI_32BIT_SYSTEM) || (HI3798MV200 && HI_32BIT_SYSTEM))
+
+config  HI_WIFI_DEVICE_RTL8812AU
+	bool "Realtek RTL8812AU (11ac 2x2 5G USB)"
+	depends on (HI3798MV100 || HI3796MV100 || HI3716DV100 || (HI3798CV200 && HI_32BIT_SYSTEM) || (HI3798MV200 && HI_32BIT_SYSTEM))
+
+config  HI_WIFI_DEVICE_RTL8723BU
+	bool "Realtek RTL8723BU (11n 1x1 2.4G USB + BT4.0)"
+	depends on (HI3798MV100 || HI3796MV100 || HI3716DV100 || (HI3798CV200 && HI_32BIT_SYSTEM) || (HI3798MV200 && HI_32BIT_SYSTEM))
+
+config  HI_WIFI_DEVICE_RTL8822BU
+	bool "Realtek RTL8822BU (11ac 2x2 5G USB)"
+	depends on (HI3798MV100 || HI3796MV100 || HI3716DV100 || (HI3798CV200 && HI_32BIT_SYSTEM) || (HI3798MV200 && HI_32BIT_SYSTEM))
+
+config  HI_WIFI_DEVICE_RTL8821AU
+	bool "Realtek RTL8821AU (11ac 1x1 5G USB + BT4.0)"
+	depends on (HI3798MV100 || HI3796MV100 || HI3716DV100 || (HI3798CV200 && HI_32BIT_SYSTEM))
+
+config  HI_WIFI_DEVICE_MT76X2U
+	bool "Mediatek MT7662TU and MT7632TU (2x2 USB + BT4.0)"
+	depends on (HI3798MV100 || HI3796MV100 || HI3716DV100 || (HI3798CV200 && HI_32BIT_SYSTEM) || (HI3798MV200 && HI_32BIT_SYSTEM))
+
+config  HI_WIFI_DEVICE_MT7662TE
+	bool "Mediatek MT7662TE (11ac 2x2 5G USB + BT4.0)(PCI-e interface)"
+	depends on (HI3798MV100 || HI3796MV100 || HI3716DV100 || (HI3798CV200 && HI_32BIT_SYSTEM) || (HI3798MV200 && HI_32BIT_SYSTEM))
+
+#config  HI_WIFI_DEVICE_MT7601U
+#	bool "Mediatek MT7601U (11n 1x1 2.4G USB)"
+#	depends on (HI3798MV100 || HI3796MV100 || HI3716DV100)
+
+#config  HI_WIFI_DEVICE_RT5572
+#	bool "Mediatek RT5572 (11n 2x2 2.4G+5G USB)"
+#	depends on (HI3798MV100 || HI3796MV100 || HI3716DV100)
+
+endmenu
+
+menu	"WiFi Working Mode"
+	depends on HI_WIFI_SUPPORT
+
+config  HI_WIFI_MODE_STA
+	bool "STA Mode"
+
+config  HI_WIFI_MODE_AP
+	bool "SoftAP Mode"
+endmenu

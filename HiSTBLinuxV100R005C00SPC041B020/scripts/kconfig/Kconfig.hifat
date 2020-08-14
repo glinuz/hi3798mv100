@@ -1,0 +1,5 @@
+config HI_FAT_SUPPORT
+	bool "HIFAT support"
+	default y
+	help
+	  If you wan't to support himount, say y here.

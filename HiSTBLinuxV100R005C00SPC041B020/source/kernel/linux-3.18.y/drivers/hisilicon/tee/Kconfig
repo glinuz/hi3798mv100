@@ -1,0 +1,20 @@
+menuconfig  TEE
+	tristate "Secure TEE driver"
+	default n
+	help
+	 Provides a communication interface between userspace and
+	 TrustZone Operating Environment.
+
+config  TEE_HISI
+	tristate "Trustedcore Secure TEE driver"
+	default n
+	depends on TEE
+	help
+	 Provides a communication interface between userspace and
+	 TrustZone Operating Environment.
+
+if TEE_HISI
+source drivers/hisilicon/tee/tee_hisi/tzdriver/Kconfig
+endif
+
+

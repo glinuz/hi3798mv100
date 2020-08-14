@@ -1,0 +1,9 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "Demux Config"
+	  		  
+source "scripts/kconfig/Kconfig.board.demux.if"	  
+source "scripts/kconfig/Kconfig.board.demux.tsi"
+source "scripts/kconfig/Kconfig.board.demux.tso"
+
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

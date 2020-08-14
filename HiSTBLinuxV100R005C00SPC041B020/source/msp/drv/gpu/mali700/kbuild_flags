@@ -1,0 +1,47 @@
+
+export KBUILD_EXTRA_SYMBOLS += $(COMMON_DIR)/drv/Module.symvers
+
+#SDK include header files
+export EXTRA_CFLAGS += -I$(SDK_DIR)/source/msp/drv/gpu/mali700/include                \
+                -I$(SDK_DIR)/source/msp/drv/gpu/mali700/drivers/gpu/arm/midgard       \
+                -I$(COMMON_UNF_INCLUDE)                 \
+                -I$(COMMON_DRV_INCLUDE)                 \
+                -I$(MSP_DRV_INCLUDE)    
+
+export ccflags-y += -I$(SDK_DIR)/source/msp/drv/gpu/mali700/include                   \
+                -I$(SDK_DIR)/source/msp/drv/gpu/mali700/drivers/gpu/arm/midgard       \
+                -I$(COMMON_UNF_INCLUDE)                 \
+                -I$(COMMON_DRV_INCLUDE)                 \
+                -I$(MSP_DRV_INCLUDE)    
+
+#build in or not
+export CONFIG_MALI_MIDGARD=$(HI_DRV_BUILDTYPE)
+export CONFIG_KDS=$(HI_DRV_BUILDTYPE)
+export CONFIG_MALI_PLATFORM_DEVICETREE=y
+export CONFIG_MALI_DEVFREQ=$(CONFIG_PM_DEVFREQ)
+ifeq ($(CFG_PRODUCT_TYPE),linux)
+export CONFIG_HI_DMA_BUFFER_EXPORTER=$(HI_DRV_BUILDTYPE)
+endif
+
+#SDK flags  
+export EXTRA_CFLAGS += $(CFG_HI_KMOD_CFLAGS)
+export ccflags-y += $(CFG_HI_KMOD_CFLAGS)
+
+#GPU flags
+MALI_GPU_DEFINE = -DCONFIG_MALI_MIDGARD -DMALI_GATOR_SUPPORT -DMALI_EXPERT  -DCONFIG_KDS \
+	-DCONFIG_MALI_PLATFORM_DEVICETREE -DCONFIG_MALI_TRACE_TIMELINE \
+	-DMALI_DEBUG -DCONFIG_MALI_GATOR_SUPPORT -DMALI_AVS_SUPPORT
+	#-DMALI_DEBUG -DCONFIG_MALI_MIDGARD_DVFS
+	
+ifeq ($(CONFIG_MALI_DEVFREQ),y)
+MALI_GPU_DEFINE += -DCONFIG_MALI_DEVFREQ
+endif
+
+export ccflags-y += $(MALI_GPU_DEFINE)
+export subdir-ccflags-y += $(MALI_GPU_DEFINE)
+export EXTRA_CFLAGS += $(MALI_GPU_DEFINE)
+
+
+
+
+

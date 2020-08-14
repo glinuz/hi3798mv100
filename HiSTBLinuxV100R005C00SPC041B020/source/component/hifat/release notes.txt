@@ -1,0 +1,14 @@
+A: Version limit
+1. Libhimount only provide the himount function.if you want to umount you can use standard umount function.you can choose according to your own needs,
+   a forced umount or a narmal umount.
+2. Ftruncate only support truncate to zero.
+3. Chmod/chown/ln FAT32 does not support.HIFAT does not support too
+4. HIFAT currently only supports UTF-8 chinese
+5. The read/write function.you can't take a buf pointer to the MMZ as a  parameter passing under linux2.6.14
+   but you can do it under linux2.6.35
+6. you can reference Specification list to further understand other test specification and limit 
+B: Operation note
+1. When you copy the mount provided by HIFAT to rootfs,you must do it in linux.if you do it in windows,there will be link problems which may
+   cover the busybox.
+2. Please choose the correct SDK version, avoid version mismatch problems
+

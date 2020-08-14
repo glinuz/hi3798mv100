@@ -1,0 +1,7 @@
+
+config HI_OPERA_SUPPORT
+	bool "Opera Support"
+	default n
+	help
+      If you want to compile Opera SDK, Select this option first.
+      It contains the adapter layer of Opera SDK.

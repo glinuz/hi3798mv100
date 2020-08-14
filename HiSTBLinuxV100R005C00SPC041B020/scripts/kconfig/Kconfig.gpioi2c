@@ -1,0 +1,11 @@
+#+++++++++++++++++++++++++++++++++++++
+#menu "gpio simulate i2c support config"
+#+++++++++++++++++++++++++++++++++++++
+
+config HI_GPIOI2C_SUPPORT
+	bool "Gpio Simulate I2c Support"
+	default y
+
+#+++++++++++++++++++++++++++++++++++++
+#endmenu
+#+++++++++++++++++++++++++++++++++++++

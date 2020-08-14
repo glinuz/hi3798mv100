@@ -1,0 +1,69 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "TSO0 Config"
+#----------------------clk frequency----------------------
+choice
+	prompt "Clock Frequency"
+	help 
+	TSO clock frequency
+	default 150M
+
+config  HI_TSO0_CLK_100M
+	bool "100M"
+config  HI_TSO0_CLK_150M
+	bool "150M"
+config  HI_TSO0_CLK_1200M
+	bool "1200M"
+config  HI_TSO0_CLK_1500M
+	bool "1500M"
+endchoice 
+#----------------------clk mode----------------------	  	  
+choice
+	prompt "Clock Mode"
+	help 
+	The TSO out clock mode
+	default normal
+
+config  HI_TSO0_CLK_MODE_NORMAL
+	bool "normal"
+config  HI_TSO0_CLK_MODE_JITTER
+	bool "jitter"
+endchoice
+#----------------------valid------------------------------
+choice
+	prompt "Valid Signal Mode"
+	help 
+	TSO prot valid signal mode
+	default active_output
+
+config  HI_TSO0_VALID_ACTIVE_OUTPUT
+	bool "active_output"
+config  HI_TSO0_VALID_ACTIVE_HIGH
+	bool "active_high"
+endchoice
+#----------------------serial or parallel----------------------
+choice
+	prompt "Serial or Parallel"
+	help 
+	TSO prot valid signal mode
+	default serial
+
+config  HI_TSO0_SERIAL
+	bool "serial"
+config  HI_TSO0_PARALLEL
+	bool "parallel"
+endchoice    
+#----------------------bit selector----------------------
+choice
+	prompt "Bit Selector"
+	help 
+	TSO bit selector
+	default 0
+
+config  HI_TSO0_SERIAL_BIT_0
+	bool "0"
+config  HI_TSO0_SERIAL_BIT_7
+	bool "7"
+endchoice 
+  
+endmenu
+#+++++++++++++++++++++++++++++++++++++++++++++++++++

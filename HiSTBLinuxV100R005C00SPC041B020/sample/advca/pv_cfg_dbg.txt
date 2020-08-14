@@ -1,0 +1,30 @@
+STB_SN_0    0x67452301
+MSID		0x000030C6
+Version_ID	0x00000000
+
+boot_mode_sel		0x0
+bootsel_ctrl		0x0
+
+
+ts_csa2_hardonly_en	0x1
+ts_sp_hardonly_en	0x1
+ts_csa3_hardonly_en	0x1
+tskl_sm4_disable	0x1
+tskl_tdes_disable	0x1
+
+bload_enc_disable   0x0
+runtime_check_en	0x0
+ddr_wakeup_disable	0x0
+wakeup_ddr_check_en	0x0
+version_id_check_en	0x0
+bl_msid_check_en	0x0
+
+jtag_prt_mode		0x0
+ethernet_disable	0x0
+uart_disable		0x0
+usb_disable		0x0
+soc_tz_enable       0x0
+otp_tz_area_enable  0x0
+bload_dec_en		0x0
+self_boot_disable	0x0
+SCS_activation		0x0

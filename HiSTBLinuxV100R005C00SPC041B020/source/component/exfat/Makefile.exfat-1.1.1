@@ -1,0 +1,74 @@
+################################################################################
+#
+# Copyright (C) 2014 Hisilicon Technologies Co., Ltd.  All rights reserved. 
+#
+#  This program is confidential and proprietary to Hisilicon Technologies Co., Ltd.
+#  (Hisilicon), and may not be copied, reproduced, modified, disclosed to
+#  others, published or used, in whole or in part, without the express prior
+#  written permission of Hisilicon.
+#
+#  Create By Czying 2014.05.28
+#  download from https://code.google.com/p/exfat/
+#
+################################################################################
+
+CROSS_COMPILE ?= arm-hisiv200-linux-
+
+CC      := $(CROSS_COMPILE)gcc
+AR      := $(CROSS_COMPILE)ar
+STRIP   := $(CROSS_COMPILE)strip
+CFLAGS  += -D_FILE_OFFSET_BITS=64 -Wall -O2 -I. -I./libexfat/ \
+	-I$(FUSE_PATH)/include -DFUSE_USE_VERSION=29 \
+	-I$(EXFAT_PATH)/libexfat \
+	-std=c99 -D_XOPEN_SOURCE=700 -D_GNU_SOURCE
+
+LDFLAGS += -static -L./ -lexfat -L$(FUSE_PATH)/lib/ -lfuse -ldl -lrt -lpthread
+
+all: mount.exfat-fuse dumpexfat exfatfsck exfatlabel mkexfatfs
+
+install: mount.exfat-fuse dumpexfat exfatfsck exfatlabel mkexfatfs
+	$(STRIP) $^
+	mkdir -p $(PREFIX)/usr/sbin
+	install -v -t $(PREFIX)/usr/sbin $^
+
+fuse_objs := fuse/main.o
+TMP += mount.exfat-fuse fuse/*.o
+mount.exfat-fuse: $(fuse_objs) libexfat.a
+	$(CC) -o $@ $(fuse_objs) $(LDFLAGS)
+
+exfatfsck_objs := fsck/main.o
+TMP += exfatfsck fsck/*.o
+exfatfsck: $(exfatfsck_objs) libexfat.a
+	$(CC) -o $@ $(exfatfsck_objs) $(LDFLAGS)
+
+dumpexfat_objs := dump/main.o
+TMP += dumpexfat dump/*.o
+dumpexfat: $(dumpexfat_objs) libexfat.a
+	$(CC) -o $@ $(dumpexfat_objs) $(LDFLAGS)
+
+exfatlabel_objs += label/main.o
+TMP += exfatlabel label/*.o
+exfatlabel: $(exfatlabel_objs) libexfat.a
+	$(CC) -o $@ $(exfatlabel_objs) $(LDFLAGS)
+
+# mkexfat.o uctc.o
+mkexfatfs_objs = main.o cbm.o fat.o rootdir.o vbr.o uct.o mkexfat.o uctc.o
+mkexfatfs_objs := $(addprefix mkfs/,$(mkexfatfs_objs))
+TMP += mkexfatfs mkfs/*.o
+mkexfatfs: $(mkexfatfs_objs) libexfat.a
+	$(CC) -o $@ $(mkexfatfs_objs) $(LDFLAGS)
+
+libexfat_objs = cluster.o io.o log.o lookup.o time.o mount.o node.o utf.o utils.o
+libexfat_objs := $(addprefix libexfat/,$(libexfat_objs))
+TMP += libexfat.a libexfat/*.o
+libexfat.a: $(libexfat_objs)
+	$(AR) rc $@ $^
+
+%.o: %.c
+	$(CC) $(CFLAGS) -o $@ -c $< -I$(@D)
+
+PHONYS += clean distclean
+distclean clean:
+	@rm -rf $(TMP)
+
+.PHONY: $(PHONYS)

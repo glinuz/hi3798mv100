@@ -1,0 +1,6 @@
+
+config HI_ALSA_SUPPORT
+	bool "ALSA Support"
+	depends on LINUX_PRODUCT && !HI_BLUETOOTH_SUPPORT
+	default n
+

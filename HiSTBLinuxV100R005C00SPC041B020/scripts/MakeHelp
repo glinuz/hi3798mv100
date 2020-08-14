@@ -1,0 +1,60 @@
+---------------------  make help ----------------------
+input 'q' to exit .
+
+OVERVIEW:
+    When the first time you get the SDK, please use the 'make build' command
+to build it .
+
+    This document list the command you can use.
+
+make:
+	The same as make build.
+
+make build:
+	Make prepare, all and install.
+
+make help:
+	Show this list.
+
+make tools:
+	Make tools, you need this command when you make the SDK first time.
+	Recommend to use 'make tools_install' directly.
+
+make tools_clean:
+	Clean tools.
+
+make defconfig:
+	Create the default SDK config file(cfg.mak).
+	You can indicate your config file by CFILE parameter:
+	make defconfig CFILE=$(YOUR_CONFIG_FILE)
+
+make menuconfig:
+	Configurate the SDK, the results will be saved to cfg.mak.
+
+make clean:
+	Clean all.
+
+make xxx:
+	The xxx can be hiboot, linux, rootfs, common, msp, component or sample,
+	make them respectively.
+
+make xxx:
+	The xxx can be hiboot, linux, rootfs, common, msp, component or sample,
+	clean them respectively.
+
+make signature:
+	Generate the signed image of boot, bootargs, hi_kerkel, rootfs and apploader according to CA vender's (such as conax , vermatrix ...) requirement.
+	Attention:
+	1.These signatured image only for development ,not for the formal CAS certification.
+
+make rootbox:
+	Install rootbox.
+
+make fs:
+	Create filesystem images .
+
+in ${SDK_DIR}, or use
+	make esplay
+in ${SDK_DIR}/sample, or use
+	make
+in ${SDK_DIR}/sample/esplay.

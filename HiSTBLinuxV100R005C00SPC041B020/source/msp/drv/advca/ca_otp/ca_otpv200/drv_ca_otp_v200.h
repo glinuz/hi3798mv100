@@ -1,0 +1,337 @@
+/******************************************************************************
+
+  Copyright (C), 2011-2014, Hisilicon Tech. Co., Ltd.
+
+ ******************************************************************************
+  File Name     : drv_ca_otp_reg_v200.h
+  Version       : Initial Draft
+  Author        : Hisilicon hisecurity team
+  Created       : 
+  Last Modified :
+  Description   : CA OTPV100 FUNC DECLARE
+  Function List :
+  History       :
+******************************************************************************/
+#ifndef __DRV_CA_OTP_V200_H__
+#define __DRV_CA_OTP_V200_H__
+
+#include "hi_type.h"
+#include "hi_unf_advca.h"
+
+#include "drv_advca_ioctl.h"
+#include "drv_ca_otp_common.h"
+
+HI_S32 DRV_CA_OTP_V200_Set_MarketId(HI_U32 u32Id);
+HI_S32 DRV_CA_OTP_V200_Set_UniqueMarketId(HI_U8 *pu8Id);
+HI_S32 DRV_CA_OTP_V200_MarketId(HI_U32 *pu32MarketID);
+HI_S32 DRV_CA_OTP_V200_Get_UniqueMarketId(HI_U8 *pu8Id);
+HI_S32 DRV_CA_OTP_V200_Set_STBSN(HI_U32 u32SN);
+HI_S32 DRV_CA_OTP_V200_Set_UniqueSTBSN(HI_U8 *pu8SN);
+HI_S32 DRV_CA_OTP_V200_GetSTBSN(HI_U32 *pu32SN);
+HI_S32 DRV_CA_OTP_V200_Get_UniqueSTBSN(HI_U8 *pu8SN);
+HI_S32 DRV_CA_OTP_V200_Set_UniqueVersionId(HI_U8 *pu8Id);
+HI_S32 DRV_CA_OTP_V200_Get_UniqueVersionId(HI_U8 *pu8Id);
+HI_S32 DRV_CA_OTP_V200_LockHardCwSel(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_LockHardSPESel(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_LockHardNVSel(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_LockHardAESSel(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_LockHardTDESSel(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_LockBootDecEn(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_SetBootDecMode(HI_U32 u32Mode);
+HI_S32 DRV_CA_OTP_V200_SetKlDPAClkSelEn(HI_BOOL bValue);
+HI_S32 DRV_CA_OTP_V200_GetKlDPAClkSelEn(HI_BOOL *pbValue);
+HI_S32 DRV_CA_OTP_V200_SetKlDPAFilterClkEn(HI_BOOL bValue);
+HI_S32 DRV_CA_OTP_V200_GetKlDPAFilterClkEn(HI_BOOL *pbValue);
+HI_S32 DRV_CA_OTP_V200_SetMcDPAClkSelEn(HI_BOOL bValue);
+HI_S32 DRV_CA_OTP_V200_GetMcDPAClkSelEn(HI_BOOL *pbValue);
+HI_S32 DRV_CA_OTP_V200_SetPvrDPAFilterClkEn(HI_BOOL bValue);
+HI_S32 DRV_CA_OTP_V200_GetPvrDPAFilterClkEn(HI_BOOL *pbValue);
+HI_S32 DRV_CA_OTP_V200_SetDDRScrambleEn(HI_U32 u32Mode);
+HI_S32 DRV_CA_OTP_V200_GetDDRScrambleEn(HI_U32 *pu32Mode);
+HI_S32 DRV_CA_OTP_V200_LockR2RHardKey(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_DisableNV(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_DisableLinkProtect(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_DisableRuntimeCheck(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_DisableSelfBoot(HI_U32 u32SelfBoot);
+HI_S32 DRV_CA_OTP_V200_GetSelfBoot(HI_U32 *pu32SelfBoot);
+HI_S32 DRV_CA_OTP_V200_DisableJtagWrite(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetJtagWriteDisable(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_SetBootMode(CA_OTP_FLASH_TYPE_E type);
+HI_S32 DRV_CA_OTP_V200_GetBootMode(HI_UNF_ADVCA_FLASH_TYPE_E *pType);
+HI_S32 DRV_CA_OTP_V200_SetSCSActive(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetSCSActive(HI_U32 *pActiveFlag);
+HI_S32 DRV_CA_OTP_V200_SetJtagProtectMode(CA_OTP_JTAG_MODE_E JtagMode);
+HI_S32 DRV_CA_OTP_V200_GetJtagProtectMode(CA_OTP_JTAG_MODE_E *pJtagMode);
+HI_S32 DRV_CA_OTP_V200_SetCSA2LadderLevel(CA_OTP_KEY_LEVEL_E level);
+HI_S32 DRV_CA_OTP_V200_GetCSA2LadderLevel(CA_OTP_KEY_LEVEL_E *pLevel);
+HI_S32 DRV_CA_OTP_V200_SetCSA3LadderLevel(CA_OTP_KEY_LEVEL_E level);
+HI_S32 DRV_CA_OTP_V200_GetCSA3LadderLevel(CA_OTP_KEY_LEVEL_E *pLevel);
+HI_S32 DRV_CA_OTP_V200_SetR2RLadderLevel(CA_OTP_KEY_LEVEL_E level);
+HI_S32 DRV_CA_OTP_V200_GetR2RLadderLevel(CA_OTP_KEY_LEVEL_E *pLevel);
+HI_S32 DRV_CA_OTP_V200_SetSPLadderLevel(CA_OTP_KEY_LEVEL_E level);
+HI_S32 DRV_CA_OTP_V200_GetSPLadderLevel(CA_OTP_KEY_LEVEL_E *pLevel);
+//HI_S32 CA_OTP_V200_setCSA3LadderLevel(CA_OTP_KEY_LEVEL_E level);        //reserved
+HI_S32 DRV_CA_OTP_V200_GetVendorId(CA_OTP_VENDOR_TYPE_E *penVendorType);
+HI_S32 DRV_CA_OTP_V200_SetVendorId(CA_OTP_VENDOR_TYPE_E enVendorType);
+HI_S32 DRV_CA_OTP_V200_SetVendorIdLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetVendorIdLock(HI_U32 *pu32VendorIdLock);
+HI_S32 DRV_CA_OTP_V200_SetSecureChipFlag(HI_U32 u32Flag);
+HI_S32 DRV_CA_OTP_V200_GetSecureChipFlag(HI_U32 *pu32SecureChipFlag);
+HI_S32 DRV_CA_OTP_V200_SetTZEnable(HI_U32 u32Enable);
+HI_S32 DRV_CA_OTP_V200_GetTZEnStatus(HI_BOOL *pbEn);
+HI_S32 DRV_CA_OTP_V200_SetCSA2Deactive(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetCSA2Deactive(HI_U32 *pu32CSA2Deactive);
+HI_S32 DRV_CA_OTP_V200_SetR2RDeactive(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetR2RDeactive(HI_U32 *pu32R2RDeactive);
+HI_S32 DRV_CA_OTP_V200_SetSPDeactive(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetSPDeactive(HI_U32 *pu32SPDeactive);
+HI_S32 DRV_CA_OTP_V200_SetCSA2RootKey(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_GetCSA2RootKey(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_SetCSA3RootKey(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_GetCSA3RootKey(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_SetR2RRootKey(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_GetR2RRootKey(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_SetSPRootKey(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_GetSPRootKey(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_SetJtagKey(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_GetJtagKey(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_SetRootKeyLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetRootKeyLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetESCK(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_GetESCK(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_GetESCKLock(HI_BOOL *pbLock);
+HI_S32 DRV_CA_OTP_V200_SetMISCRootKey(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_GetMISCRootKey(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_GetMISCRootKeyLock(HI_BOOL *pbLock);
+HI_S32 DRV_CA_OTP_V200_SetOEMRootKey(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_GetOEMRootKey(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_GetOEMRootKeyLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetOTPTzData(CA_OTP_TZ_DATA_S *pstInputParam);
+HI_S32 DRV_CA_OTP_V200_GetOTPTzData(CA_OTP_TZ_DATA_S *pstInputParam);
+HI_S32 DRV_CA_OTP_V200_LockOTPTzData(HI_UNF_ADVCA_LOCK_TZ_OTP_PARAM_S *pstInputParam);
+HI_S32 DRV_CA_OTP_V200_SetRSAKeyE(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_GetRSAKeyE(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_SetRSAKeyN(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_GetRSAKeyN(HI_U8 *pu8Key);
+HI_S32 DRV_CA_OTP_V200_LockRSAKey(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetRSAKeyLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetChipId(HI_U32 u32Id);
+HI_S32 DRV_CA_OTP_V200_SetUniqueChipId(HI_U8 *pu8Id);
+HI_S32 DRV_CA_OTP_V200_GetChipId(HI_U32 *pu32ChipID);
+HI_S32 DRV_CA_OTP_V200_GetUniqueChipId(HI_U8 *pu8ChipID);
+HI_S32 DRV_CA_OTP_V200_SetChipIdLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetChipIdLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetTdesLock(HI_U32 u32TdesLock);
+HI_S32 DRV_CA_OTP_V200_GetTdesLock(HI_U32 *pu32TdesLock);
+HI_S32 DRV_CA_OTP_V200_SetLowPowerDisable(HI_U32 u32Flag);
+HI_S32 DRV_CA_OTP_V200_GetLowPowerDisable(HI_U32 *pu32Flag);
+HI_S32 DRV_CA_OTP_V200_SetCsa3En(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetCsa3En(HI_U32 *pu32CSA3Disable);
+HI_S32 DRV_CA_OTP_V200_SetLpcEn(HI_U32 u32LpcDisable);
+HI_S32 DRV_CA_OTP_V200_GetLpcEn(HI_U32 *pu32LpcDisable);
+HI_S32 DRV_CA_OTP_V200_SetLpcMasterEn(HI_U32 u32LpcMasterDisable);
+HI_S32 DRV_CA_OTP_V200_GetLpcMasterEn(HI_U32 *pu32LpcMasterDisable);
+HI_S32 DRV_CA_OTP_V200_SetBootSelLock_0(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetBootSelLock_0(HI_U32 *pu32BootSelLock);
+HI_S32 DRV_CA_OTP_V200_SetBootSelLock_1(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetBootSelLock_1(HI_U32 *pu32BootSelLock);
+HI_S32 DRV_CA_OTP_V200_SetMktIdLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetMktIdLock(HI_U32 *pu32mktIdP);
+HI_S32 DRV_CA_OTP_V200_SetStbSnLock_0(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetStbSnLock_0(HI_U32 *pu32StbSnP);
+HI_S32 DRV_CA_OTP_V200_SetSelfbootLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetSelfbootLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetLowPowerDisableLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetLowPowerDisableLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetDVBLadderLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetDVBLadderLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetR2RLadderLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetR2RLadderLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetSPLadderLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetSPLadderLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetCSA3LadderLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetCSA3LadderLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetTSCWDeactive(HI_U32 u32Deactive);
+HI_S32 DRV_CA_OTP_V200_GetTSCWDeactive(HI_U32 *pu32Deactive);
+HI_S32 DRV_CA_OTP_V200_SetTSCWDeactiveLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetTSCWDeactiveLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetTSSPDeactive(HI_U32 u32Deactive);
+HI_S32 DRV_CA_OTP_V200_GetTSSPDeactive(HI_U32 *pu32Deactive);
+HI_S32 DRV_CA_OTP_V200_SetTSSPDeactiveLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetTSSPDeactiveLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetTSCSA3Deactive(HI_U32 u32Deactive);
+HI_S32 DRV_CA_OTP_V200_GetTSCSA3Deactive(HI_U32 *pu32Deactive);
+HI_S32 DRV_CA_OTP_V200_SetTSCSA3DeactiveLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetTSCSA3DeactiveLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetDesDisable(HI_U32 u32Disable);
+HI_S32 DRV_CA_OTP_V200_GetDesDisable(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_SetDesDisableLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetDesDisableLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetDesHardDisable(HI_U32 u32Disable);
+HI_S32 DRV_CA_OTP_V200_GetDesHardDisable(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_SetDesHardDisableLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetDesHardDisableLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetTsOutDisable(HI_U32 u32Disable);
+HI_S32 DRV_CA_OTP_V200_GetTsOutDisable(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_SetTsOutDisableLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetTsOutDisableLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetLpcEnLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetLpcEnLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetLpcMasterEnLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetLpcMasterEnLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetSecureChipFlagLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetSecureChipFlagLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetBootSelCtrl(HI_U32 u32BootSel);
+HI_S32 DRV_CA_OTP_V200_GetBootSelCtrl(HI_U32 *pu32BootSel);
+HI_S32 DRV_CA_OTP_V200_SetBootSelCtrlLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetBootSelCtrlLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetCSA3Deactive(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetCSA3Deactive(HI_U32 *pu32Deactive);
+HI_S32 DRV_CA_OTP_V200_SetJtagReadDisable(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetJtagReadDisable(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_SetDebugDisable(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetDebugDisable(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_SetRigthCtrlEn(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetRigthCtrlEn(HI_U32 *pu32Enable);
+
+HI_S32 DRV_CA_OTP_V200_SetLinkProtectDisable(HI_U32 u32Disable);
+HI_S32 DRV_CA_OTP_V200_SetMiscKlLevel(HI_UNF_ADVCA_KEYLADDER_LEV_E enLevel);
+HI_S32 DRV_CA_OTP_V200_GetMiscKlLevel(HI_UNF_ADVCA_KEYLADDER_LEV_E *penValue);
+HI_S32 DRV_CA_OTP_V200_GetTSCsa2HardonlyEn(HI_U32 *pu32Enable);
+HI_S32 DRV_CA_OTP_V200_SetBloadDecEn(HI_U32 u32Enable);
+HI_S32 DRV_CA_OTP_V200_SetVersionIdLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_SetBloadDecEn(HI_U32 u32Enable);
+HI_S32 DRV_CA_OTP_V200_SetTSCSA3HardonlyEn(HI_U32 u32Enable);
+HI_S32 DRV_CA_OTP_V200_SetCSA3HardOnlyEnLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_SetTSSPEHardonlyEn(HI_U32 u32Enable);
+HI_S32 DRV_CA_OTP_V200_SetMCAESHardonlyEn(HI_U32 u32Enable);
+HI_S32 DRV_CA_OTP_V200_SetMCTDESHardonlyEn(HI_U32 u32Enable);
+HI_S32 DRV_CA_OTP_V200_SetBloadModeSelLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_SetDDRScrambleEnLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_SetOtpGlobalLockEn(HI_U32 u32Enable);
+HI_S32 DRV_CA_OTP_V200_SetOtpGlobalLockEnLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_SetDcasKLDisable(HI_U32 u32Disable);
+HI_S32 DRV_CA_OTP_V200_SetDcasKLDisableLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_SetRuntimeCheckEn(HI_U32 u32Disable);
+HI_S32 DRV_CA_OTP_V200_SetRuntimeCheckEnLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_SetWakeupDDRCheckEn(HI_U32 u32Disable);
+HI_S32 DRV_CA_OTP_V200_SetWakeupDDRCheckEnLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_SetVersionIdCheckEn(HI_U32 u32Disable);
+HI_S32 DRV_CA_OTP_V200_SetVersionIdCheckEnLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_SetBlMSIDCheckEn(HI_U32 u32Disable);
+HI_S32 DRV_CA_OTP_V200_SetBlMSIDCheckEnLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_SetJtagReadDisable(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetVersionIdCheckLock(HI_U32 *pu32VersionIdCheckP);
+HI_S32 DRV_CA_OTP_V200_GetBloadDecEn(HI_U32 *pu32Enable);
+HI_S32 DRV_CA_OTP_V200_GetBloadDecEnLock(HI_U32 *pu32BloadDecEncLock);
+HI_S32 DRV_CA_OTP_V200_GetLinkProtectDisableLock(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_GetTSCsa2HardonlyEnLock(HI_U32 *pu32Enable);
+HI_S32 DRV_CA_OTP_V200_GetTSCSA3HardonlyEn(HI_U32 *pu32Enable);
+HI_S32 DRV_CA_OTP_V200_SetTSDESHardonlyEn(HI_U32 u32Enable);
+HI_S32 DRV_CA_OTP_V200_SetTSCsa2HardonlyEn(HI_U32 u32Enable);
+HI_S32 DRV_CA_OTP_V200_SetBloadEncDisable(HI_U32 u32Disable);
+HI_S32 DRV_CA_OTP_V200_GetBlMSIDCheckEnLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_GetBlMSIDCheckEn(HI_U32 *pu32BlMSIDCheckEn);
+HI_S32 DRV_CA_OTP_V200_GetVersionIDCheckEnLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_GetVersionIDCheckEn(HI_U32 *pu32VersionIDCheckEn);
+HI_S32 DRV_CA_OTP_V200_GetWakeupDDRCheckEnLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_GetWakeupDDRCheckEn(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_GetRuntimeCheckEnLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_GetRuntimeCheckEn(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_GetDcasKLDisableLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_GetDcasKLDisable(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_GetOtpGlobalLockEnLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_GetOtpGlobalLockEn(HI_U32 *pu32Enable);
+HI_S32 DRV_CA_OTP_V200_GetDDRScrambleEnLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_GetBloadModeSel(HI_U32 *pu32Mode);
+HI_S32 DRV_CA_OTP_V200_GetMCAESHardonlyEnLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_GetMCAESHardonlyEn(HI_U32 *pu32Enable);
+HI_S32 DRV_CA_OTP_V200_GetTSSPHardonlyEnLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_GetTSSPHardonlyEn(HI_U32 *pu32Enable);
+HI_S32 DRV_CA_OTP_V200_GetTSCSA3HardonlyEnLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_GetBloadModeSelLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_GetLinkProtectDisable(HI_U32 *pu32Disable);
+
+HI_S32 DRV_CA_OTP_V200_SetR2rRootKeyLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetR2rRootKeyLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetSpRootKeyLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetSpRootKeyLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetCsa3RootKeyLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetCsa3RootKeyLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetJtagKeyLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetJtagKeyLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetIdWord(HI_U32 u32Data);
+HI_S32 DRV_CA_OTP_V200_GetIdWord(HI_U32 *pu32Data);
+HI_S32 DRV_CA_OTP_V200_SetIdWordLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetIdWordLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetCsa2RootKeyCrc(HI_U32 u32Crc);
+HI_S32 DRV_CA_OTP_V200_GetCsa2RootKeyCrc(HI_U32 *pu32Crc);
+HI_S32 DRV_CA_OTP_V200_SetCsa2RootKeyCrcLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetCsa2RootKeyCrcLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetR2rRootKeyCrc(HI_U32 u32Crc);
+HI_S32 DRV_CA_OTP_V200_GetR2rRootKeyCrc(HI_U32 *pu32Crc);
+HI_S32 DRV_CA_OTP_V200_SetR2rRootKeyCrcLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetR2rRootKeyCrcLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetSpRootKeyCrc(HI_U32 u32Crc);
+HI_S32 DRV_CA_OTP_V200_GetSpRootKeyCrc(HI_U32 *pu32Crc);
+HI_S32 DRV_CA_OTP_V200_SetSpRootKeyCrcLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetSpRootKeyCrcLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetCsa3RootKeyCrc(HI_U32 u32Crc);
+HI_S32 DRV_CA_OTP_V200_GetCsa3RootKeyCrc(HI_U32 *pu32Crc);
+HI_S32 DRV_CA_OTP_V200_SetCsa3RootKeyCrcLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetCsa3RootKeyCrcLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetJtagKeyCrc(HI_U32 u32Crc);
+HI_S32 DRV_CA_OTP_V200_GetJtagKeyCrc(HI_U32 *pu32Crc);
+HI_S32 DRV_CA_OTP_V200_SetJtagKeyCrcLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetJtagKeyCrcLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetScsEnBak(HI_U32 u32Bak);
+HI_S32 DRV_CA_OTP_V200_GetScsEnBak(HI_U32 *pu32Bak);
+HI_S32 DRV_CA_OTP_V200_SetScsEnBakLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetScsEnBakLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetJtagModeBak(HI_U32 u32Bak);
+HI_S32 DRV_CA_OTP_V200_GetJtagModeBak(HI_U32 *pu32Bak);
+HI_S32 DRV_CA_OTP_V200_SetJtagModeBakLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetJtagModeBakLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetRightCtrlEnBak(HI_U32 u32Bak);
+HI_S32 DRV_CA_OTP_V200_GetRightCtrlEnBak(HI_U32 *pu32Bak);
+HI_S32 DRV_CA_OTP_V200_SetRightCtrlEnBakLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetRightCtrlEnBakLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetMiscKlDisable(HI_U32 u32Disable);
+HI_S32 DRV_CA_OTP_V200_GetMiscKlDisable(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_SetMiscKlDisableLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetMiscKlDisableLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetGgKlDisable(HI_U32 u32Disable);
+HI_S32 DRV_CA_OTP_V200_GetGgKlDisable(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_SetGgKlDisableLock(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetGgKlDisableLock(HI_U32 *pu32Lock);
+HI_S32 DRV_CA_OTP_V200_SetBootInfoDisable(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetBootInfoDisable(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_SetChecksumReadDisable(HI_VOID);
+HI_S32 DRV_CA_OTP_V200_GetChecksumReadDisable(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_SetSelfBootDisableBak(HI_U32 u32Bak);
+HI_S32 DRV_CA_OTP_V200_GetSelfBootDisableBak(HI_U32 *pu32Bak);
+HI_S32 DRV_CA_OTP_V200_SetTzAreaLock(HI_U32 u32Lock);
+HI_S32 DRV_CA_OTP_V200_GetTzAreaLock(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_SetBootMode_0(CA_OTP_FLASH_TYPE_E type);
+HI_S32 DRV_CA_OTP_V200_GetBootMode_0(CA_OTP_FLASH_TYPE_E *pType);
+HI_S32 DRV_CA_OTP_V200_SetBootMode_1(HI_U32 type);
+HI_S32 DRV_CA_OTP_V200_GetBootMode_1(HI_U32 *pType);
+HI_S32 DRV_CA_OTP_V200_SetMiscKLDisable(HI_U32 u32Disable);
+HI_S32 DRV_CA_OTP_V200_SetGgKLDisable(HI_U32 u32Disable);
+HI_S32 DRV_CA_OTP_V200_SetTsklCsa3Disable(HI_U32 u32Disable);
+HI_U32 DRV_CA_OTP_V200_Read(HI_U32 addr);
+HI_S32 DRV_CA_OTP_V200_GetDDRWakeup(HI_U32 *pu32Enable);
+HI_S32 DRV_CA_OTP_V200_GetCsa2KlDisable(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_GetCsa3KlDisable(HI_U32 *pu32Disable);
+HI_S32 DRV_CA_OTP_V200_GetSpKlDisable(HI_U32 *pu32Disable);
+HI_U8 DRV_CA_OTP_V200_ReadByte(HI_U32 addr);
+HI_S32 DRV_CA_OTP_V200_WriteByte(HI_U32 addr, HI_U8 tdata);
+HI_S32 DRV_CA_OTP_V200_SetOtpFuse(CA_OTP_ATTR_S *pstOtpAttr);
+HI_S32 DRV_CA_OTP_V200_GetOtpFuse(CA_OTP_ATTR_S *pstOtpAttr);
+HI_S32 DRV_CA_OTP_V200_SetRSACRC(HI_U8 *pu8Key);
+
+
+
+
+#endif /* __DRV_CA_OTP_V200_H__ */
+

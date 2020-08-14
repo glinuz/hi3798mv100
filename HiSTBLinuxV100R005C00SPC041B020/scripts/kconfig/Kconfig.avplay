@@ -1,0 +1,11 @@
+#++++++++++++++++++++++++++++++++++++++++++++++++++++
+menu "Avplay Config"
+        depends on (HI3716MV410 || HI3716MV420)
+
+#--------------------------------
+config HI_AVPLAY_PLAY_AND_REC_SUPPORT
+        bool "Avplay Play And Rec On A Demux Support"
+        default n
+
+endmenu
+#++++++++++++++++++++++++++++++++++++++++++++++++++++
