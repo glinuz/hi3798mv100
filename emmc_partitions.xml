@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<Partition_Info ProgrammerFile="">
+<Part Sel="0" PartitionName="fastboot" FlashType="emmc" FileSystem="none" Start="0" Length="1M" SelectFile="D:\workspace\hi3798mv100\histblinux3\fastboot-burn.bin"/>
+<Part Sel="0" PartitionName="bootargs" FlashType="emmc" FileSystem="none" Start="1M" Length="1M" SelectFile="D:\workspace\hi3798mv100\histblinux3\bootargs.bin"/>
+<Part Sel="0" PartitionName="kernel" FlashType="emmc" FileSystem="none" Start="2M" Length="8M" SelectFile="D:\workspace\hi3798mv100\histblinux3\hi_kernel.bin"/>
+<Part Sel="0" PartitionName="rootfs" FlashType="emmc" FileSystem="ext3/4" Start="10M" Length="128M" SelectFile="D:\workspace\hi3798mv100\histblinux3\rootfs_128M.ext4"/>
+</Partition_Info>
