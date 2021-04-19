@@ -1,5 +1,5 @@
 # Hi3798mv00 （Huawei ec6108v9）Linux的编译 烧录 blog
-本文记录了为华为机顶盒EC6108v9（海思Hi3798mv100芯片）编译内核、烧录uboot以及刷入Ubuntu 16.04 rootfs，以及集成dropbear ssh的过程。同时，恶补了一下uboot的相关知识。
+本文记录了为华为机顶盒EC6108v9（海思Hi3798mv100芯片）编译内核、烧录uboot以及刷入Ubuntu 16.04 rootfs的过程。同时，恶补了一下uboot的相关知识。
 ## 基本环境
 目标板：联通IPTV退役的华为机顶盒EC6108v9（海思Hi3798mv100 2G内存 8G emmc）
 编译环境：Ubuntu 16.04 32bit VM
@@ -208,3 +208,5 @@ make_ext4fs -l 128M -s rootfs_128M.ext4 ./rootfs
 [1] https://wiki.ubuntu.com/ARM/RootfsFromScratch/QemuDebootstrap
 [2] http://gnu-linux.org/building-ubuntu-rootfs-for-arm.html
 
+## 其他
+后继debootstrap 加入python golang docker等软件包，需注意调大rootfs到4GB，并修改相应bootargs emmc_partition。
