@@ -22,8 +22,8 @@ make menuconfig
 make build -j4 2>&1  | tee -a buildlog.txt
 ```
 制成功后，在out/hi3798mv100可以找到编译好的fastboot-burn.bin、bootargs.bin、hi_kernel.bin，分别是uboot引导文件、uboot引导参数配置和linux内核。
-## 使用HiTool烧录到
-TTL连接图见[hi3798mv100-ec6109.jpg]
+## 使用HiTool烧录到eMMC
+TTL连接图见[hi3798mv100-ec6109.jpg]，具体烧录方案可以搜索hitool教程。
 eMMC分区为uboot 1M、bootargs 1M、kernel 8M、rootfs 128M，具体见[emmc_partitions.xml].
 如果修改分区大小，调整分区大小，需同步修改bootargs.txt 和 emmc_partitions.xml。
 configs/hi3798mv100/prebuilts/bootargs.txt
@@ -33,9 +33,10 @@ bootargs=console=ttyAMA0,115200 root=/dev/mmcblk0p4 rootfstype=ext4 rootwait blk
 
 mkbootargs  -s 128k -r bootargs.txt  -o bootargs.bin
 ```
-bootcmd操作说明：从第0个mmc设备块上2M字节处开始（0x1000的十进制4096,4096*512/1024=2M），读取16×512个字节（0x4000的十进制16384*512/1024=8M）到内存0x1FFFFC0处，并从此处引导。以kernel为例，若前面的分区为94M（也就是kernel的分区从94M的地方开始），那么，0x600的地方的值应为：94*2*1024的十六进制0x2F000。
+bootcmd操作说明：从第0个mmc设备块上2M字节处开始（0x1000的十进制4096,4096*512/1024=2M），读取16×512个字节（0x4000的十进制16384*512/1024=8M）到内存0x1FFFFC0处，并从此处引导。
+
 打开串口console，以便进行调试。console=ttyAMA0,115200
-启动过程输出如下：
+uboot启动过程输出如下：
 ```
 Bootrom start
 Boot from eMMC
@@ -113,19 +114,25 @@ Starting kernel ...
 ## 高级编译
 ### 自定义linux内核
 ARM平台内核配置文件采用defconfig格式，正确使用和保存deconfig的流程如下：
+
 source/kernel/linux-3.18.y/arch/arm/configs/hi3798mv100_defconfig 
 cd source/kernel/linux-3.18.y/
 1. 先备份hi3798mv100_defconfig
 2. make ARCH=arm hi3798mv100_defconfig #从defconfig生成标准linux内核配置.config文件
 3. make ARCH=arm menuconfig #修改内核配置，并保存
 4. make ARCH=arm savedefconfig #重新生成defconfg文件
-5. cp defconfig arch/arm/configs/hi3798mv100_defconfig  #保存defconfig文件，配置最小化，且日后能恢复成.config。
-6. make distclean #清理之前内核编译
+5. cp defconfig arch/arm/configs/hi3798mv100_defconfig  #复制defconfig文件到正确的位置。
+6. make distclean #清理之前编译生产的文件
 7. cd $SDK_path;make linux  #重新编译kernel
+
 需关注的几个kernel编译参数：
+
     打开devtmpfs，/dev 文件系统
+
     打开open by fhandle syscalls
+
     打开cgroup功能
+
 ### 修改uboot
 ```
 source/boot/fastboot/include/configs godbox.h
@@ -137,11 +144,12 @@ or
 cd $SDK_path;make hiboot CONFIG_SHOW_RESERVE_MEM_LAYOUT='y'
 ```
 CONFIG_SHOW_RESERVE_MEM_LAYOUT='y' 编译时，打开uboot启动时输出MEM信息开关
-## 修改uboot启动参数
+## 启动时修改uboot启动参数
 在uboot启动阶段，Ctrl+C进入uboot模式
 ```
  setenv bootargs console=tty1 console=ttyAMA0,115200 root=/dev/mmcblk0p4 rootfstype=ext4 rootwait blkdevparts=mmcblk0:1M(fastboot),1M(bootargs),8M(kernel),128M(rootfs),-(system)  ipaddr=192.168.10.100 gateway=192.168.10.1 netmask=255.255.255.0 netdev=eth0
  saveenv
+ reset
  ```
 ## 制作ubuntu rootfs
 ```
@@ -159,7 +167,7 @@ mount -t tmpfs tmpfs run
 LC_ALL=C LANGUAGE=C LANG=C chroot . /debootstrap/debootstrap --second-stage
 LC_ALL=C LANGUAGE=C LANG=C chroot . dpkg --configure -a
 
-LC_ALL=C LANGUAGE=C LANG=C chroot . /bin/bash  #chroot
+LC_ALL=C LANGUAGE=C LANG=C chroot . /bin/bash  #以下命令在chroot环境bash执行
 mkdir /proc
 mkdir /tmp
 mkdir /sys
@@ -205,8 +213,10 @@ apt clean
 make_ext4fs -l 128M -s rootfs_128M.ext4 ./rootfs
 ```
 参考资料
+
 [1] https://wiki.ubuntu.com/ARM/RootfsFromScratch/QemuDebootstrap
+
 [2] http://gnu-linux.org/building-ubuntu-rootfs-for-arm.html
 
 ## 其他
-后继debootstrap 加入python golang docker等软件包，需注意调大rootfs到4GB，并修改相应bootargs emmc_partition。
+后继又在debootstrap中加入了python golang docker等软件包，并调大rootfs到4GB，同时修改相应bootargs emmc_partition。
