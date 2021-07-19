@@ -1,9 +1,11 @@
-# Hi3798mv00 （Huawei ec6108v9）Linux的编译 烧录 blog
+# Hi3798mv100 （Huawei ec6108v9 IPTV）Linux的编译 烧录 blog
 本文记录了为华为机顶盒EC6108v9（海思Hi3798mv100芯片）编译内核、烧录uboot以及刷入Ubuntu 16.04 rootfs的过程。同时，恶补了一下uboot的相关知识。
 ## 基本环境
 目标板：联通IPTV退役的华为机顶盒EC6108v9（海思Hi3798mv100 2G内存 8G emmc）
 编译环境：Ubuntu 16.04 32bit VM
 海思linux内核：HiSTBLinux 适用于hi3798mv100 mv200 
+SDK: HiSTBLinuxV100R005C00SPC041B020
+
 ## 环境准备
 
 ```
@@ -25,10 +27,15 @@ make build -j4 2>&1  | tee -a buildlog.txt
 制成功后，在out/hi3798mv100可以找到编译好的fastboot-burn.bin、bootargs.bin、hi_kernel.bin，分别是uboot引导文件、uboot引导参数配置和linux内核。
 ## 使用HiTool烧录到eMMC
 TTL连接图见[hi3798mv100-ec6109.jpg]，具体烧录方案可以搜索hitool教程。
+
 hitool烧录界面配置建[hit00l-burn.png]
+
 eMMC分区为uboot 1M、bootargs 1M、kernel 8M、rootfs 128M，具体见[emmc_partitions.xml].
+
 如果修改分区大小，调整分区大小，需同步修改bootargs.txt 和 emmc_partitions.xml。
-configs/hi3798mv100/prebuilts/bootargs.txt
+
+configs/hi3798mv100/prebuilts/bootargs.txt，并重新生成bootargs.bin文件
+
 ```
 bootcmd=mmc read 0 0x1FFFFC0 0x1000 0x4000;bootm 0x1FFFFC0
 bootargs=console=ttyAMA0,115200 root=/dev/mmcblk0p4 rootfstype=ext4 rootwait blkdevparts=mmcblk0:1M(fastboot),1M(bootargs),8M(kernel),128M(rootfs),-(system)
@@ -128,7 +135,7 @@ cd source/kernel/linux-3.18.y/
 6. make distclean #清理之前编译生产的文件
 7. cd $SDK_path;make linux  #重新编译kernel
 
-需关注的几个kernel编译参数：
+需关注的kernel编译参数：
 
     打开devtmpfs，/dev 文件系统
 
