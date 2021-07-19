@@ -16,6 +16,7 @@ sh server_install.sh
 apt-get install gcc make gettext bison flex bc zlib1g-dev libncurses5-dev lzma
 #拷贝SDK中预先定义的
 cp configs/hi3798mv100/hi3798mdmo1g_hi3798mv100_cfg.mak ./cfg.mak
+
 source ./env.sh  #SDK各种环境变量
 #按需修改编译的配置
 make menuconfig
@@ -24,6 +25,7 @@ make build -j4 2>&1  | tee -a buildlog.txt
 制成功后，在out/hi3798mv100可以找到编译好的fastboot-burn.bin、bootargs.bin、hi_kernel.bin，分别是uboot引导文件、uboot引导参数配置和linux内核。
 ## 使用HiTool烧录到eMMC
 TTL连接图见[hi3798mv100-ec6109.jpg]，具体烧录方案可以搜索hitool教程。
+hitool烧录界面配置建[hit00l-burn.png]
 eMMC分区为uboot 1M、bootargs 1M、kernel 8M、rootfs 128M，具体见[emmc_partitions.xml].
 如果修改分区大小，调整分区大小，需同步修改bootargs.txt 和 emmc_partitions.xml。
 configs/hi3798mv100/prebuilts/bootargs.txt
@@ -117,6 +119,7 @@ ARM平台内核配置文件采用defconfig格式，正确使用和保存deconfig
 
 source/kernel/linux-3.18.y/arch/arm/configs/hi3798mv100_defconfig 
 cd source/kernel/linux-3.18.y/
+可以使用本git库提供的hi3798mv100_defconfig-0812
 1. 先备份hi3798mv100_defconfig
 2. make ARCH=arm hi3798mv100_defconfig #从defconfig生成标准linux内核配置.config文件
 3. make ARCH=arm menuconfig #修改内核配置，并保存
