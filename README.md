@@ -40,7 +40,7 @@ configs/hi3798mv100/prebuilts/bootargs.txt，并重新生成bootargs.bin文件
 bootcmd=mmc read 0 0x1FFFFC0 0x1000 0x4000;bootm 0x1FFFFC0
 bootargs=console=ttyAMA0,115200 root=/dev/mmcblk0p4 rootfstype=ext4 rootwait blkdevparts=mmcblk0:1M(fastboot),1M(bootargs),8M(kernel),128M(rootfs),-(system)
 
-mkbootargs  -s 128k -r bootargs.txt  -o bootargs.bin
+mkbootargs  -s 1M -r bootargs.txt  -o bootargs.bin
 ```
 bootcmd操作说明：从第0个mmc设备块上2M字节处开始（0x1000的十进制4096,4096*512/1024=2M），读取16×512个字节（0x4000的十进制16384*512/1024=8M）到内存0x1FFFFC0处，并从此处引导。
 
