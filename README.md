@@ -228,5 +228,27 @@ make_ext4fs -l 128M -s rootfs_128M.ext4 ./rootfs
 
 [2] http://gnu-linux.org/building-ubuntu-rootfs-for-arm.html
 
+## 刷机包-二进制文件
+文件下载 release
+fastboot-bin.bin  uboot分区包
+bootargs.bin   uboot参数分区包
+hi_kernel.bin  kernel分区包
+rootfs_128m.ext  root根分区包
+emmc_partitions.xml  刷机分区配置文件
+如调整分区大小，需要重新生成bootargs.bin 和调整分区配置文件。
+使用华为hi-tool,emmc烧录
+
+## uboot说明
+很多同学问uboot启动，有关主要uboot参数如下,emmc存储芯片
+```
+bootcmd=mmc read 0 0x1FFFFC0 0x1000 0x4000;bootm 0x1FFFFC0
+bootargs=console=ttyAMA0,115200 root=/dev/mmcblk0p4 rootfstype=ext4 rootwait blkdevparts=mmcblk0:1M(fastboot),1M(bootargs),8M(kernel),128M(rootfs),-(system)
+```
+bootcmd uboot启动引导： mmc read <device num> addr blk
+指令        内存地址 mmc内地址    长度
+mmc read 0 0x1FFFFC0 0x1000 0x4000
+bootm 0x1FFFFC0   #从内存地址引导内核
+    
+    
 ## 其他
 后继又在debootstrap中加入了python golang docker等软件包，并调大rootfs到4GB，同时修改相应bootargs emmc_partition。
